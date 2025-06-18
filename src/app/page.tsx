@@ -37,15 +37,15 @@ export default function WeddingInvitation() {
   return (
     <div className={styles.container}>
       <section className={styles.cover}>
-        <h1 className={styles.coverTitle}>지훈 ❤️ 수아</h1>
+        <h1 className={styles.coverTitle}>은상 💝 펀</h1>
         <p className={styles.coverSubtitle}>저희 결혼합니다</p>
       </section>
 
       <ScrollSection>
         <div className={styles.card}>
-          <p>2025.10.18</p>
-          <p>SAT PM 13:00</p>
-          <p>서울 라마다호텔 2층 그랜드홀</p>
+          <p>2027.04.10</p>
+          <p>SAT PM 12:00</p>
+          <p>신도리 웨딩시티 8층 스타티스홀</p>
           <p style={{ marginTop: '10px', fontWeight: 'bold' }}>지훈 | 수아</p>
         </div>
       </ScrollSection>
@@ -93,7 +93,7 @@ export default function WeddingInvitation() {
       </ScrollSection>
 
       <footer className={styles.footer}>
-        © 2025 Jihun & Sua Wedding Invitation
+        © 2025 Eunsang & Fern Wedding Invitation
       </footer>
     </div>
   )
