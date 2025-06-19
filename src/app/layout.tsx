@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Poppins } from "next/font/google";
 import { ReactNode } from "react";
+import Script from 'next/script'
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -41,53 +42,25 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="ko">
       <head>
         <link rel="shortcut icon" href="/carrot.png" />
-        <meta property="og:title" content="지훈❤️수아 결혼식에 초대합니다" />
+        <meta property="og:title" content="은상❤️펀 결혼식에 초대합니다" />
         <meta property="og:description" content="2025년 10월 18일 토요일 오후 1시, 서울 라마다호텔 2층 그랜드홀에서 만나요." />
         <meta property="og:image" content="https://fern-eunsang.vercel.app/images/photo1.png" />
         <meta property="og:url" content="https://fern-eunsang.vercel.app/" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="지훈❤️수아 결혼식에 초대합니다" />
+        <meta name="twitter:title" content="은상❤️펀 결혼식에 초대합니다" />
         <meta name="twitter:description" content="2025년 10월 18일 토요일 오후 1시, 서울 라마다호텔 2층 그랜드홀에서 만나요." />
         <meta name="twitter:image" content="https://fern-eunsang.vercel.app/images/photo1.png" />
-        <a
-            href="https://fern-eunsang.vercel.app"
-            style={{
-              display: 'inline-block',
-              padding: '12px 24px',
-              backgroundColor: '#f3f3f3',
-              color: '#000',
-              textDecoration: 'none',
-              fontWeight: 600,
-              borderRadius: '8px',
-              fontSize: '16px',
-            }}
-          >
-            청첩장 보기
-          </a>
-      
       </head>
       <body className={poppins.className}>
+        {/* ✅ SDK 스크립트 */}
+        <Script
+          src="https://t1.kakaocdn.net/kakao_js_sdk/2.5.0/kakao.min.js"
+          strategy="beforeInteractive"
+          integrity="sha384-pnQ9vEt9kgh2pV8W9PhN0LtBkIga4ZHPf0qluMS2eyxg+ZLMipPQ57WZbf10B8ZQ"
+          crossOrigin="anonymous"
+        />
         {children}
-
-        {/* 💌 청첩장 보기 버튼 추가 */}
-        {/* <div style={{ textAlign: 'center', marginTop: '20px' }}>
-          <a
-            href="https://fern-eunsang.vercel.app"
-            style={{
-              display: 'inline-block',
-              padding: '12px 24px',
-              backgroundColor: '#f3f3f3',
-              color: '#000',
-              textDecoration: 'none',
-              fontWeight: 600,
-              borderRadius: '8px',
-              fontSize: '16px',
-            }}
-          >
-            청첩장 보기
-          </a>
-        </div> */}
       </body>
     </html>
 

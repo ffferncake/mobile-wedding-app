@@ -1,65 +1,11 @@
 import styles from "./WeddingInvitation.module.css";
 import Image from "next/image";
-// import { useInView } from "react-intersection-observer";
-// import { useEffect } from "react";
-// import { motion, useAnimation } from "framer-motion";
 import ScrollSection from "../app/components/ScrollSection"; // Client Component
-// import Head from "next/head";
-
-// export const metadata = {
-//   title: '지훈❤️수아 결혼식에 초대합니다',
-//   description: '2025년 10월 18일 토요일 오후 1시, 서울 라마다호텔 2층 그랜드홀에서 만나요.',
-//   openGraph: {
-//     title: '지훈❤️수아 결혼식에 초대합니다',
-//     description: '2025년 10월 18일 토요일 오후 1시, 서울 라마다호텔 2층 그랜드홀에서 만나요.',
-//     url: 'https://fern-eunsang.vercel.app/',
-//     siteName: '지훈❤️수아 모바일 청첩장',
-//     images: [
-//       {
-//         url: 'https://github.com/ffferncake/mobile-wedding-app/blob/main/public/photo1.PNG', // Replace with actual image URL
-//         width: 800,
-//         height: 600,
-//         alt: '지훈❤️수아 웨딩 사진',
-//       },
-//     ],
-//     type: 'website',
-//   },
-//   twitter: {
-//     card: 'summary_large_image',
-//     title: '지훈❤️수아 결혼식에 초대합니다',
-//     description: '2025년 10월 18일 토요일 오후 1시, 서울 라마다호텔 2층 그랜드홀에서 만나요.',
-//     images: ['https://github.com/ffferncake/mobile-wedding-app/blob/main/public/photo1.PNG'],
-//   },
-// }
+import KakaoShareButton from "./components/KakaoShareButton";
 
 export default function WeddingInvitation() {
   return (
     <>
-      {/* <Head>
-        <title>수산♡수이 결혼식에 초대합니다</title>
-        <meta property="og:title" content="수산♡수이 결혼식에 초대합니다" />
-        <meta
-          property="og:description"
-          content="2025년 6월 15일 일요일 12시 30분, 로얄파크컨벤션 3층 로얄홀에서 만나요."
-        />
-        <meta
-          property="og:image"
-          content="https://fern-eunsang.vercel.app/images/og-cover.png"
-        />
-        <meta property="og:url" content="https://fern-eunsang.vercel.app/" />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="수산♡수이 결혼식에 초대합니다" />
-        <meta
-          name="twitter:description"
-          content="2025년 6월 15일 일요일 12시 30분, 로얄파크컨벤션 3층 로얄홀에서 만나요."
-        />
-        <meta
-          name="twitter:image"
-          content="https://fern-eunsang.vercel.app/images/photo1.png"
-        />
-      </Head> */}
-
       <div className={styles.container}>
         <section className={styles.cover}>
           <h1 className={styles.coverTitle}>은상 💝 펀</h1>
@@ -142,12 +88,17 @@ export default function WeddingInvitation() {
             <a href="https://forms.gle/your-form-url" target="_blank">
               RSVP 하기
             </a>
+              {/* ✅ 카카오 공유 버튼 추가 */}
+              <div style={{ marginTop: "20px" }}>
+              <KakaoShareButton />
+            </div>
           </div>
         </ScrollSection>
 
         <footer className={styles.footer}>
           © 2025 Eunsang & Fern Wedding Invitation
         </footer>
+
       </div>
     </>
   );
