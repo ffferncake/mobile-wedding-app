@@ -1,9 +1,9 @@
 "use client";
 import styles from "./WeddingInvitation.module.css";
 import Image from "next/image";
-import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
-import { motion, useAnimation } from "framer-motion";
+// import { useInView } from "react-intersection-observer";
+// import { useEffect } from "react";
+// import { motion, useAnimation } from "framer-motion";
 import ScrollSection from "../app/components/ScrollSection"; // Client Component
 import Head from "next/head";
 
