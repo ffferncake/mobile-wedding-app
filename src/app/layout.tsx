@@ -9,20 +9,6 @@ const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"]
 });
 
-// export const metadata = {
-//   title: "Fern Nichanun",
-//   description: "Ferncake Web Portfolio",
-
-//   icons: {
-//     icon: "/carrot.png",
-//     shortcut: "/carrot.png",
-//     apple: "/carrot.png",
-//     other: {
-//       rel: "shortcut icon",
-//       url: "/carrot.png"
-//     }
-//   }
-// };
 
 export const metadata = {
   title: '지훈❤️수아 결혼식에 초대합니다',
@@ -52,11 +38,19 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      {/* <head>
-        <link rel="shortcut icon" type="image/png" href="/carrot.png" />
-      </head> */}
-      <link rel="shortcut icon" type="image/png" href="/carrot.png" />
+    <html lang="ko">
+      <head>
+        <link rel="shortcut icon" href="/carrot.png" />
+        <meta property="og:title" content="지훈❤️수아 결혼식에 초대합니다" />
+        <meta property="og:description" content="2025년 10월 18일 토요일 오후 1시, 서울 라마다호텔 2층 그랜드홀에서 만나요." />
+        <meta property="og:image" content="https://fern-eunsang.vercel.app/photo1.png" />
+        <meta property="og:url" content="https://fern-eunsang.vercel.app/" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="지훈❤️수아 결혼식에 초대합니다" />
+        <meta name="twitter:description" content="2025년 10월 18일 토요일 오후 1시, 서울 라마다호텔 2층 그랜드홀에서 만나요." />
+        <meta name="twitter:image" content="https://fern-eunsang.vercel.app/photo1.png" />
+      </head>
       <body className={poppins.className}>{children}</body>
     </html>
   );
