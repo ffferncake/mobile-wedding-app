@@ -2,11 +2,9 @@
 import { useState, useEffect, useRef } from "react";
 import styles from "./WeddingInvitation.module.css";
 import Image from "next/image";
-import ScrollSection from "../app/components/ScrollSection"; // Client Component
+import ScrollSection from "../app/components/ScrollSection"; 
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-
-import { style } from "framer-motion/client";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiZmVybmNha2UiLCJhIjoiY2txajcyaWwwMDh2bjMwbngwM2hnaGdjZSJ9.w6HwEX8hDJzyYKOC7X7WHg";
