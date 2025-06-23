@@ -5,7 +5,8 @@
   line-height: 1.6;
   max-width: 420px;
   margin: 0 auto;
-  border: 1px solid #eee;
+  border-left: 1px solid #eee;
+  border-right: 1px solid #eee;
 }
 
 .tabNav {
@@ -76,7 +77,7 @@
 
 .card {
   background: white;
-  border: 1px solid #ddd;
+  /* border: 1px solid #ddd; */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   max-width: 400px;
   margin: -60px auto 40px;
@@ -86,9 +87,10 @@
 
 .quote,
 .inviteMessage {
-  max-width: 500px;
+  max-width: 420px;
   margin: 0 auto 10px;
-  padding: 16px;
+  margin-top: 50px;
+  /* padding: 16px; */
 }
 
 .quote {
@@ -124,6 +126,7 @@
   display: flex;
   flex-direction: column;
 }
+
 .parentName {
   min-width: 160px;
   margin-right: 20px;
@@ -144,6 +147,15 @@
   font-weight: bold;
 }
 
+.kidsImg {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
 .locationInfo {
   text-align: center;
   font-size: 16px;
@@ -151,24 +163,70 @@
   margin-bottom: 20px;
 }
 
+.flipClock {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.flipUnit {
+  text-align: center;
+}
+
+.flipCard {
+  padding: 10px 5px;
+  background: #f3f3f3;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 48px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.flipCard span {
+  position: relative;
+  z-index: 2;
+}
+
+.flipLabel {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #444;
+  font-weight: 500;
+}
+
 .mapContainer {
   width: 100%;
   max-width: 420px;
-  height: 300px; /* Use fixed px for stability */
+  height: 350px; 
   margin: 0 auto;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.navLinks {
+/* .navLinks {
   display: flex;
   justify-content: center;
   gap: 12px;
   margin-top: 10px;
+} */
+
+.mapLinks {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 15px;
 }
 
-.navLinks a {
+.navLinks {
+  display: flex;
+  align-items: center;
   background-color: #f8f8f8;
   padding: 10px 16px;
   border-radius: 8px;
@@ -177,9 +235,14 @@
   text-decoration: none;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   transition: background 0.2s;
+  gap: 7px;
 }
 
-.navLinks a:hover {
+.navLinks img {
+  border-radius: 4px;
+}
+
+.navLinks:hover {
   background-color: #eee;
 }
 
@@ -221,5 +284,5 @@
 .footer {
   font-size: 12px;
   color: #aaa;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
