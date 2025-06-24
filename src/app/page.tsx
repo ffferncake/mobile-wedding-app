@@ -103,16 +103,17 @@ export default function WeddingInvitation() {
 
   return (
     <>
-      <div className={styles.container}>
-        <nav className={styles.tabNav}>
-          {/* <a href="#date">날짜</a> */}
-          {/* <a href="#quote">연가</a> */}
-          <a href="#message">초대글</a>
-          <a href="#weddinginfo">예식안내</a>
-          <a href="#accountnumber">마음 전하실 곳</a>
-          <a href="#location">오시는길</a>
-          <a href="#gallery">갤러리</a>
-        </nav>
+    <div className={styles.container}>
+      <nav className={styles.tabNav}>
+        {/* <a href="#date">날짜</a> */}
+        {/* <a href="#quote">연가</a> */}
+        <a href="#message">초대글</a>
+        <a href="#weddinginfo">예식안내</a>
+        <a href="#accountnumber">마음 전하실 곳</a>
+        <a href="#location">오시는길</a>
+        <a href="#gallery">갤러리</a>
+      </nav>
+      <div className={styles.contentContainer}>
         <h1 className={styles.coverHeader}>결혼일보</h1>
         <section className={styles.cover}>
           <div className={styles.coverTitle}>
@@ -133,13 +134,13 @@ export default function WeddingInvitation() {
         </section>
 
         {/* <ScrollSection> */}
-          <div id="date" className={styles.card}>
-            <p>2027.04.10 12:00PM</p>
-            <p>신도림 웨딩시티 8층 스타티스홀</p>
-            <strong>
-              <p>은상 | 펀</p>
-            </strong>
-          </div>
+        <div id="date" className={styles.card}>
+          <p>2027.04.10 12:00PM</p>
+          <p>신도림 웨딩시티 8층 스타티스홀</p>
+          <strong>
+            <p>은상 | 펀</p>
+          </strong>
+        </div>
         {/* </ScrollSection> */}
 
         <ScrollSection>
@@ -345,6 +346,7 @@ export default function WeddingInvitation() {
           © 2025 Eunsang & Fern Wedding Invitation
         </footer>
       </div>
+    </div>   
     </>
   );
 }
