@@ -132,7 +132,7 @@ export default function WeddingInvitation() {
           </p>
         </section>
 
-        <ScrollSection>
+        {/* <ScrollSection> */}
           <div id="date" className={styles.card}>
             <p>2027.04.10 12:00PM</p>
             <p>신도림 웨딩시티 8층 스타티스홀</p>
@@ -140,7 +140,7 @@ export default function WeddingInvitation() {
               <p>은상 | 펀</p>
             </strong>
           </div>
-        </ScrollSection>
+        {/* </ScrollSection> */}
 
         <ScrollSection>
           <div id="message" className={styles.inviteMessage}>
@@ -208,7 +208,8 @@ export default function WeddingInvitation() {
               src="/images/weddinginfo_section.png"
               alt="wedding info section"
               width={250}
-              height={350}
+              height={250}
+              className={styles.weddingInfoImg}
             />{" "}
             {/* ⏱ Countdown Timer */}
             <div className={styles.flipClock}>
