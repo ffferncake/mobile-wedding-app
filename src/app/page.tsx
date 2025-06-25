@@ -139,7 +139,7 @@ export default function WeddingInvitation() {
           <a href="#accountnumber">마음 전하실 곳</a>
           <a href="#location">오시는길</a>
           <a href="#gallery">갤러리</a>
-          <button
+           <button
             onClick={() => setIsMuted((prev) => !prev)}
             className={styles.muteBtn}
           >
@@ -149,8 +149,9 @@ export default function WeddingInvitation() {
               width={16}
               height={16}
             />
-          </button>
+            </button>
         </nav>
+        
       </div>
       <div className={styles.container}>
         <div className={styles.contentContainer}>
