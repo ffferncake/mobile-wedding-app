@@ -27,11 +27,43 @@ export default function WeddingInvitation() {
   const [showAll, setShowAll] = useState(false);
   const visibleImages = showAll ? allImages : allImages.slice(0, 9);
 
+  // 👇 Add these for full-screen image modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isMuted, setIsMuted] = useState(true);
+
+  const openModal = (index: number) => {
+    setCurrentIndex(index);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const showNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % allImages.length);
+  };
+
+  const showPrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
+  };
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (!isModalOpen) return;
+      if (e.key === "Escape") closeModal();
+      if (e.key === "ArrowRight") showNext();
+      if (e.key === "ArrowLeft") showPrev();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [isModalOpen]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -139,7 +171,7 @@ export default function WeddingInvitation() {
           <a href="#accountnumber">마음 전하실 곳</a>
           <a href="#location">오시는길</a>
           <a href="#gallery">갤러리</a>
-           <button
+          <button
             onClick={() => setIsMuted((prev) => !prev)}
             className={styles.muteBtn}
           >
@@ -149,9 +181,8 @@ export default function WeddingInvitation() {
               width={16}
               height={16}
             />
-            </button>
+          </button>
         </nav>
-        
       </div>
       <div className={styles.container}>
         <div className={styles.contentContainer}>
@@ -297,9 +328,38 @@ export default function WeddingInvitation() {
                   alt={`gallery-${index + 1}`}
                   width={120}
                   height={160}
+                  onClick={() => openModal(index)}
+                  style={{ cursor: "pointer" }} // Optional: shows it's clickable
                 />
               ))}
             </div>
+
+            {/* Modal Fullscreen Gallery */}
+            {isModalOpen && (
+              <div className={styles.modalOverlay} onClick={closeModal}>
+                <div
+                  className={styles.modalContent}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Image
+                    src={allImages[currentIndex]}
+                    alt={`modal-${currentIndex}`}
+                    width={600}
+                    height={800}
+                    className={styles.modalImage}
+                  />
+                  <button className={styles.modalClose} onClick={closeModal}>
+                    ✕
+                  </button>
+                  <button className={styles.modalPrev} onClick={showPrev}>
+                    ‹
+                  </button>
+                  <button className={styles.modalNext} onClick={showNext}>
+                    ›
+                  </button>
+                </div>
+              </div>
+            )}
 
             {allImages.length > 9 && (
               <div className={styles.showMoreWrapper}>
