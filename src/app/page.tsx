@@ -37,6 +37,8 @@ export default function WeddingInvitation() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isMuted, setIsMuted] = useState(true);
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const openModal = (index: number) => {
     setCurrentIndex(index);
     setIsModalOpen(true);
@@ -164,7 +166,7 @@ export default function WeddingInvitation() {
   }, [isMuted]);
   return (
     <>
-      <div className={styles.tabNavContainer}>
+      {/* <div className={styles.tabNavContainer}>
         <nav className={styles.tabNav}>
           <a href="#message">초대글</a>
           <a href="#weddinginfo">예식안내</a>
@@ -183,7 +185,61 @@ export default function WeddingInvitation() {
             />
           </button>
         </nav>
+      </div> */}
+      <div className={styles.tabNavContainer}>
+        <header className={styles.headerNav}>
+          <button
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+            className={styles.menuBtn}
+          >
+            <Image
+              src="/images/hamburger_icon.svg"
+              alt="menu"
+              width={24}
+              height={24}
+            />
+          </button>
+
+          <div className={styles.titleCenter}>
+            은상<span className={styles.heart}>💍</span>펀
+          </div>
+
+          <button
+            onClick={() => setIsMuted((prev) => !prev)}
+            className={styles.muteBtn}
+          >
+            <Image
+              src={isMuted ? "/images/volume_off.svg" : "/images/volume_on.svg"}
+              alt="audio control"
+              width={20}
+              height={20}
+            />
+          </button>
+        </header>
       </div>
+      {/* Hamburger Side Menu */}
+      {isMenuOpen && (
+        <div className={styles.hamburgerMenuWrapper}>
+          <div className={styles.hamburgerMenu}>
+            <a href="#message" onClick={() => setIsMenuOpen(false)}>
+              초대글
+            </a>
+            <a href="#weddinginfo" onClick={() => setIsMenuOpen(false)}>
+              예식안내
+            </a>
+            <a href="#accountnumber" onClick={() => setIsMenuOpen(false)}>
+              마음 전하실 곳
+            </a>
+            <a href="#location" onClick={() => setIsMenuOpen(false)}>
+              오시는길
+            </a>
+            <a href="#gallery" onClick={() => setIsMenuOpen(false)}>
+              갤러리
+            </a>
+          </div>
+        </div>
+      )}
+
       <div className={styles.container}>
         <div className={styles.contentContainer}>
           <h1 className={styles.coverHeader}>결혼일보</h1>
@@ -210,7 +266,7 @@ export default function WeddingInvitation() {
               <p>2027.04.10 12:00PM</p>
               <p>신도림 웨딩시티 8층 스타티스홀</p>
               <strong>
-                <p>은상 | 펀</p>
+                <p>은상 💍 펀</p>
               </strong>
             </div>
           </ScrollSection>
@@ -250,7 +306,6 @@ export default function WeddingInvitation() {
                   </div>
                 </div>
               </div>
-
               <div className={styles.kidsImg}>
                 <Image
                   src="/images/oppa_kids_ver.png"
@@ -314,6 +369,27 @@ export default function WeddingInvitation() {
             </div>
           </ScrollSection>
 
+          {/* 신랑 & 신부 소개합니다 */}
+          <ScrollSection>
+            <div id="gallery" className={styles.inviteMessage}>
+              <h3 className={styles.highlight}>신랑 & 신부 소개합니다</h3>
+            </div>
+            <div className={styles.kidsImg}>
+              <Image
+                src="/images/oppa_kids_ver.png"
+                alt="oppa img"
+                width={150}
+                height={150}
+              />{" "}
+              <Image
+                src="/images/me_kids_ver.png"
+                alt="my img"
+                width={150}
+                height={150}
+              />{" "}
+            </div>
+          </ScrollSection>
+
           {/* 갤러리 */}
           <ScrollSection>
             <div id="gallery" className={styles.inviteMessage}>
@@ -327,9 +403,9 @@ export default function WeddingInvitation() {
                   src={src}
                   alt={`gallery-${index + 1}`}
                   width={120}
-                  height={160}
+                  height={130}
                   onClick={() => openModal(index)}
-                  style={{ cursor: "pointer" }} // Optional: shows it's clickable
+                  style={{ cursor: "pointer" }}
                 />
               ))}
             </div>
@@ -357,6 +433,9 @@ export default function WeddingInvitation() {
                   <button className={styles.modalNext} onClick={showNext}>
                     ›
                   </button>
+                  <p className={styles.imageCounter}>
+                    {currentIndex + 1} / {allImages.length}
+                  </p>
                 </div>
               </div>
             )}
@@ -381,6 +460,30 @@ export default function WeddingInvitation() {
                 소중한 축하를 보내주셔서 감사드리며, <br />
                 따뜻한 마음에 깊이 감사드립니다.
               </p>
+              <div className={styles.account}>
+                <Image
+                  src="/images/toss.png"
+                  alt="toss icon"
+                  width={32}
+                  height={32}
+                />
+                <span>토스뱅크 1001-5731-0736 (커플통장)</span>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText("1001-5731-0736");
+                    alert("계좌번호가 복사되었습니다.");
+                  }}
+                  className={styles.copyButton}
+                >
+                  복사
+                  <Image
+                    src="/images/copy_icon.png"
+                    alt="copy icon"
+                    width={14}
+                    height={14}
+                  />
+                </button>
+              </div>
             </div>
           </ScrollSection>
 
@@ -394,7 +497,6 @@ export default function WeddingInvitation() {
                 <p>서울 구로구 새말로 97 신도림테크노마트</p>
               </div>
               <div ref={mapContainerRef} className={styles.mapContainer} />
-
               <div className={styles.mapLinks}>
                 <div className={styles.navLinks}>
                   <Image
@@ -428,6 +530,44 @@ export default function WeddingInvitation() {
             </div>
           </ScrollSection>
 
+          {/* 지하철 이용시 */}
+          <ScrollSection>
+            <div id="location" className={styles.inviteMessage}>
+              <h3 className={styles.highlight}>지하철 이용시</h3>
+              <div className={styles.subwayInfo}>
+                <div className={styles.subwaylineInfo}>
+                  <Image
+                    src="/images/ellipse_blue.svg"
+                    alt="ellipse blue"
+                    width={19}
+                    height={19}
+                  />
+                  <p>1호선 신도림역</p>
+                </div>
+                <div className={styles.subwaylineInfo}>
+                  <Image
+                    src="/images/ellipse_green.svg"
+                    alt="ellipse green"
+                    width={19}
+                    height={19}
+                  />
+                  <p>2호선 신도림역</p>
+                </div>
+              </div>
+              <p>신도림역 ③ 번출구 테크노마트</p>
+              <p>판매동 지하1층과 직접 연결되어 있습니다</p>
+            </div>
+          </ScrollSection>
+
+          {/* 주차안내 */}
+          <ScrollSection>
+            <div id="location" className={styles.inviteMessage}>
+              <h3 className={styles.highlight}>주차안내</h3>
+              <p>테크노마트 지하주차장 이용(B3~B7)</p>
+              <p>주차요원의 안내를 받으세요.</p>
+            </div>
+          </ScrollSection>
+
           {/* 참석 여부 */}
           {/* <ScrollSection>
           <div id="rsvp" className={styles.inviteMessage}>
@@ -444,7 +584,8 @@ export default function WeddingInvitation() {
         </ScrollSection> */}
 
           <footer className={styles.footer}>
-            © 2025 Eunsang & Fern Wedding Invitation
+            © Fern & Eunsang
+            {/* <p>Eunsang & Fern Wedding Invitation</p> */}
           </footer>
         </div>
       </div>
