@@ -38,6 +38,7 @@ export default function WeddingInvitation() {
   const [isMuted, setIsMuted] = useState(true);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const popupRef = useRef<mapboxgl.Popup | null>(null);
 
   const openModal = (index: number) => {
     setCurrentIndex(index);
@@ -74,14 +75,49 @@ export default function WeddingInvitation() {
           container: mapContainerRef.current,
           style: "mapbox://styles/mapbox/streets-v11",
           center: [126.8779692, 37.508535],
-          zoom: 15
+          zoom: 15,
         });
 
-        new mapboxgl.Marker().setLngLat([126.8779692, 37.508535]).addTo(map);
+        const marker = new mapboxgl.Marker()
+          .setLngLat([126.8779692, 37.508535])
+          .addTo(map);
+
+        // Create popup DOM node
+        const popupNode = document.createElement("div");
+        popupNode.innerHTML = `
+          <div class="${styles.popupContent}">
+            <p>💒 웨딩시티 스타티스홀</p>
+          </div>
+        `;
+
+        // Create and store popup
+        const popup = new mapboxgl.Popup({
+          closeOnClick: false,
+          offset: 30,
+        })
+          .setDOMContent(popupNode)
+          .setLngLat([126.8779692, 37.508535])
+          .addTo(map);
+
+        popupRef.current = popup;
+
+        // Close button handler
+        popupNode
+          .querySelector("#closePopup")
+          ?.addEventListener("click", () => {
+            popup.remove();
+          });
+
+        // Show popup again when clicking marker
+        marker.getElement().addEventListener("click", () => {
+          if (!popupRef.current?.isOpen()) {
+            popupRef.current?.addTo(map);
+          }
+        });
 
         mapRef.current = map;
       }
-    }, 500); // Slight delay
+    }, 500);
 
     return () => {
       clearTimeout(timeout);
@@ -166,26 +202,6 @@ export default function WeddingInvitation() {
   }, [isMuted]);
   return (
     <>
-      {/* <div className={styles.tabNavContainer}>
-        <nav className={styles.tabNav}>
-          <a href="#message">초대글</a>
-          <a href="#weddinginfo">예식안내</a>
-          <a href="#accountnumber">마음 전하실 곳</a>
-          <a href="#location">오시는길</a>
-          <a href="#gallery">갤러리</a>
-          <button
-            onClick={() => setIsMuted((prev) => !prev)}
-            className={styles.muteBtn}
-          >
-            <Image
-              src={isMuted ? "/images/volume_off.svg" : "/images/volume_on.svg"}
-              alt="audio control"
-              width={16}
-              height={16}
-            />
-          </button>
-        </nav>
-      </div> */}
       <div className={styles.tabNavContainer}>
         <header className={styles.headerNav}>
           <button
@@ -467,7 +483,7 @@ export default function WeddingInvitation() {
                   width={32}
                   height={32}
                 />
-                <span>토스뱅크 1001-5731-0736 (커플통장)</span>
+                <span>토스뱅크 1001-5731-0736</span>
                 <button
                   onClick={() => {
                     navigator.clipboard.writeText("1001-5731-0736");
