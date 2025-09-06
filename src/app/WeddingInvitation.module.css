@@ -154,7 +154,7 @@
   align-items: center;
   border-top: 1px solid #eee;
   gap: 5px;
-  background-image: url("/images/bg_image.png");
+  background-image: url("/images/bg_image_final.JPG");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -177,14 +177,17 @@
   border-bottom: 1px solid;
   align-items: center;
   gap: 8px;
+  color: #3b417b;
 }
 
 .coverSubtitle {
   font-size: 16px;
+  color: #333333;
 }
 
 .coverDetail {
   font-size: 13px;
+  color: #333333;
 }
 
 .card {
@@ -254,7 +257,7 @@
 } */
 
 .highlight {
-  color: #4f70ff;
+  color: #3b417b;
   font-weight: bold;
   font-size: 14px;
 }
@@ -314,6 +317,22 @@
   gap: 20px;
 }
 
+.oppaPart {
+  display: flex;
+  flex-direction: column;
+}
+
+.oppaPart h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.oppaPart p {
+  font-size: 14px;
+  font-weight: medium;
+}
+
 .locationInfo {
   text-align: center;
   font-size: 13px;
@@ -323,6 +342,7 @@
 
 .weddingInfoImg {
   border-radius: 20px;
+  height: auto;
 }
 
 .flipClock {
@@ -478,7 +498,7 @@
 .modalImage {
   max-width: 100%;
   max-height: 100%;
-  border-radius: 8px;
+  /* border-radius: 8px; */
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
@@ -535,7 +555,7 @@
 .popupContent {
   display: flex;
   flex-direction: row;
-  gap:10px
+  gap: 10px;
 }
 
 .closePopup {

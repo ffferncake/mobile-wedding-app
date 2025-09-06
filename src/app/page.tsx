@@ -11,17 +11,17 @@ mapboxgl.accessToken =
 
 export default function WeddingInvitation() {
   const allImages = [
-    "/images/photo1.png",
-    "/images/photo1.png",
-    "/images/photo1.png",
-    "/images/photo1.png",
-    "/images/photo1.png",
-    "/images/photo1.png",
-    "/images/photo1.png",
-    "/images/photo1.png",
-    "/images/photo1.png",
-    "/images/photo1.png",
-    "/images/photo1.png"
+    "/images/gallery_1.JPG",
+    "/images/gallery_2.JPG",
+    "/images/gallery_3.JPG",
+    "/images/gallery_4.JPG",
+    "/images/gallery_5.JPG",
+    "/images/gallery_6.JPG",
+    "/images/gallery_7.JPG",
+    "/images/gallery_8.JPG",
+    "/images/gallery_9.JPG",
+    "/images/gallery_10.JPG",
+    "/images/gallery_11.JPG",
   ];
 
   const [showAll, setShowAll] = useState(false);
@@ -132,7 +132,7 @@ export default function WeddingInvitation() {
     days: "00",
     hours: "00",
     minutes: "00",
-    seconds: "00"
+    seconds: "00",
   });
 
   useEffect(() => {
@@ -147,7 +147,7 @@ export default function WeddingInvitation() {
           days: "00",
           hours: "00",
           minutes: "00",
-          seconds: "00"
+          seconds: "00",
         });
         return;
       }
@@ -209,7 +209,7 @@ export default function WeddingInvitation() {
             className={styles.menuBtn}
           >
             <Image
-              src="/images/hamburger_icon.svg"
+              src="/images/icon/hamburger_icon.svg"
               alt="menu"
               width={24}
               height={24}
@@ -225,7 +225,11 @@ export default function WeddingInvitation() {
             className={styles.muteBtn}
           >
             <Image
-              src={isMuted ? "/images/volume_off.svg" : "/images/volume_on.svg"}
+              src={
+                isMuted
+                  ? "/images/icon/volume_off.svg"
+                  : "/images/icon/volume_on.svg"
+              }
               alt="audio control"
               width={20}
               height={20}
@@ -261,13 +265,13 @@ export default function WeddingInvitation() {
           <h1 className={styles.coverHeader}>결혼일보</h1>
           <section className={styles.cover}>
             <div className={styles.coverTitle}>
-              유은상{" "}
-              <Image
-                src="/images/heart_icon_white.png"
+              유은상 💍{" "}
+              {/* <Image
+                src="/images/icon/heart_icon_white.png"
                 alt="heart icon white"
                 width={32}
                 height={32}
-              />
+              /> */}
               펀
             </div>
             <p className={styles.coverSubtitle}>저희 결혼합니다</p>
@@ -349,7 +353,7 @@ export default function WeddingInvitation() {
                 <p>8층 스타티스홀</p>
               </div>
               <Image
-                src="/images/weddinginfo_section.png"
+                src="/images/weddinginfo_section.JPG"
                 alt="wedding info section"
                 width={250}
                 height={250}
@@ -391,18 +395,28 @@ export default function WeddingInvitation() {
               <h3 className={styles.highlight}>신랑 & 신부 소개합니다</h3>
             </div>
             <div className={styles.kidsImg}>
-              <Image
-                src="/images/oppa_kids_ver.png"
-                alt="oppa img"
-                width={150}
-                height={150}
-              />{" "}
-              <Image
-                src="/images/me_kids_ver.png"
-                alt="my img"
-                width={150}
-                height={150}
-              />{" "}
+              <div className={styles.oppaPart}>
+                <Image
+                  src="/images/oppa_kids_ver.png"
+                  alt="oppa img"
+                  width={150}
+                  height={150}
+                />
+                <h3>유은상</h3>
+                <p>92년산 🍾🐒✨</p>
+                <p>건축공학 엔지니어</p>
+              </div>
+              <div className={styles.oppaPart}>
+                <Image
+                  src="/images/me_kids_ver.png"
+                  alt="my img"
+                  width={150}
+                  height={150}
+                />
+                <h3>펀</h3>
+                <p>99년산 🍼🐰💖</p>
+                <p>프론트엔드 개발자</p>
+              </div>
             </div>
           </ScrollSection>
 
@@ -493,7 +507,7 @@ export default function WeddingInvitation() {
                 >
                   복사
                   <Image
-                    src="/images/copy_icon.png"
+                    src="/images/icon/copy_icon.png"
                     alt="copy icon"
                     width={14}
                     height={14}
@@ -553,7 +567,7 @@ export default function WeddingInvitation() {
               <div className={styles.subwayInfo}>
                 <div className={styles.subwaylineInfo}>
                   <Image
-                    src="/images/ellipse_blue.svg"
+                    src="/images/icon/ellipse_blue.svg"
                     alt="ellipse blue"
                     width={19}
                     height={19}
@@ -562,7 +576,7 @@ export default function WeddingInvitation() {
                 </div>
                 <div className={styles.subwaylineInfo}>
                   <Image
-                    src="/images/ellipse_green.svg"
+                    src="/images/icon/ellipse_green.svg"
                     alt="ellipse green"
                     width={19}
                     height={19}

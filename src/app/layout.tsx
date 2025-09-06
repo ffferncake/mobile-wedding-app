@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko">
       <head>
-        <link rel="shortcut icon" href="/images/heart_icon.png" />
+        <link rel="shortcut icon" href="/images/icon/heart_icon.png" />
         <meta property="og:title" content="은상♡펀 결혼합니다!" />
         <meta
           property="og:description"
