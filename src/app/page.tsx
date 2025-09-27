@@ -22,6 +22,10 @@ export default function WeddingInvitation() {
     "/images/gallery_9.JPG",
     "/images/gallery_10.JPG",
     "/images/gallery_11.JPG",
+    "/images/gallery_12.JPG",
+    "/images/gallery_13.JPG",
+    "/images/gallery_14.JPG",
+    "/images/gallery_15.JPG",
   ];
 
   const [showAll, setShowAll] = useState(false);
@@ -200,6 +204,21 @@ export default function WeddingInvitation() {
       }
     }
   }, [isMuted]);
+
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const [showScrollBtn, setShowScrollBtn] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (contentRef.current) {
+        setShowScrollBtn(contentRef.current.scrollTop > 200);
+      }
+    };
+    const container = contentRef.current;
+    container?.addEventListener("scroll", handleScroll);
+    return () => container?.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <>
       <div className={styles.tabNavContainer}>
@@ -241,46 +260,97 @@ export default function WeddingInvitation() {
       {isMenuOpen && (
         <div className={styles.hamburgerMenuWrapper}>
           <div className={styles.hamburgerMenu}>
-            <a href="#message" onClick={() => setIsMenuOpen(false)}>
+            <a
+              href="#message"
+              onClick={(e) => {
+                e.preventDefault(); // Stop default jump
+                document
+                  .querySelector("#message")
+                  ?.scrollIntoView({ behavior: "smooth" });
+                setIsMenuOpen(false); // Close menu after scrolling
+              }}
+            >
               초대글
             </a>
-            <a href="#weddinginfo" onClick={() => setIsMenuOpen(false)}>
+
+            <a
+              href="#weddinginfo"
+              onClick={(e) => {
+                e.preventDefault();
+                document
+                  .querySelector("#weddinginfo")
+                  ?.scrollIntoView({ behavior: "smooth" });
+                setIsMenuOpen(false);
+              }}
+            >
               예식안내
             </a>
-            <a href="#accountnumber" onClick={() => setIsMenuOpen(false)}>
+
+            <a
+              href="#accountnumber"
+              onClick={(e) => {
+                e.preventDefault();
+                document
+                  .querySelector("#accountnumber")
+                  ?.scrollIntoView({ behavior: "smooth" });
+                setIsMenuOpen(false);
+              }}
+            >
               마음 전하실 곳
             </a>
-            <a href="#location" onClick={() => setIsMenuOpen(false)}>
+
+            <a
+              href="#location"
+              onClick={(e) => {
+                e.preventDefault();
+                document
+                  .querySelector("#location")
+                  ?.scrollIntoView({ behavior: "smooth" });
+                setIsMenuOpen(false);
+              }}
+            >
               오시는길
             </a>
-            <a href="#gallery" onClick={() => setIsMenuOpen(false)}>
+
+            <a
+              href="#gallery"
+              onClick={(e) => {
+                e.preventDefault();
+                document
+                  .querySelector("#gallery")
+                  ?.scrollIntoView({ behavior: "smooth" });
+                setIsMenuOpen(false);
+              }}
+            >
               갤러리
             </a>
           </div>
         </div>
       )}
-
       <div className={styles.container}>
-        <div className={styles.contentContainer}>
-          <h1 className={styles.coverHeader}>결혼일보</h1>
+        <div className={styles.contentContainer} ref={contentRef}>
+          <div
+            className={styles.scrollToTopBtn}
+            style={{ display: showScrollBtn ? "block" : "none" }}
+            onClick={() => {
+              contentRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          >
+            <Image
+              src="/images/icon/scrollup.svg"
+              alt="scroll to top"
+              width={24}
+              height={24}
+            />
+          </div>
           <section className={styles.cover}>
-            <div className={styles.coverTitle}>
-              유은상 💍{" "}
-              {/* <Image
-                src="/images/icon/heart_icon_white.png"
-                alt="heart icon white"
-                width={32}
-                height={32}
-              /> */}
-              펀
-            </div>
+            <div className={styles.coverTitle}>유은상 💍 펀</div>
             <p className={styles.coverSubtitle}>저희 결혼합니다</p>
             <p className={styles.coverDetail}>2027.04.10 토요일 오후 12.00</p>
             <p className={styles.coverDetail}>
               웨딩시티 신도림 테크노마트 8층 스타티스홀
             </p>
           </section>
-
           <ScrollSection>
             <div id="date" className={styles.card}>
               <p>2027.04.10 12:00PM</p>
@@ -290,7 +360,6 @@ export default function WeddingInvitation() {
               </strong>
             </div>
           </ScrollSection>
-
           <ScrollSection>
             <div id="message" className={styles.inviteMessage}>
               <p className={styles.highlight}>소중한 분들을 초대합니다.</p>
@@ -305,19 +374,42 @@ export default function WeddingInvitation() {
               {/* 부모님 소개 섹션 */}
               <div className={styles.parentInfo}>
                 <div className={styles.parentColumn}>
-                  <p className={styles.parentName}>유영운 · 신혜원의 아들</p>
-                  <p className={styles.parentName}>
-                    Chelermchai · Monruedee의 딸
-                  </p>
-                  <p className={styles.parentNickname}>(Nhong · Kagh의 딸)</p>
+                  <div className={styles.parentName}>
+                    <p className={styles.dadName}>유영운</p>
+                    <p>·</p>
+                    <p className={styles.momName}>신혜원의 아들</p>
+                    <p>🤵🏻</p>
+                  </div>
+                  <div className={styles.parentName}>
+                    <p className={styles.dadName}>Nhong</p>
+                    <p>·</p>
+                    <p className={styles.momName}>Kagh의 딸</p>
+                    <p>👰🏻‍♀️</p>
+                  </div>
                 </div>
+              </div>
+              <div className={styles.kidsImg}>
                 <div className={styles.ourName}>
+                  <Image
+                    src="/images/oppa_kids_ver2.png"
+                    alt="oppa img"
+                    width={55}
+                    height={150}
+                  />{" "}
                   <div className={styles.ourNameIcon}>
                     <p>유은상</p>
                     <a href="tel:01033883415" className={styles.phoneIcon}>
                       📞
                     </a>
                   </div>
+                </div>
+                <div className={styles.ourName}>
+                  <Image
+                    src="/images/me_kids_ver2.PNG"
+                    alt="my img"
+                    width={60}
+                    height={150}
+                  />{" "}
                   <div className={styles.ourNameIcon}>
                     <p>펀</p>
                     <a href="tel:010-5334-9912" className={styles.phoneIcon}>
@@ -326,23 +418,8 @@ export default function WeddingInvitation() {
                   </div>
                 </div>
               </div>
-              <div className={styles.kidsImg}>
-                <Image
-                  src="/images/oppa_kids_ver.png"
-                  alt="oppa img"
-                  width={100}
-                  height={100}
-                />{" "}
-                <Image
-                  src="/images/me_kids_ver.png"
-                  alt="my img"
-                  width={100}
-                  height={100}
-                />{" "}
-              </div>
             </div>
           </ScrollSection>
-
           {/* 예식 안내 */}
           <ScrollSection>
             <div id="weddinginfo" className={styles.inviteMessage}>
@@ -353,9 +430,9 @@ export default function WeddingInvitation() {
                 <p>8층 스타티스홀</p>
               </div>
               <Image
-                src="/images/weddinginfo_section.JPG"
+                src="/images/bg_image_final.JPG"
                 alt="wedding info section"
-                width={250}
+                width={280}
                 height={250}
                 className={styles.weddingInfoImg}
               />{" "}
@@ -388,7 +465,6 @@ export default function WeddingInvitation() {
               </div>
             </div>
           </ScrollSection>
-
           {/* 신랑 & 신부 소개합니다 */}
           <ScrollSection>
             <div id="gallery" className={styles.inviteMessage}>
@@ -419,7 +495,6 @@ export default function WeddingInvitation() {
               </div>
             </div>
           </ScrollSection>
-
           {/* 갤러리 */}
           <ScrollSection>
             <div id="gallery" className={styles.inviteMessage}>
@@ -481,7 +556,6 @@ export default function WeddingInvitation() {
               </div>
             )}
           </ScrollSection>
-
           {/* 마음 전하실 곳 */}
           <ScrollSection>
             <div id="accountnumber" className={styles.inviteMessage}>
@@ -516,7 +590,6 @@ export default function WeddingInvitation() {
               </div>
             </div>
           </ScrollSection>
-
           {/* 오시는길 */}
           <ScrollSection>
             <div id="location" className={styles.inviteMessage}>
@@ -559,10 +632,9 @@ export default function WeddingInvitation() {
               </div>
             </div>
           </ScrollSection>
-
           {/* 지하철 이용시 */}
           <ScrollSection>
-            <div id="location" className={styles.inviteMessage}>
+            <div id="location-subway" className={styles.inviteMessage}>
               <h3 className={styles.highlight}>지하철 이용시</h3>
               <div className={styles.subwayInfo}>
                 <div className={styles.subwaylineInfo}>
@@ -588,16 +660,14 @@ export default function WeddingInvitation() {
               <p>판매동 지하1층과 직접 연결되어 있습니다</p>
             </div>
           </ScrollSection>
-
           {/* 주차안내 */}
           <ScrollSection>
-            <div id="location" className={styles.inviteMessage}>
+            <div id="location-parking" className={styles.inviteMessage}>
               <h3 className={styles.highlight}>주차안내</h3>
               <p>테크노마트 지하주차장 이용(B3~B7)</p>
               <p>주차요원의 안내를 받으세요.</p>
             </div>
           </ScrollSection>
-
           {/* 참석 여부 */}
           {/* <ScrollSection>
           <div id="rsvp" className={styles.inviteMessage}>
@@ -612,7 +682,6 @@ export default function WeddingInvitation() {
             </div>
           </div>
         </ScrollSection> */}
-
           <footer className={styles.footer}>
             © Fern & Eunsang
             {/* <p>Eunsang & Fern Wedding Invitation</p> */}

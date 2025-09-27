@@ -1,10 +1,9 @@
 .container {
   width: 100%;
   height: 100vh;
-  /* ✅ Ensure full viewport height */
-  overflow: hidden;
-  position: relative;
+  /* overflow: hidden; */
   background: rgba(153, 153, 153, 0.05);
+  justify-content: center;
 }
 
 /* Apply scroll and hide scrollbar here */
@@ -15,11 +14,9 @@
   line-height: 1.6;
   max-width: 420px;
   margin: 0 auto;
-  /* border-left: 1px solid #eee;
-  border-right: 1px solid #eee; */
+  position: relative;
   overflow-y: auto;
   height: 100vh;
-
   /* Hide scrollbar on all browsers */
   -ms-overflow-style: none;
   /* IE and Edge */
@@ -33,8 +30,13 @@
 }
 
 .tabNavContainer {
-  position: relative;
-  background: rgba(153, 153, 153, 0.05);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1200; /* high enough to be above overlays */
+  pointer-events: none; /* allow inner header to control pointer events */
+  /* background: rgba(153, 153, 153, 0.05); */
 }
 
 .tabNav {
@@ -67,9 +69,10 @@
 }
 
 .headerNav {
+  pointer-events: auto;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   padding: 12px 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   position: sticky;
@@ -80,12 +83,18 @@
   background-color: #ffffff;
 }
 
-.menuBtn,
 .muteBtn {
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
+}
+
+.menuBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 1300;
 }
 
 .titleCenter {
@@ -154,7 +163,7 @@
   align-items: center;
   border-top: 1px solid #eee;
   gap: 5px;
-  background-image: url("/images/bg_image_final.JPG");
+  background-image: url("/images/weddinginfo_section.JPG");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -172,7 +181,7 @@
   flex-direction: row;
   font-size: 28px;
   font-weight: bold;
-  margin-top: 15px;
+  margin-top: 65px;
   border-top: 1px solid;
   border-bottom: 1px solid;
   align-items: center;
@@ -192,10 +201,9 @@
 
 .card {
   background: white;
-  /* border: 1px solid #ddd; */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   max-width: 400px;
-  margin: -60px auto 40px;
+  margin: -20px auto 40px;
   padding: 20px;
   border-radius: 12px;
   font-size: 14px;
@@ -236,7 +244,7 @@
 .copyButton {
   background-color: #fff;
   border: 1px solid #ccc;
-  padding: 4px 10px;
+  padding: 6px 10px;
   font-size: 13px;
   border-radius: 6px;
   cursor: pointer;
@@ -287,25 +295,44 @@
 }
 
 .parentName {
-  min-width: 160px;
-  margin-right: 20px;
-  font-size: 13px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
 }
 
-.parentNickname {
+.dadName,
+.momName {
   font-size: 13px;
+  font-weight: 600;
+}
+
+.dadName {
+  width: 60px;
+}
+
+.momName {
+  width: 100px;
+}
+
+.ourName {
+  display: flex;
+  flex-direction: column;
 }
 
 .ourNameIcon {
   display: flex;
   flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
 }
 
 .ourNameIcon p {
-  min-width: 60px;
-  /* margin-right: 10px; */
   font-weight: bold;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .kidsImg {
@@ -562,4 +589,30 @@
   background-color: transparent;
   color: #727272;
   font-size: 15px;
+}
+
+.scrollToTopBtn {
+  position: fixed;
+  bottom: 20px;
+  right: calc(50% - 200px); /* 50% viewport - half of content width (420/2) */
+  background: rgba(0, 0, 0, 0.15);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.7;
+  z-index: 1000;
+}
+
+.scrollToTopBtn img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scrollToTopBtn:hover {
+  transform: translateY(-3px);
+  opacity: 1;
 }
