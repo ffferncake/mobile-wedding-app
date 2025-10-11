@@ -34,9 +34,20 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1200; /* high enough to be above overlays */
-  pointer-events: none; /* allow inner header to control pointer events */
-  /* background: rgba(153, 153, 153, 0.05); */
+  z-index: 1000;
+  transition: all 0.4s ease;
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+.tabNavContainer.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tabNavContainer.hidden {
+  opacity: 0;
+  transform: translateY(-100%);
 }
 
 .tabNav {
@@ -163,7 +174,7 @@
   align-items: center;
   border-top: 1px solid #eee;
   gap: 5px;
-  background-image: url("/images/weddinginfo_section.JPG");
+  background-image: url("/images/bg_updated.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -182,8 +193,8 @@
   font-size: 28px;
   font-weight: bold;
   margin-top: 65px;
-  border-top: 1px solid;
-  border-bottom: 1px solid;
+  /* border-top: 1px solid;
+  border-bottom: 1px solid; */
   align-items: center;
   gap: 8px;
   color: #3b417b;
@@ -216,6 +227,13 @@
   padding: 0px 6px;
   font-size: 13px;
 }
+
+.title_en {
+  font-family: "League Spartan", sans-serif;
+  display: inline-block;
+  border: 2px solid transparent;
+}
+
 
 .account {
   display: flex;
@@ -267,7 +285,7 @@
 .highlight {
   color: #3b417b;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .parentInfo {
@@ -299,17 +317,17 @@
   flex-direction: row;
   align-items: center;
   width: 100%;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 .dadName,
 .momName {
-  font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
+  
 }
 
 .dadName {
-  width: 60px;
+  min-width: 70px;
 }
 
 .momName {
@@ -324,7 +342,7 @@
 .ourNameIcon {
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 10px;
   align-items: center;
   justify-content: center;
   margin-top: 10px;
@@ -364,12 +382,23 @@
   text-align: center;
   font-size: 13px;
   line-height: 1.8;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+}
+
+.locationName{
+  font-weight: 600;
+  font-size: 18px;
+  margin-top: 15px;
+}
+
+.locationFloor{
+  color: #888;
+  font-size: 14px;
 }
 
 .weddingInfoImg {
-  border-radius: 20px;
-  height: auto;
+  border-radius: 4px;
+  /* height: auto; */
 }
 
 .flipClock {
@@ -456,24 +485,32 @@
 }
 
 .phoneIcon {
-  font-size: 16px;
-  color: #6e8acb;
+  display: inline-block;
+  font-size: 24px;
+  margin-left: 6px;
+  cursor: pointer;
+  animation: bounce 1.4s infinite;
+  position: relative;
+}
+
+@keyframes bounce {
+  0%, 100% { top: 0; }
+  50% { top: -6px; }
 }
 
 .gallery {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   /* show 3 images per row */
   gap: 4px;
   justify-items: center;
   margin: 20px auto;
   max-width: 400px;
-  /* Optional: controls overall width */
 }
 
 .gallery img {
   width: 100%;
-  /* border-radius: 10px; */
+  border-radius: 4px;
   object-fit: cover;
 }
 

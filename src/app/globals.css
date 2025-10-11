@@ -1,3 +1,7 @@
+/* ① Import Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=GFS+Didot&family=League+Spartan:wght@100..900&family=Playfair+Display:wght@400;600;700&display=swap");
+
+/* ② Define color variables */
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -10,6 +14,7 @@
   }
 }
 
+/* ③ Define local fonts */
 @font-face {
   font-family: "NEXON Lv1 Gothic";
   src: url("/font/NEXONLv1Gothic.otf") format("opentype");
@@ -18,25 +23,52 @@
   font-display: swap;
 }
 
-button,
-body {
-  font-family: "NEXON Lv1 Gothic", sans-serif;
+@font-face {
+  font-family: "Custom Serif";
+  src: url("/font/CustomSerif.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
+/* ④ Default font stack for body & buttons */
+button,
+body {
+  font-family: "NEXON Lv1 Gothic", "League Spartan", Arial, sans-serif;
+}
+
+/* ⑤ Class-based usage */
 .nexon-font {
   font-family: "NEXON Lv1 Gothic", sans-serif;
 }
 
+.league-font {
+  font-family: "League Spartan", sans-serif;
+}
+
+.didot-font {
+  font-family: "GFS Didot", serif;
+}
+
+.playfair-font {
+  font-family: "Playfair Display", serif;
+}
+
+.custom-serif {
+  font-family: "Custom Serif", serif;
+}
+
+/* ⑥ General styling */
 html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
   background-color: #ffffff;
   height: 100%;
-  overflow: hidden; /* ✅ Prevent scrolling on body */
+  overflow: hidden;
 }
 
-p{
+p {
   line-height: 28px;
 }
 
@@ -63,6 +95,6 @@ a {
   }
 }
 
-.mapboxgl-popup-close-button{
+.mapboxgl-popup-close-button {
   display: none;
 }

@@ -5,8 +5,6 @@ import Image from "next/image";
 import ScrollSection from "../app/components/ScrollSection";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import HeartsBackground from "./components/HeartsBackground";
-import WeddingCalendar from "./components/WeddingCalendar";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiZmVybmNha2UiLCJhIjoiY2txajcyaWwwMDh2bjMwbngwM2hnaGdjZSJ9.w6HwEX8hDJzyYKOC7X7WHg";
@@ -31,7 +29,7 @@ export default function WeddingInvitation() {
   ];
 
   const [showAll, setShowAll] = useState(false);
-  const visibleImages = showAll ? allImages : allImages.slice(0, 10);
+  const visibleImages = showAll ? allImages : allImages.slice(0, 9);
 
   // 👇 Add these for full-screen image modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,37 +39,13 @@ export default function WeddingInvitation() {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const popupRef = useRef<mapboxgl.Popup | null>(null);
 
   const images = ["/images/hall_1.jpg", "/images/hall_2.jpg"];
   const [currentHallIndex, setCurrentHallIndex] = useState(0);
-
-  const [showHeader, setShowHeader] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Trigger when scroll position > 100px
-      setShowHeader(window.scrollY > 100);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const container = contentRef.current;
-    if (!container) return;
-
-    const handleScroll = () => {
-      setShowHeader(container.scrollTop > 100);
-    };
-
-    container.addEventListener("scroll", handleScroll);
-    return () => container.removeEventListener("scroll", handleScroll);
-  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -218,33 +192,12 @@ export default function WeddingInvitation() {
   useEffect(() => {
     const audio = new Audio("/songs/until-i-found-you.mp3");
     audio.loop = true;
-    audio.volume = 0.6;
+    audio.volume = 0.6; // Adjust volume
     audioRef.current = audio;
 
-    // Try to autoplay right away
-    const playAudio = async () => {
-      try {
-        await audio.play();
-        console.log("✅ Background music started automatically");
-      } catch (err) {
-        console.warn("⚠️ Autoplay blocked, waiting for user interaction");
-        // Wait for any user interaction
-        const startOnInteraction = async () => {
-          try {
-            await audio.play();
-            console.log("🎵 Music started after user interaction");
-            document.removeEventListener("click", startOnInteraction);
-            document.removeEventListener("touchstart", startOnInteraction);
-          } catch (e) {
-            console.error("Still blocked:", e);
-          }
-        };
-        document.addEventListener("click", startOnInteraction);
-        document.addEventListener("touchstart", startOnInteraction);
-      }
-    };
-
-    playAudio();
+    if (!isMuted) {
+      audio.play().catch((err) => console.error("Auto-play blocked:", err));
+    }
 
     return () => {
       audio.pause();
@@ -279,12 +232,7 @@ export default function WeddingInvitation() {
 
   return (
     <>
-      <HeartsBackground />
-      <div
-        className={`${styles.tabNavContainer} ${
-          showHeader ? styles.visible : styles.hidden
-        }`}
-      >
+      <div className={styles.tabNavContainer}>
         <header className={styles.headerNav}>
           <button
             onClick={() => setIsMenuOpen((prev) => !prev)}
@@ -385,14 +333,14 @@ export default function WeddingInvitation() {
                 setIsMenuOpen(false);
               }}
             >
-              웨딩 갤러리
+              갤러리
             </a>
           </div>
         </div>
       )}
       <div className={styles.container}>
         <div className={styles.contentContainer} ref={contentRef}>
-          {/* <div
+          <div
             className={styles.scrollToTopBtn}
             style={{ display: showScrollBtn ? "block" : "none" }}
             onClick={() => {
@@ -405,7 +353,7 @@ export default function WeddingInvitation() {
               width={24}
               height={24}
             />
-          </div> */}
+          </div>
           <section className={styles.cover}>
             {/* <div className={styles.coverTitle}>유은상 💍 펀</div>
             <p className={styles.coverSubtitle}>저희 결혼합니다</p>
@@ -425,11 +373,8 @@ export default function WeddingInvitation() {
           </ScrollSection>
           <ScrollSection>
             <div id="message" className={styles.inviteMessage}>
-              <p className={styles.title_en}>INVITATION</p>
               <p className={styles.highlight}>소중한 분들을 초대합니다.</p>
-              <p style={{ marginTop: "10px" }}>
-                작은 인연으로 만나 연인이 된 저희가
-              </p>
+              <p>작은 인연으로 만나 연인이 된 저희가</p>
               <p>이제는 더욱 단단한 인연을 맺고자</p>
               <p>저희 두 사람 결혼합니다.</p>
               <p style={{ marginTop: "10px" }}>
@@ -443,31 +388,25 @@ export default function WeddingInvitation() {
                   <div className={styles.parentName}>
                     <p className={styles.dadName}>유영운</p>
                     <p>·</p>
-                    <p className={styles.momName}>신혜원</p>
-                    <p>의 아들 🤵🏻</p>
+                    <p className={styles.momName}>신혜원의 아들</p>
+                    <p>🤵🏻</p>
                   </div>
                   <div className={styles.parentName}>
                     <p className={styles.dadName}>Nhong</p>
                     <p>·</p>
-                    <p className={styles.momName}>Kagh</p>
-                    <p>의 딸 👰🏻‍♀️</p>
+                    <p className={styles.momName}>Kagh의 딸</p>
+                    <p>👰🏻‍♀️</p>
                   </div>
                 </div>
               </div>
               <div className={styles.kidsImg}>
                 <div className={styles.ourName}>
-                  {/* <Image
+                  <Image
                     src="/images/oppa_kids_ver2.png"
                     alt="oppa img"
                     width={55}
                     height={150}
-                  />{" "} */}
-                  <Image
-                    src="/images/oppa_kids_ver.png"
-                    alt="oppa img"
-                    width={100}
-                    height={100}
-                  />
+                  />{" "}
                   <div className={styles.ourNameIcon}>
                     <p>유은상</p>
                     <a href="tel:01033883415" className={styles.phoneIcon}>
@@ -476,18 +415,12 @@ export default function WeddingInvitation() {
                   </div>
                 </div>
                 <div className={styles.ourName}>
-                  {/* <Image
+                  <Image
                     src="/images/me_kids_ver2.PNG"
                     alt="my img"
                     width={60}
                     height={150}
-                  />{" "} */}
-                  <Image
-                    src="/images/me_kids_ver.png"
-                    alt="my img"
-                    width={100}
-                    height={100}
-                  />
+                  />{" "}
                   <div className={styles.ourNameIcon}>
                     <p>펀</p>
                     <a href="tel:010-5334-9912" className={styles.phoneIcon}>
@@ -501,19 +434,16 @@ export default function WeddingInvitation() {
           {/* 예식 안내 */}
           <ScrollSection>
             <div id="weddinginfo" className={styles.inviteMessage}>
-              <p className={styles.title_en}>WEDDING HALL</p>
               <h3 className={styles.highlight}>예식 안내</h3>
               <div className={styles.locationInfo}>
-                {/* <p>2027년 4월 10일 토요일 오후 12시 </p> */}
-                <p className={styles.locationName}>
-                  웨딩시티 신도림 테크노마트
-                </p>
-                <p className={styles.locationFloor}>8층 스타티스홀</p>
+                <p>2027년 4월 10일 토요일 오후 12시 </p>
+                <p>웨딩시티 신도림 테크노마트</p>
+                <p>8층 스타티스홀</p>
               </div>
               <Image
                 src={images[currentHallIndex]}
                 alt="wedding hall"
-                width={300}
+                width={280}
                 height={200}
                 className={styles.weddingInfoImg}
                 onClick={() =>
@@ -525,8 +455,7 @@ export default function WeddingInvitation() {
                 }
                 style={{ cursor: "pointer" }}
               />
-              {/* 🗓 Add Calendar */}
-              <WeddingCalendar />
+
               {/* ⏱ Countdown Timer */}
               <div className={styles.flipClock}>
                 <div className={styles.flipUnit}>
@@ -559,7 +488,6 @@ export default function WeddingInvitation() {
           {/* 신랑 & 신부 소개합니다 */}
           <ScrollSection>
             <div id="gallery" className={styles.inviteMessage}>
-              <p className={styles.title_en}>INTRODUCTION</p>
               <h3 className={styles.highlight}>신랑 & 신부 소개합니다</h3>
             </div>
             <div className={styles.kidsImg}>
@@ -590,8 +518,7 @@ export default function WeddingInvitation() {
           {/* 갤러리 */}
           <ScrollSection>
             <div id="gallery" className={styles.inviteMessage}>
-              <p className={styles.title_en}>GALLERY</p>
-              <h3 className={styles.highlight}>웨딩 갤러리</h3>
+              <h3 className={styles.highlight}>갤러리</h3>
             </div>
 
             <div className={styles.gallery}>
@@ -600,8 +527,8 @@ export default function WeddingInvitation() {
                   key={index}
                   src={src}
                   alt={`gallery-${index + 1}`}
-                  width={140}
-                  height={200}
+                  width={120}
+                  height={130}
                   onClick={() => openModal(index)}
                   style={{ cursor: "pointer" }}
                 />
@@ -638,7 +565,7 @@ export default function WeddingInvitation() {
               </div>
             )}
 
-            {allImages.length > 10 && (
+            {allImages.length > 9 && (
               <div className={styles.showMoreWrapper}>
                 <div
                   onClick={() => setShowAll(!showAll)}
@@ -652,7 +579,6 @@ export default function WeddingInvitation() {
           {/* 마음 전하실 곳 */}
           <ScrollSection>
             <div id="accountnumber" className={styles.inviteMessage}>
-              <p className={styles.title_en}>ACCOUNT</p>
               <h3 className={styles.highlight}>마음 전하실 곳 </h3>
               <p>
                 소중한 축하를 보내주셔서 감사드리며, <br />
@@ -687,7 +613,6 @@ export default function WeddingInvitation() {
           {/* 오시는길 */}
           <ScrollSection>
             <div id="location" className={styles.inviteMessage}>
-              <p className={styles.title_en}>LOCATION</p>
               <h3 className={styles.highlight}>오시는 길</h3>
               <div className={styles.locationInfo}>
                 <p>웨딩시티 신도림 테크노마트</p>
@@ -730,7 +655,6 @@ export default function WeddingInvitation() {
           {/* 지하철 이용시 */}
           <ScrollSection>
             <div id="location-subway" className={styles.inviteMessage}>
-              <p className={styles.title_en}>SUBWAY</p>
               <h3 className={styles.highlight}>지하철 이용시</h3>
               <div className={styles.subwayInfo}>
                 <div className={styles.subwaylineInfo}>
@@ -759,7 +683,6 @@ export default function WeddingInvitation() {
           {/* 주차안내 */}
           <ScrollSection>
             <div id="location-parking" className={styles.inviteMessage}>
-              <p className={styles.title_en}>PARKING</p>
               <h3 className={styles.highlight}>주차안내</h3>
               <p>테크노마트 지하주차장 이용(B3~B7)</p>
               <p>주차요원의 안내를 받으세요.</p>
