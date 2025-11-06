@@ -113,67 +113,46 @@ export default function WeddingInvitation() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (mapContainerRef.current && !mapRef.current) {
+    
         const map = new mapboxgl.Map({
           container: mapContainerRef.current,
-          style: "mapbox://styles/mapbox/outdoors-v11",
+          style: "mapbox://styles/mapbox/standard", // ✅ Standard style
           center: [126.8779692, 37.508535],
-          zoom: 19.5, // ✅ same zoom level as example
-          pitch: 45, // ✅ same pitch
-          bearing: -17.6, // ✅ same bearing
-          antialias: true, // ✅ smoother 3D
+          zoom: 19.5,
+          pitch: 60,
+          bearing: -17.6,
+          antialias: true,
         });
 
         mapRef.current = map;
 
         map.on("style.load", () => {
-          // ✅ Find the first symbol layer with text (same as mapbox docs)
-          const layers = map.getStyle().layers!;
-          const labelLayer = layers.find(
-            (l) => l.type === "symbol" && l.layout && l.layout["text-field"]
-          );
+          console.log("✅ Standard style loaded");
 
-          const labelLayerId = labelLayer?.id;
+          // ✅ Set light preset in Standard style
+          map.setConfigProperty("basemap", "lightPreset", "dusk");       
 
-          // ✅ Add 3D buildings layer BELOW the labels
-          map.addLayer(
-            {
-              id: "add-3d-buildings",
-              source: "composite",
-              "source-layer": "building",
-              filter: ["==", "extrude", "true"],
-              type: "fill-extrusion",
-              minzoom: 15,
-              paint: {
-                "fill-extrusion-color": "#aaa",
-
-                // ✅ Smooth zoom-based extrusion
-                "fill-extrusion-height": [
-                  "interpolate",
-                  ["linear"],
-                  ["zoom"],
-                  15,
-                  0,
-                  15.05,
-                  ["get", "height"],
-                ],
-                "fill-extrusion-base": [
-                  "interpolate",
-                  ["linear"],
-                  ["zoom"],
-                  15,
-                  0,
-                  15.05,
-                  ["get", "min_height"],
-                ],
-                "fill-extrusion-opacity": 0.6,
-              },
+          // ✅ Add 3D model layer (Standard compatible)
+          map.addLayer({
+            id: "tower",
+            type: "model",
+            slot: "middle", // ✅ required for Standard style
+            source: "model",
+            minzoom: 15,
+            layout: {
+              "model-id": ["get", "model-uri"],
             },
+            paint: {
+              "model-opacity": 1,
+              "model-rotation": [0, 0, 35],
+              "model-scale": [0.8, 0.8, 1.2],
+              "model-color-mix-intensity": 0,
+              "model-cast-shadows": true,
+              "model-emissive-strength": 0.8,
+            },
+          });
 
-            // ✅ Insert BEFORE text labels
-            labelLayerId
-          );
-
-          console.log("✅ 3D buildings added like Mapbox example");
+          console.log("✅ 3D model added to Standard style");
         });
 
         /** ✅ Marker */
