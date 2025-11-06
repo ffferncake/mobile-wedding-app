@@ -28,6 +28,7 @@ export default function WeddingInvitation() {
     "/images/gallery_13.JPG",
     "/images/gallery_14.JPG",
     "/images/gallery_15.JPG",
+    "/images/gallery_16.JPG",
   ];
 
   const [showAll, setShowAll] = useState(false);
@@ -114,24 +115,80 @@ export default function WeddingInvitation() {
       if (mapContainerRef.current && !mapRef.current) {
         const map = new mapboxgl.Map({
           container: mapContainerRef.current,
-          style: "mapbox://styles/mapbox/streets-v11",
+          style: "mapbox://styles/mapbox/outdoors-v11",
           center: [126.8779692, 37.508535],
-          zoom: 15,
+          zoom: 19.5, // ✅ same zoom level as example
+          pitch: 45, // ✅ same pitch
+          bearing: -17.6, // ✅ same bearing
+          antialias: true, // ✅ smoother 3D
         });
 
+        mapRef.current = map;
+
+        map.on("style.load", () => {
+          // ✅ Find the first symbol layer with text (same as mapbox docs)
+          const layers = map.getStyle().layers!;
+          const labelLayer = layers.find(
+            (l) => l.type === "symbol" && l.layout && l.layout["text-field"]
+          );
+
+          const labelLayerId = labelLayer?.id;
+
+          // ✅ Add 3D buildings layer BELOW the labels
+          map.addLayer(
+            {
+              id: "add-3d-buildings",
+              source: "composite",
+              "source-layer": "building",
+              filter: ["==", "extrude", "true"],
+              type: "fill-extrusion",
+              minzoom: 15,
+              paint: {
+                "fill-extrusion-color": "#aaa",
+
+                // ✅ Smooth zoom-based extrusion
+                "fill-extrusion-height": [
+                  "interpolate",
+                  ["linear"],
+                  ["zoom"],
+                  15,
+                  0,
+                  15.05,
+                  ["get", "height"],
+                ],
+                "fill-extrusion-base": [
+                  "interpolate",
+                  ["linear"],
+                  ["zoom"],
+                  15,
+                  0,
+                  15.05,
+                  ["get", "min_height"],
+                ],
+                "fill-extrusion-opacity": 0.6,
+              },
+            },
+
+            // ✅ Insert BEFORE text labels
+            labelLayerId
+          );
+
+          console.log("✅ 3D buildings added like Mapbox example");
+        });
+
+        /** ✅ Marker */
         const marker = new mapboxgl.Marker()
           .setLngLat([126.8779692, 37.508535])
           .addTo(map);
 
-        // Create popup DOM node
+        /** ✅ Popup */
         const popupNode = document.createElement("div");
         popupNode.innerHTML = `
-          <div class="${styles.popupContent}">
-            <p>💒 웨딩시티 스타티스홀</p>
-          </div>
-        `;
+        <div class="${styles.popupContent}">
+          <p>💒 웨딩시티 스타티스홀</p>
+        </div>
+      `;
 
-        // Create and store popup
         const popup = new mapboxgl.Popup({
           closeOnClick: false,
           offset: 30,
@@ -142,21 +199,9 @@ export default function WeddingInvitation() {
 
         popupRef.current = popup;
 
-        // Close button handler
-        popupNode
-          .querySelector("#closePopup")
-          ?.addEventListener("click", () => {
-            popup.remove();
-          });
-
-        // Show popup again when clicking marker
         marker.getElement().addEventListener("click", () => {
-          if (!popupRef.current?.isOpen()) {
-            popupRef.current?.addTo(map);
-          }
+          if (!popupRef.current?.isOpen()) popupRef.current?.addTo(map);
         });
-
-        mapRef.current = map;
       }
     }, 500);
 
@@ -275,6 +320,16 @@ export default function WeddingInvitation() {
     const container = contentRef.current;
     container?.addEventListener("scroll", handleScroll);
     return () => container?.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const [bgIndex, setBgIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBgIndex((prev) => (prev === 0 ? 1 : 0));
+    }, 5000); // ✅ every 5 secs
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -406,7 +461,16 @@ export default function WeddingInvitation() {
               height={24}
             />
           </div> */}
-          <section className={styles.cover}>
+          <section
+            className={styles.cover}
+            style={{
+              backgroundImage:
+                bgIndex === 0
+                  ? 'url("/images/bg_updated_1.png")'
+                  : 'url("/images/bg_updated_2.png")',
+            }}
+          >
+            {" "}
             {/* <div className={styles.coverTitle}>유은상 💍 펀</div>
             <p className={styles.coverSubtitle}>저희 결혼합니다</p>
             <p className={styles.coverDetail}>2027.04.10 토요일 오후 12.00</p>
