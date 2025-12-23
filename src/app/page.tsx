@@ -120,7 +120,7 @@ export default function WeddingInvitation() {
         const map = new mapboxgl.Map({
           container: mapContainerRef.current,
           style: "mapbox://styles/mapbox/standard", // ✅ Standard style
-          center: [126.899821, 37.51764],
+          center: [126.8779692, 37.508535],
           zoom: 19.5,
           pitch: 60,
           bearing: -17.6,
@@ -128,6 +128,11 @@ export default function WeddingInvitation() {
         });
 
         mapRef.current = map;
+
+        if (!map) return;
+
+        const zoom = map.getZoom();
+        const center = map.getCenter(); // LngLat object
 
         map.on("style.load", () => {
           console.log("✅ Standard style loaded");
@@ -204,7 +209,7 @@ export default function WeddingInvitation() {
   });
 
   useEffect(() => {
-    const target = new Date("2026-09-13T2:00:00+09:00");
+    const target = new Date("2026-09-13T02:00:00+09:00");
 
     const update = () => {
       const now = new Date();
@@ -736,9 +741,11 @@ export default function WeddingInvitation() {
               <p className={styles.title_en}>LOCATION</p>
               <h3 className={styles.highlight}>오시는 길</h3>
               <div className={styles.locationInfo}>
-                <p>웨딩시티 신도림 테크노마트</p>
-                <p>8층 스타티스홀</p>
-                <p>서울 구로구 새말로 97 신도림테크노마트</p>
+                <p>JK 아트컨벤션 4층 엠버루체홀</p>
+                <p>
+                  서울특별시 영등포구 문래로 164 (문래동3가 55-16번지)
+                  SK리더스뷰
+                </p>
               </div>
               <div ref={mapContainerRef} className={styles.mapContainer} />
               <div className={styles.mapLinks}>
