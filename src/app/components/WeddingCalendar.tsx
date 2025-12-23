@@ -4,7 +4,7 @@ import styles from "./WeddingCalendar.module.css";
 
 export default function WeddingCalendar() {
   // 📅 Target date
-  const targetDate = new Date(2027, 3, 10); // months are 0-indexed → 3 = April
+  const targetDate = new Date(2026, 8, 13); // months are 0-indexed → 3 = April
   const year = targetDate.getFullYear();
   const month = targetDate.getMonth();
   const day = targetDate.getDate();
@@ -23,7 +23,7 @@ export default function WeddingCalendar() {
   const formattedDate = `${year}.${String(month + 1).padStart(2, "0")}.${String(
     day
   ).padStart(2, "0")}`;
-  const formattedTime = "토요일 오후 12시";
+  const formattedTime = "일요일 오후 2시";
 
   return (
     <div className={styles.calendarWrapper}>

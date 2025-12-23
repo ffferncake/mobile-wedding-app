@@ -47,7 +47,11 @@ export default function WeddingInvitation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const popupRef = useRef<mapboxgl.Popup | null>(null);
 
-  const images = ["/images/hall_1.jpg", "/images/hall_2.jpg"];
+  const images = [
+    "/images/hall_1.jpg",
+    "/images/hall_2.jpg",
+    "/images/hall_3.jpg",
+  ];
   const [currentHallIndex, setCurrentHallIndex] = useState(0);
 
   const [showHeader, setShowHeader] = useState(false);
@@ -113,11 +117,10 @@ export default function WeddingInvitation() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (mapContainerRef.current && !mapRef.current) {
-    
         const map = new mapboxgl.Map({
           container: mapContainerRef.current,
           style: "mapbox://styles/mapbox/standard", // ✅ Standard style
-          center: [126.8779692, 37.508535],
+          center: [126.899821, 37.51764],
           zoom: 19.5,
           pitch: 60,
           bearing: -17.6,
@@ -130,7 +133,7 @@ export default function WeddingInvitation() {
           console.log("✅ Standard style loaded");
 
           // ✅ Set light preset in Standard style
-          map.setConfigProperty("basemap", "lightPreset", "dusk");       
+          map.setConfigProperty("basemap", "lightPreset", "dusk");
 
           // ✅ Add 3D model layer (Standard compatible)
           map.addLayer({
@@ -164,7 +167,7 @@ export default function WeddingInvitation() {
         const popupNode = document.createElement("div");
         popupNode.innerHTML = `
         <div class="${styles.popupContent}">
-          <p>💒 웨딩시티 스타티스홀</p>
+          <p>💒 JK 아트컨벤션</p>
         </div>
       `;
 
@@ -201,7 +204,7 @@ export default function WeddingInvitation() {
   });
 
   useEffect(() => {
-    const target = new Date("2027-04-10T12:00:00+09:00");
+    const target = new Date("2026-09-13T2:00:00+09:00");
 
     const update = () => {
       const now = new Date();
@@ -440,23 +443,21 @@ export default function WeddingInvitation() {
               height={24}
             />
           </div> */}
-          <section
-            className={styles.cover}
-            style={{
-              backgroundImage:
-                bgIndex === 0
-                  ? 'url("/images/bg_updated_1.png")'
-                  : 'url("/images/bg_updated_2.png")',
-            }}
-          >
-            {" "}
-            {/* <div className={styles.coverTitle}>유은상 💍 펀</div>
-            <p className={styles.coverSubtitle}>저희 결혼합니다</p>
-            <p className={styles.coverDetail}>2027.04.10 토요일 오후 12.00</p>
-            <p className={styles.coverDetail}>
-              웨딩시티 신도림 테크노마트 8층 스타티스홀
-            </p> */}
+          <section className={styles.cover}>
+            <div
+              className={`${styles.coverBg} ${
+                bgIndex === 0 ? styles.active : ""
+              }`}
+              style={{ backgroundImage: 'url("/images/bg_updated_1.png")' }}
+            />
+            <div
+              className={`${styles.coverBg} ${
+                bgIndex === 1 ? styles.active : ""
+              }`}
+              style={{ backgroundImage: 'url("/images/bg_updated_2.png")' }}
+            />
           </section>
+
           <ScrollSection>
             <div id="date" className={styles.card}>
               <p>2027.04.10 12:00PM</p>
@@ -549,9 +550,11 @@ export default function WeddingInvitation() {
               <div className={styles.locationInfo}>
                 {/* <p>2027년 4월 10일 토요일 오후 12시 </p> */}
                 <p className={styles.locationName}>
-                  웨딩시티 신도림 테크노마트
+                  JK Art Convention (JK아트컨벤션)
                 </p>
-                <p className={styles.locationFloor}>8층 스타티스홀</p>
+                <p className={styles.locationFloor}>
+                  4층 Amberluce Hall (엠버루체홀)
+                </p>
               </div>
               <Image
                 src={images[currentHallIndex]}
@@ -561,7 +564,7 @@ export default function WeddingInvitation() {
                 className={styles.weddingInfoImg}
                 onClick={() =>
                   window.open(
-                    "https://www.tmwedding.co.kr/8fhall1",
+                    "http://www.jkart.co.kr/wedding/amberluce/",
                     "_blank",
                     "noopener,noreferrer"
                   )
@@ -746,10 +749,7 @@ export default function WeddingInvitation() {
                     width={32}
                     height={32}
                   />
-                  <a
-                    href="https://map.kakao.com/?q=%EC%9B%A8%EB%94%A9%EC%8B%9C%ED%8B%B0%20%EC%8B%A0%EB%8F%84%EB%A6%BC"
-                    target="_blank"
-                  >
+                  <a href="https://kko.to/Kg-9yiU8OY" target="_blank">
                     카카오내비
                   </a>
                 </div>
@@ -760,10 +760,7 @@ export default function WeddingInvitation() {
                     width={32}
                     height={32}
                   />
-                  <a
-                    href="https://map.naver.com/p/search/%ED%85%8C%ED%81%AC%EB%85%B8%EB%A7%88%ED%8A%B8%20%EC%9B%A8%EB%94%A9%EC%8B%9C%ED%8B%B0/place/12867934?c=15.00,0,0,0,dh&isCorrectAnswer=true&placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202506222339&locale=ko&svcName=map_pcv5&searchText=%ED%85%8C%ED%81%AC%EB%85%B8%EB%A7%88%ED%8A%B8%20%EC%9B%A8%EB%94%A9%EC%8B%9C%ED%8B%B0"
-                    target="_blank"
-                  >
+                  <a href="https://naver.me/Gn0yrSdR" target="_blank">
                     네이버지도
                   </a>
                 </div>
@@ -778,25 +775,16 @@ export default function WeddingInvitation() {
               <div className={styles.subwayInfo}>
                 <div className={styles.subwaylineInfo}>
                   <Image
-                    src="/images/icon/ellipse_blue.svg"
-                    alt="ellipse blue"
-                    width={19}
-                    height={19}
-                  />
-                  <p>1호선 신도림역</p>
-                </div>
-                <div className={styles.subwaylineInfo}>
-                  <Image
                     src="/images/icon/ellipse_green.svg"
                     alt="ellipse green"
                     width={19}
                     height={19}
                   />
-                  <p>2호선 신도림역</p>
+                  <p>2호선 문래역역</p>
                 </div>
               </div>
-              <p>신도림역 ③ 번출구 테크노마트</p>
-              <p>판매동 지하1층과 직접 연결되어 있습니다</p>
+              <p>셔틀버스 : 4번출구(뒷쪽) 셔틀버스 운행</p>
+              <p>도보이용 : 5번출구에서 전방 직진 300M</p>
             </div>
           </ScrollSection>
           {/* 주차안내 */}
