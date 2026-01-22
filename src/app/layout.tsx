@@ -4,11 +4,11 @@ import { ReactNode } from "react";
 export const metadata = {
   title: "은상 ♥ 펀 결혼합니다!",
   description:
-    "2027년 04월 10일 토요일 오후 12시, 웨딩시티 신도림 테크노마트 8층 스타티스홀 만나요.",
+    "2026년 09월 13일 일요일 오후 2시, JK아트컨벤션 4층 엠버루체홀 만나요.",
   openGraph: {
     title: "은상 ♥ 펀 결혼합니다!",
     description:
-      "2027년 04월 10일 토요일 오후 12시, 웨딩시티 신도림 테크노마트 8층 스타티스홀 만나요.",
+      "2026년 09월 13일 일요일 오후 2시, JK아트컨벤션 4층 엠버루체홀 만나요.",
     url: "https://fern-eunsang.vercel.app/",
     siteName: "은상 ♥ 펀 모바일 청첩장",
     images: [
@@ -31,7 +31,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta property="og:title" content="은상 ♥ 펀 결혼합니다!" />
         <meta
           property="og:description"
-          content="2027년 04월 10일 토요일 오후 12시, 웨딩시티 신도림 테크노마트 8층 스타티스홀 만나요."
+          content="2026년 09월 13일 일요일 오후 2시, JK아트컨벤션 4층 엠버루체홀 만나요."
         />
         <meta
           property="og:image"
