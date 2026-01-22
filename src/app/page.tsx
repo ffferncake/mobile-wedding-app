@@ -852,19 +852,6 @@ export default function WeddingInvitation() {
             <div id="rsvp" className={styles.inviteMessage}>
               <p className={styles.title_en}>SHARE INVITATION</p>
               <h3 className={styles.highlight}>초대장 공유</h3>
-
-              {/* RSVP Form Button */}
-              <div className={styles.rsvpRow}>
-                <a
-                  href="https://fern-eunsang.vercel.app/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.rsvpButton}
-                >
-                  참석 여부 응답하기
-                </a>
-              </div>
-
               {/* Share Buttons */}
               <div className={styles.shareSection}>
                 <button

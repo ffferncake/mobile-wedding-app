@@ -742,8 +742,8 @@
 
 .busRowInline {
   display: flex;
-  flex-wrap: wrap;      /* allows wrap on small screens */
-  gap: 14px;            /* spacing between groups */
+  flex-wrap: wrap; /* allows wrap on small screens */
+  gap: 14px; /* spacing between groups */
   margin-top: 6px;
 }
 
@@ -752,7 +752,6 @@
   align-items: center;
   gap: 6px;
 }
-
 
 .busTag {
   font-size: 11px;
@@ -775,4 +774,31 @@
 .busNumber {
   font-size: 13px;
   color: #333;
+}
+
+.shareSection {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.copyLinkButton {
+  background: #f3f3f3;
+  border: 1px solid #ddd;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  color: #000;
+  transition: all 0.2s ease; /* ✨ 부드러운 애니메이션 */
+}
+
+.copyLinkButton:hover {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+  transform: translateY(-1px); /* ✨ 살짝 떠오르는 느낌 */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
