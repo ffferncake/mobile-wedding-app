@@ -42,7 +42,7 @@ export default function WeddingInvitation() {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const popupRef = useRef<mapboxgl.Popup | null>(null);
@@ -53,18 +53,8 @@ export default function WeddingInvitation() {
     "/images/hall_3.jpg",
   ];
   const [currentHallIndex, setCurrentHallIndex] = useState(0);
-
   const [showHeader, setShowHeader] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Trigger when scroll position > 100px
-      setShowHeader(window.scrollY > 100);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const [mapViewMode, setMapViewMode] = useState<"MAP" | "IMAGE">("MAP");
 
   useEffect(() => {
     const container = contentRef.current;
@@ -114,92 +104,59 @@ export default function WeddingInvitation() {
     return () => window.removeEventListener("keydown", handleKey);
   }, [isModalOpen]);
 
+  const mapInitializedRef = useRef(false);
+
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (mapContainerRef.current && !mapRef.current) {
-        const map = new mapboxgl.Map({
-          container: mapContainerRef.current,
-          style: "mapbox://styles/mapbox/standard", // ✅ Standard style
-          center: [126.8779692, 37.508535],
-          zoom: 19.5,
-          pitch: 60,
-          bearing: -17.6,
-          antialias: true,
-        });
+    // Only run when MAP tab is active
+    if (mapViewMode !== "MAP") return;
 
-        mapRef.current = map;
+    if (!mapContainerRef.current) return;
+    if (mapInitializedRef.current) return;
 
-        if (!map) return;
+    mapInitializedRef.current = true;
 
-        const zoom = map.getZoom();
-        const center = map.getCenter(); // LngLat object
+    const map = new mapboxgl.Map({
+      container: mapContainerRef.current,
+      style: "mapbox://styles/mapbox/standard",
+      center: [126.8779692, 37.508535],
+      zoom: 17.5,
+      pitch: 60,
+      bearing: -17.6,
+      antialias: true,
+      preserveDrawingBuffer: true,
+      config: {
+        basemap: {
+          lightPreset: "dusk",
+          show3dObjects: true,
+        },
+      },
+    });
 
-        map.on("style.load", () => {
-          console.log("✅ Standard style loaded");
+    mapRef.current = map;
 
-          // ✅ Set light preset in Standard style
-          map.setConfigProperty("basemap", "lightPreset", "dusk");
+    // Marker
+    new mapboxgl.Marker().setLngLat([126.8779692, 37.508535]).addTo(map);
 
-          // ✅ Add 3D model layer (Standard compatible)
-          map.addLayer({
-            id: "tower",
-            type: "model",
-            slot: "middle", // ✅ required for Standard style
-            source: "model",
-            minzoom: 15,
-            layout: {
-              "model-id": ["get", "model-uri"],
-            },
-            paint: {
-              "model-opacity": 1,
-              "model-rotation": [0, 0, 35],
-              "model-scale": [0.8, 0.8, 1.2],
-              "model-color-mix-intensity": 0,
-              "model-cast-shadows": true,
-              "model-emissive-strength": 0.8,
-            },
-          });
+    // Popup
+    const popupNode = document.createElement("div");
+    popupNode.innerHTML = `
+    <div class="${styles.popupContent}">
+      <p>💒 JK 아트컨벤션</p>
+    </div>
+  `;
 
-          console.log("✅ 3D model added to Standard style");
-        });
+    new mapboxgl.Popup({ closeOnClick: false, offset: 30 })
+      .setDOMContent(popupNode)
+      .setLngLat([126.8779692, 37.508535])
+      .addTo(map);
 
-        /** ✅ Marker */
-        const marker = new mapboxgl.Marker()
-          .setLngLat([126.8779692, 37.508535])
-          .addTo(map);
-
-        /** ✅ Popup */
-        const popupNode = document.createElement("div");
-        popupNode.innerHTML = `
-        <div class="${styles.popupContent}">
-          <p>💒 JK 아트컨벤션</p>
-        </div>
-      `;
-
-        const popup = new mapboxgl.Popup({
-          closeOnClick: false,
-          offset: 30,
-        })
-          .setDOMContent(popupNode)
-          .setLngLat([126.8779692, 37.508535])
-          .addTo(map);
-
-        popupRef.current = popup;
-
-        marker.getElement().addEventListener("click", () => {
-          if (!popupRef.current?.isOpen()) popupRef.current?.addTo(map);
-        });
-      }
-    }, 500);
-
+    // ✅ CLEANUP
     return () => {
-      clearTimeout(timeout);
-      if (mapRef.current) {
-        mapRef.current.remove();
-        mapRef.current = null;
-      }
+      map.remove();
+      mapRef.current = null;
+      mapInitializedRef.current = false; // 🔑 THIS LINE FIXES YOUR BUG
     };
-  }, []);
+  }, [mapViewMode]);
 
   const [timeLeft, setTimeLeft] = useState({
     days: "00",
@@ -253,45 +210,21 @@ export default function WeddingInvitation() {
     audio.volume = 0.6;
     audioRef.current = audio;
 
-    // Try to autoplay right away
-    const playAudio = async () => {
-      try {
-        await audio.play();
-        console.log("✅ Background music started automatically");
-      } catch (err) {
-        console.warn("⚠️ Autoplay blocked, waiting for user interaction");
-        // Wait for any user interaction
-        const startOnInteraction = async () => {
-          try {
-            await audio.play();
-            console.log("🎵 Music started after user interaction");
-            document.removeEventListener("click", startOnInteraction);
-            document.removeEventListener("touchstart", startOnInteraction);
-          } catch (e) {
-            console.error("Still blocked:", e);
-          }
-        };
-        document.addEventListener("click", startOnInteraction);
-        document.addEventListener("touchstart", startOnInteraction);
-      }
-    };
-
-    playAudio();
-
     return () => {
       audio.pause();
+      audio.src = "";
     };
   }, []);
 
   useEffect(() => {
-    if (audioRef.current) {
-      if (isMuted) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current
-          .play()
-          .catch((err) => console.error("Play error:", err));
-      }
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (isMuted) {
+      audio.pause();
+    } else {
+      audio.muted = false;
+      audio.play().catch(() => {});
     }
   }, [isMuted]);
 
@@ -561,21 +494,28 @@ export default function WeddingInvitation() {
                   4층 Amberluce Hall (엠버루체홀)
                 </p>
               </div>
-              <Image
-                src={images[currentHallIndex]}
-                alt="wedding hall"
-                width={300}
-                height={200}
-                className={styles.weddingInfoImg}
-                onClick={() =>
-                  window.open(
-                    "http://www.jkart.co.kr/wedding/amberluce/",
-                    "_blank",
-                    "noopener,noreferrer"
-                  )
-                }
-                style={{ cursor: "pointer" }}
-              />
+              <div className={styles.weddingImgWrapper}>
+                {images.map((src, idx) => (
+                  <Image
+                    key={src}
+                    src={src}
+                    alt="wedding hall"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 600px"
+                    className={`${styles.weddingImg} ${
+                      idx === currentHallIndex ? styles.active : ""
+                    }`}
+                    onClick={() =>
+                      window.open(
+                        "http://www.jkart.co.kr/wedding/amberluce/",
+                        "_blank",
+                        "noopener,noreferrer"
+                      )
+                    }
+                  />
+                ))}
+              </div>
+
               {/* 🗓 Add Calendar */}
               <WeddingCalendar />
               {/* ⏱ Countdown Timer */}
@@ -632,7 +572,7 @@ export default function WeddingInvitation() {
                   width={150}
                   height={150}
                 />
-                <h3>펀</h3>
+                <h3>펀 | FERN</h3>
                 <p>99년산 🍼🐰💖</p>
                 <p>프론트엔드 개발자</p>
               </div>
@@ -670,7 +610,7 @@ export default function WeddingInvitation() {
                     src={allImages[currentIndex]}
                     alt={`modal-${currentIndex}`}
                     width={600}
-                    height={800}
+                    height={500}
                     className={styles.modalImage}
                   />
                   <button className={styles.modalClose} onClick={closeModal}>
@@ -706,32 +646,37 @@ export default function WeddingInvitation() {
               <p className={styles.title_en}>ACCOUNT</p>
               <h3 className={styles.highlight}>마음 전하실 곳 </h3>
               <p>
-                소중한 축하를 보내주셔서 감사드리며, <br />
+                소중한 축하를 보내주셔서 감사드리며,
+                <br />
                 따뜻한 마음에 깊이 감사드립니다.
               </p>
-              <div className={styles.account}>
-                <Image
-                  src="/images/toss.png"
-                  alt="toss icon"
-                  width={32}
-                  height={32}
-                />
-                <span>토스뱅크 1001-5731-0736</span>
-                <button
-                  onClick={() => {
-                    navigator.clipboard.writeText("1001-5731-0736");
-                    alert("계좌번호가 복사되었습니다.");
-                  }}
-                  className={styles.copyButton}
-                >
-                  복사
+
+              <div className={styles.accountWrapper}>
+                <div className={styles.account}>
                   <Image
-                    src="/images/icon/copy_icon.png"
-                    alt="copy icon"
-                    width={14}
-                    height={14}
+                    src="/images/toss.png"
+                    alt="toss icon"
+                    width={32}
+                    height={32}
                   />
-                </button>
+                  <span>토스뱅크 1001-5731-0736</span>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText("1001-5731-0736");
+                      alert("계좌번호가 복사되었습니다.");
+                    }}
+                    className={styles.copyButton}
+                  >
+                    복사
+                    <Image
+                      src="/images/icon/copy_icon.png"
+                      alt="copy icon"
+                      width={14}
+                      height={14}
+                    />
+                  </button>
+                </div>
+                <span>TRAKULPHUDPHONG NICHANUN (커플통장)</span>
               </div>
             </div>
           </ScrollSection>
@@ -747,7 +692,42 @@ export default function WeddingInvitation() {
                   SK리더스뷰
                 </p>
               </div>
-              <div ref={mapContainerRef} className={styles.mapContainer} />
+              {/* --- Map / Image Tabs --- */}
+              <div className={styles.mapTabBar}>
+                <button
+                  className={`${styles.mapTab} ${
+                    mapViewMode === "MAP" ? styles.activeTab : ""
+                  }`}
+                  onClick={() => setMapViewMode("MAP")}
+                >
+                  지도 보기
+                </button>
+
+                <button
+                  className={`${styles.mapTab} ${
+                    mapViewMode === "IMAGE" ? styles.activeTab : ""
+                  }`}
+                  onClick={() => setMapViewMode("IMAGE")}
+                >
+                  약도 보기
+                </button>
+              </div>
+
+              {/* --- Content --- */}
+              {mapViewMode === "MAP" ? (
+                <div ref={mapContainerRef} className={styles.mapContainer} />
+              ) : (
+                <div className={styles.mapImageWrapper}>
+                  <Image
+                    src="/images/jk_map.jpg"
+                    alt="JK Art Convention map"
+                    width={800}
+                    height={500}
+                    className={styles.mapImage}
+                    priority
+                  />
+                </div>
+              )}
               <div className={styles.mapLinks}>
                 <div className={styles.navLinks}>
                   <Image
@@ -794,32 +774,114 @@ export default function WeddingInvitation() {
               <p>도보이용 : 5번출구에서 전방 직진 300M</p>
             </div>
           </ScrollSection>
+
+          {/* 버스 이용시 */}
+          <ScrollSection>
+            <div id="location-bus" className={styles.inviteMessage}>
+              <p className={styles.title_en}>BUS</p>
+              <h3 className={styles.highlight}>버스 이용시</h3>
+
+              <div className={styles.busSection}>
+                {/* 문래역 정류장 */}
+                <div className={styles.busRowInline}>
+                  <div className={styles.busRow}>
+                    <span className={`${styles.busTag} ${styles.busGreen}`}>
+                      지선버스
+                    </span>
+                    <span className={styles.busNumber}>6211, 6625</span>
+                  </div>
+
+                  <div className={styles.busRow}>
+                    <span className={`${styles.busTag} ${styles.busBlue}`}>
+                      간선버스
+                    </span>
+                    <span className={styles.busNumber}>641</span>
+                  </div>
+
+                  <div className={styles.busRow}>
+                    <span className={`${styles.busTag} ${styles.busGreen}`}>
+                      마을버스
+                    </span>
+                    <span className={styles.busNumber}>영등포12</span>
+                  </div>
+                </div>
+
+                {/* 문래주민센터 */}
+                <div className={styles.busBlock}>
+                  <p className={styles.busStopTitle}>
+                    ○ 문래주민센터 / 영일시장, 롯스 정류장 하차
+                  </p>
+
+                  <div className={styles.busRow}>
+                    <span className={`${styles.busTag} ${styles.busGreen}`}>
+                      마을버스
+                    </span>
+                    <span className={styles.busNumber}>영등포05</span>
+                  </div>
+                </div>
+
+                {/* 벽산메가트리움 */}
+                <div className={styles.busBlock}>
+                  <p className={styles.busStopTitle}>
+                    ○ 벽산메가트리움APT 정류장 하차
+                  </p>
+
+                  <div className={styles.busRow}>
+                    <span className={`${styles.busTag} ${styles.busGreen}`}>
+                      지선버스
+                    </span>
+                    <span className={styles.busNumber}>6516</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ScrollSection>
+
           {/* 주차안내 */}
           <ScrollSection>
             <div id="location-parking" className={styles.inviteMessage}>
               <p className={styles.title_en}>PARKING</p>
               <h3 className={styles.highlight}>주차안내</h3>
-              <p>테크노마트 지하주차장 이용(B3~B7)</p>
-              <p>주차요원의 안내를 받으세요.</p>
+              <p>네비게이션 : "JK아트컨벤션" 또는 "문래동 SK리더스뷰" 입력</p>
+              <p>동시 1,000여대 주차 가능, 주차요원의 안내를 받으세요.</p>
             </div>
           </ScrollSection>
           {/* 참석 여부 */}
-          {/* <ScrollSection>
-          <div id="rsvp" className={styles.inviteMessage}>
-            <h3>참석 여부</h3>
-            <a href="https://forms.gle/your-form-url" target="_blank">
-              RSVP 하기
-            </a>
-            <div>
-              <button className={styles.shareButton}>
-                💛 카카오톡으로 공유하기
-              </button>
+          {/* 참석 여부 / 공유하기 */}
+          <ScrollSection>
+            <div id="rsvp" className={styles.inviteMessage}>
+              <p className={styles.title_en}>SHARE INVITATION</p>
+              <h3 className={styles.highlight}>초대장 공유</h3>
+
+              {/* RSVP Form Button */}
+              <div className={styles.rsvpRow}>
+                <a
+                  href="https://fern-eunsang.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.rsvpButton}
+                >
+                  참석 여부 응답하기
+                </a>
+              </div>
+
+              {/* Share Buttons */}
+              <div className={styles.shareSection}>
+                <button
+                  className={styles.copyLinkButton}
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert("초대장 링크가 복사되었습니다 💌");
+                  }}
+                >
+                  🔗 모바일 청첩장 링크 복사하기
+                </button>
+              </div>
             </div>
-          </div>
-        </ScrollSection> */}
+          </ScrollSection>
+
           <footer className={styles.footer}>
-            © Fern & Eunsang
-            {/* <p>Eunsang & Fern Wedding Invitation</p> */}
+            © DEVELOPED BY Fern Nichanun
           </footer>
         </div>
       </div>

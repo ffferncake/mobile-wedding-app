@@ -364,8 +364,8 @@ export default function WeddingInvitation() {
           </section>
           <ScrollSection>
             <div id="date" className={styles.card}>
-              <p>2027.04.10 12:00PM</p>
-              <p>신도림 웨딩시티 8층 스타티스홀</p>
+              <p>2026.09.13 14:00PM</p>
+              <p>JK 아트컨벤션 4층 엠버루체홀</p>
               <strong>
                 <p>은상 💍 펀</p>
               </strong>

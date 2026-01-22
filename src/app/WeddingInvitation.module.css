@@ -239,28 +239,31 @@
   border: 2px solid transparent;
 }
 
+.accountWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  gap: 10px;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  transition: background 0.2s;
+  padding: 10px 14px;
+}
+
 .account {
   display: flex;
   align-items: center;
-  background-color: #f8f8f8;
-  padding: 10px 16px;
-  border-radius: 8px;
   font-weight: 500;
   color: #333;
   text-decoration: none;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  transition: background 0.2s;
   gap: 7px;
-  margin-top: 15px;
   justify-content: space-between;
 }
 
 .account img {
   border-radius: 4px;
-}
-
-.account:hover {
-  background-color: #eee;
 }
 
 .copyButton {
@@ -399,9 +402,26 @@
   font-size: 14px;
 }
 
-.weddingInfoImg {
-  border-radius: 4px;
-  /* height: auto; */
+.weddingImgWrapper {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.weddingImg {
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity;
+}
+
+.weddingImg.active {
+  opacity: 1;
 }
 
 .flipClock {
@@ -518,8 +538,10 @@
 
 .gallery img {
   width: 100%;
+  height: 100%;
   border-radius: 4px;
   object-fit: cover;
+  cursor: pointer;
 }
 
 .showMoreWrapper {
@@ -660,4 +682,97 @@
 .scrollToTopBtn:hover {
   transform: translateY(-3px);
   opacity: 1;
+}
+
+.mapTabBar {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.mapTab {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  background: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #000;
+}
+
+.activeTab {
+  background: #111;
+  color: white;
+  border-color: #111;
+}
+
+.mapImageWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.mapImage {
+  border-radius: 12px;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+}
+
+.busSection {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 0px 10px;
+}
+
+.busBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.busStopTitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: #222;
+}
+
+.busRowInline {
+  display: flex;
+  flex-wrap: wrap;      /* allows wrap on small screens */
+  gap: 14px;            /* spacing between groups */
+  margin-top: 6px;
+}
+
+.busRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+
+.busTag {
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 3px;
+  min-width: 64px;
+  text-align: center;
+}
+
+.busGreen {
+  background: #4aa52c;
+}
+
+.busBlue {
+  background: #3b56c4;
+}
+
+.busNumber {
+  font-size: 13px;
+  color: #333;
 }
