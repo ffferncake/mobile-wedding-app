@@ -7,6 +7,7 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import HeartsBackground from "./components/HeartsBackground";
 import WeddingCalendar from "./components/WeddingCalendar";
+import { Copy } from "lucide-react";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiZmVybmNha2UiLCJhIjoiY2txajcyaWwwMDh2bjMwbngwM2hnaGdjZSJ9.w6HwEX8hDJzyYKOC7X7WHg";
@@ -184,15 +185,15 @@ export default function WeddingInvitation() {
 
       const days = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(
         2,
-        "0"
+        "0",
       );
       const hours = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(
         2,
-        "0"
+        "0",
       );
       const minutes = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(
         2,
-        "0"
+        "0",
       );
       const seconds = String(Math.floor((diff / 1000) % 60)).padStart(2, "0");
 
@@ -509,7 +510,7 @@ export default function WeddingInvitation() {
                       window.open(
                         "http://www.jkart.co.kr/wedding/amberluce/",
                         "_blank",
-                        "noopener,noreferrer"
+                        "noopener,noreferrer",
                       )
                     }
                   />
@@ -668,12 +669,7 @@ export default function WeddingInvitation() {
                     className={styles.copyButton}
                   >
                     복사
-                    <Image
-                      src="/images/icon/copy_icon.png"
-                      alt="copy icon"
-                      width={14}
-                      height={14}
-                    />
+                    <Copy className={styles.copyButtonIcon} />
                   </button>
                 </div>
                 <span>TRAKULPHUDPHONG NICHANUN (커플통장)</span>

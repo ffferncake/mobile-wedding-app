@@ -284,6 +284,11 @@
   background-color: #e0e0e0;
 }
 
+.copyButtonIcon {
+  width: 14px;
+  height: 14px;
+}
+
 /* .quote {
   font-style: italic;
   color: #777;
