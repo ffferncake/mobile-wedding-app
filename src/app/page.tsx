@@ -9,27 +9,26 @@ import HeartsBackground from "./components/HeartsBackground";
 import WeddingCalendar from "./components/WeddingCalendar";
 import { Copy } from "lucide-react";
 
-mapboxgl.accessToken =
-  "pk.eyJ1IjoiZmVybmNha2UiLCJhIjoiY2txajcyaWwwMDh2bjMwbngwM2hnaGdjZSJ9.w6HwEX8hDJzyYKOC7X7WHg";
+mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX!;
 
 export default function WeddingInvitation() {
   const allImages = [
-    "/images/gallery_1.JPG",
-    "/images/gallery_2.JPG",
-    "/images/gallery_3.JPG",
-    "/images/gallery_4.JPG",
-    "/images/gallery_5.JPG",
-    "/images/gallery_6.JPG",
-    "/images/gallery_7.JPG",
-    "/images/gallery_8.JPG",
-    "/images/gallery_9.JPG",
-    "/images/gallery_10.JPG",
-    "/images/gallery_11.JPG",
-    "/images/gallery_12.JPG",
-    "/images/gallery_13.JPG",
-    "/images/gallery_14.JPG",
-    "/images/gallery_15.JPG",
-    "/images/gallery_16.JPG",
+    "/images/gallery/gallery_1.JPG",
+    "/images/gallery/gallery_2.JPG",
+    "/images/gallery/gallery_3.JPG",
+    "/images/gallery/gallery_4.JPG",
+    "/images/gallery/gallery_5.JPG",
+    "/images/gallery/gallery_6.JPG",
+    "/images/gallery/gallery_7.JPG",
+    "/images/gallery/gallery_8.JPG",
+    "/images/gallery/gallery_9.JPG",
+    "/images/gallery/gallery_10.JPG",
+    "/images/gallery/gallery_11.JPG",
+    "/images/gallery/gallery_12.JPG",
+    "/images/gallery/gallery_13.JPG",
+    "/images/gallery/gallery_14.JPG",
+    "/images/gallery/gallery_15.JPG",
+    "/images/gallery/gallery_16.JPG",
   ];
 
   const [showAll, setShowAll] = useState(false);
@@ -46,7 +45,6 @@ export default function WeddingInvitation() {
   const [isMuted, setIsMuted] = useState(true);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const popupRef = useRef<mapboxgl.Popup | null>(null);
 
   const images = [
     "/images/hall_1.jpg",
@@ -155,7 +153,7 @@ export default function WeddingInvitation() {
     return () => {
       map.remove();
       mapRef.current = null;
-      mapInitializedRef.current = false; // 🔑 THIS LINE FIXES YOUR BUG
+      mapInitializedRef.current = false;
     };
   }, [mapViewMode]);
 
@@ -368,21 +366,16 @@ export default function WeddingInvitation() {
       )}
       <div className={styles.container}>
         <div className={styles.contentContainer} ref={contentRef}>
-          {/* <div
-            className={styles.scrollToTopBtn}
-            style={{ display: showScrollBtn ? "block" : "none" }}
-            onClick={() => {
-              contentRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-          >
-            <Image
-              src="/images/icon/scrollup.svg"
-              alt="scroll to top"
-              width={24}
-              height={24}
-            />
-          </div> */}
           <section className={styles.cover}>
+            <p className={styles.coverText}>
+              {"We're getting married".split("").map((char, i) => (
+                <span key={i} style={{ animationDelay: `${i * 0.06}s` }}>
+                  {char === " " ? "\u00A0" : char}
+                </span>
+              ))}
+            </p>
+            <p className={styles.coverSubText}>EUNSANG & FERN</p>
+            <p className={styles.coverDate}>2027.09.13 2PM</p>
             <div
               className={`${styles.coverBg} ${
                 bgIndex === 0 ? styles.active : ""
@@ -399,8 +392,8 @@ export default function WeddingInvitation() {
 
           <ScrollSection>
             <div id="date" className={styles.card}>
-              <p>2027.04.10 12:00PM</p>
-              <p>신도림 웨딩시티 8층 스타티스홀</p>
+              <p>2026.09.13 2:00PM</p>
+              <p>JK아트컨벤션 4층 엠버루체홀</p>
               <strong>
                 <p>은상 💍 펀</p>
               </strong>
@@ -487,7 +480,6 @@ export default function WeddingInvitation() {
               <p className={styles.title_en}>WEDDING HALL</p>
               <h3 className={styles.highlight}>예식 안내</h3>
               <div className={styles.locationInfo}>
-                {/* <p>2027년 4월 10일 토요일 오후 12시 </p> */}
                 <p className={styles.locationName}>
                   JK Art Convention (JK아트컨벤션)
                 </p>
@@ -779,29 +771,33 @@ export default function WeddingInvitation() {
 
               <div className={styles.busSection}>
                 {/* 문래역 정류장 */}
-                <div className={styles.busRowInline}>
-                  <div className={styles.busRow}>
-                    <span className={`${styles.busTag} ${styles.busGreen}`}>
-                      지선버스
-                    </span>
-                    <span className={styles.busNumber}>6211, 6625</span>
-                  </div>
 
-                  <div className={styles.busRow}>
-                    <span className={`${styles.busTag} ${styles.busBlue}`}>
-                      간선버스
-                    </span>
-                    <span className={styles.busNumber}>641</span>
-                  </div>
+                <div className={styles.busBlock}>
+                  <p className={styles.busStopTitle}>○ 문래역 정류장 하차</p>
 
-                  <div className={styles.busRow}>
-                    <span className={`${styles.busTag} ${styles.busGreen}`}>
-                      마을버스
-                    </span>
-                    <span className={styles.busNumber}>영등포12</span>
+                  <div className={styles.busRowInline}>
+                    <div className={styles.busRow}>
+                      <span className={`${styles.busTag} ${styles.busGreen}`}>
+                        지선버스
+                      </span>
+                      <span className={styles.busNumber}>6211, 6625</span>
+                    </div>
+
+                    <div className={styles.busRow}>
+                      <span className={`${styles.busTag} ${styles.busBlue}`}>
+                        간선버스
+                      </span>
+                      <span className={styles.busNumber}>641</span>
+                    </div>
+
+                    <div className={styles.busRow}>
+                      <span className={`${styles.busTag} ${styles.busGreen}`}>
+                        마을버스
+                      </span>
+                      <span className={styles.busNumber}>영등포12</span>
+                    </div>
                   </div>
                 </div>
-
                 {/* 문래주민센터 */}
                 <div className={styles.busBlock}>
                   <p className={styles.busStopTitle}>
@@ -815,7 +811,6 @@ export default function WeddingInvitation() {
                     <span className={styles.busNumber}>영등포05</span>
                   </div>
                 </div>
-
                 {/* 벽산메가트리움 */}
                 <div className={styles.busBlock}>
                   <p className={styles.busStopTitle}>

@@ -16,8 +16,8 @@ export default function HeartsBackground() {
       // Randomize color, size, and position
       const pastelColors = [
         "#FFD1DC", // pink
-        "#9cdf9cff", // mint
-        "#ece9d2ff", // lemon
+        "#b7f64aff", // mint
+        "#f9ee9bff", // lemon
         "#D1C4E9", // lavender
         "#78e1efff", // aqua
         "#9291b6ff", // peach
@@ -26,7 +26,7 @@ export default function HeartsBackground() {
         pastelColors[Math.floor(Math.random() * pastelColors.length)];
       heart.style.background = color;
       heart.style.left = `${Math.random() * 100}%`;
-      heart.style.width = `${Math.random() * 20 + 10}px`;
+      heart.style.width = `${Math.random() * 12 + 6}px`;
       heart.style.height = heart.style.width;
       heart.style.animationDuration = `${Math.random() * 3 + 3}s`;
 
@@ -38,7 +38,7 @@ export default function HeartsBackground() {
       }, 6000);
     };
 
-    const interval = setInterval(createHeart, 300);
+    const interval = setInterval(createHeart, 150);
     return () => clearInterval(interval);
   }, []);
 

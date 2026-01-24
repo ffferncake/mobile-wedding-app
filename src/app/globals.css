@@ -24,8 +24,8 @@
 }
 
 @font-face {
-  font-family: "Custom Serif";
-  src: url("/font/CustomSerif.ttf") format("truetype");
+  font-family: "BrittanySignature";
+  src: url("/font/BrittanySignature.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -34,7 +34,8 @@
 /* ④ Default font stack for body & buttons */
 button,
 body {
-  font-family: "NEXON Lv1 Gothic", "League Spartan", Arial, sans-serif;
+  font-family: "NEXON Lv1 Gothic", "League Spartan", Arial, sans-serif,
+    "BrittanySignature", "BODAR";
 }
 
 /* ⑤ Class-based usage */
@@ -54,8 +55,12 @@ body {
   font-family: "Playfair Display", serif;
 }
 
-.custom-serif {
-  font-family: "Custom Serif", serif;
+.brittany-font {
+  font-family: "BrittanySignature", serif;
+}
+
+.bodar-font {
+  font-family: "BODAR", serif;
 }
 
 /* ⑥ General styling */
