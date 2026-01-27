@@ -7,7 +7,7 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import HeartsBackground from "./components/HeartsBackground";
 import WeddingCalendar from "./components/WeddingCalendar";
-import { Copy } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Copy } from "lucide-react";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX!;
 
@@ -183,15 +183,15 @@ export default function WeddingInvitation() {
 
       const days = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(
         2,
-        "0",
+        "0"
       );
       const hours = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(
         2,
-        "0",
+        "0"
       );
       const minutes = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(
         2,
-        "0",
+        "0"
       );
       const seconds = String(Math.floor((diff / 1000) % 60)).padStart(2, "0");
 
@@ -502,7 +502,7 @@ export default function WeddingInvitation() {
                       window.open(
                         "http://www.jkart.co.kr/wedding/amberluce/",
                         "_blank",
-                        "noopener,noreferrer",
+                        "noopener,noreferrer"
                       )
                     }
                   />
@@ -602,19 +602,22 @@ export default function WeddingInvitation() {
                   <Image
                     src={allImages[currentIndex]}
                     alt={`modal-${currentIndex}`}
-                    width={600}
+                    width={420}
                     height={500}
                     className={styles.modalImage}
                   />
                   <button className={styles.modalClose} onClick={closeModal}>
-                    ✕
+                    <X size={28} />
                   </button>
+
                   <button className={styles.modalPrev} onClick={showPrev}>
-                    ‹
+                    <ChevronLeft size={36} />
                   </button>
+
                   <button className={styles.modalNext} onClick={showNext}>
-                    ›
+                    <ChevronRight size={36} />
                   </button>
+
                   <p className={styles.imageCounter}>
                     {currentIndex + 1} / {allImages.length}
                   </p>
