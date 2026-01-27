@@ -214,11 +214,10 @@
 /* Names */
 .coverSubText {
   position: absolute;
-  top: 25%;
+  top: 28%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
-
   font-size: 40px;
   color: #000;
   letter-spacing: 0.08em;
@@ -232,7 +231,7 @@
 /* Date */
 .coverDate {
   position: absolute;
-  top: 29%;
+  top: 34%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;

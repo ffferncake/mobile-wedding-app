@@ -367,7 +367,7 @@ export default function WeddingInvitation() {
       <div className={styles.container}>
         <div className={styles.contentContainer} ref={contentRef}>
           <section className={styles.cover}>
-            <p className={styles.coverText}>
+            <p key={bgIndex} className={styles.coverText}>
               {"We're getting married".split("").map((char, i) => (
                 <span key={i} style={{ animationDelay: `${i * 0.06}s` }}>
                   {char === " " ? "\u00A0" : char}
