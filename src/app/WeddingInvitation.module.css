@@ -223,9 +223,7 @@
   color: #000;
   letter-spacing: 0.08em;
   white-space: nowrap;
-
   font-family: "BODAR", serif; /* 🔒 locked */
-
   opacity: 0;
   animation: fadeIn 1s ease forwards;
   animation-delay: 1s;

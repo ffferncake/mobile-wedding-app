@@ -31,6 +31,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "BODAR";
+  src: url("/font/BODAR.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ④ Default font stack for body & buttons */
 button,
 body {
