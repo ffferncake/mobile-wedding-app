@@ -375,18 +375,18 @@ export default function WeddingInvitation() {
               ))}
             </p>
             <p className={styles.coverSubText}>EUNSANG & FERN</p>
-            <p className={styles.coverDate}>2027.09.13 2PM</p>
+            <p className={styles.coverDate}>2026.09.13 2PM</p>
             <div
               className={`${styles.coverBg} ${
                 bgIndex === 0 ? styles.active : ""
               }`}
-              style={{ backgroundImage: 'url("/images/bg_updated_1.png")' }}
+              style={{ backgroundImage: 'url("/images/bg_updated_1.JPG")' }}
             />
             <div
               className={`${styles.coverBg} ${
                 bgIndex === 1 ? styles.active : ""
               }`}
-              style={{ backgroundImage: 'url("/images/bg_updated_2.png")' }}
+              style={{ backgroundImage: 'url("/images/bg_updated_2.JPG")' }}
             />
           </section>
 
