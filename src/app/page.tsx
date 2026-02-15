@@ -183,15 +183,15 @@ export default function WeddingInvitation() {
 
       const days = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(
         2,
-        "0"
+        "0",
       );
       const hours = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(
         2,
-        "0"
+        "0",
       );
       const minutes = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(
         2,
-        "0"
+        "0",
       );
       const seconds = String(Math.floor((diff / 1000) % 60)).padStart(2, "0");
 
@@ -250,6 +250,8 @@ export default function WeddingInvitation() {
 
     return () => clearInterval(interval);
   }, []);
+
+  const textColorClass = bgIndex === 1 ? styles.textWhite : styles.textBlack;
 
   return (
     <>
@@ -367,15 +369,23 @@ export default function WeddingInvitation() {
       <div className={styles.container}>
         <div className={styles.contentContainer} ref={contentRef}>
           <section className={styles.cover}>
-            <p className={styles.coverText}>
+            <p
+              className={`${styles.coverText} ${textColorClass}`}
+              key={bgIndex}
+            >
               {"We're getting married".split("").map((char, i) => (
                 <span key={i} style={{ animationDelay: `${i * 0.06}s` }}>
                   {char === " " ? "\u00A0" : char}
                 </span>
               ))}
             </p>
-            <p className={styles.coverSubText}>EUNSANG & FERN</p>
-            <p className={styles.coverDate}>2026.09.13 2PM</p>
+            <p className={`${styles.coverSubText} ${textColorClass}`}>
+              EUNSANG & FERN
+            </p>
+
+            <p className={`${styles.coverDate} ${textColorClass}`}>
+              2026.09.13 2PM
+            </p>
             <div
               className={`${styles.coverBg} ${
                 bgIndex === 0 ? styles.active : ""
@@ -502,7 +512,7 @@ export default function WeddingInvitation() {
                       window.open(
                         "http://www.jkart.co.kr/wedding/amberluce/",
                         "_blank",
-                        "noopener,noreferrer"
+                        "noopener,noreferrer",
                       )
                     }
                   />
