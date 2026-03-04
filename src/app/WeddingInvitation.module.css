@@ -874,3 +874,40 @@ Z .modalClose,
   transform: translateY(-1px); /* ✨ 살짝 떠오르는 느낌 */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
+
+/* Center stage */
+.bookStage {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  /* padding: 16px 0 28px; */
+  perspective: 2000px;
+}
+
+/* Flipbook container */
+.flipBook {
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+  border-radius: 18px;
+}
+
+/* Each flip page */
+.flipPage {
+  background: #fff;
+}
+
+/* Content inside a page */
+.pageInner {
+  height: 100%;
+  width: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+
+  /* subtle paper feeling */
+  background: linear-gradient(90deg, rgba(0,0,0,0.04), rgba(0,0,0,0.0) 22%, rgba(0,0,0,0.0) 78%, rgba(0,0,0,0.04));
+}
+
+/* Optional: nice inner padding */
+.pageInner > * {
+  height: 100%;
+}
