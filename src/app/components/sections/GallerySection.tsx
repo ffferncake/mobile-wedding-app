@@ -17,12 +17,12 @@ export default function GallerySection() {
     "/images/gallery/gallery_8.JPG",
     "/images/gallery/gallery_9.JPG",
     "/images/gallery/gallery_10.JPG",
-    "/images/gallery/gallery_11.JPG",
-    "/images/gallery/gallery_12.JPG",
-    "/images/gallery/gallery_13.JPG",
-    "/images/gallery/gallery_14.JPG",
-    "/images/gallery/gallery_15.JPG",
-    "/images/gallery/gallery_16.JPG",
+    // "/images/gallery/gallery_11.JPG",
+    // "/images/gallery/gallery_12.JPG",
+    // "/images/gallery/gallery_13.JPG",
+    // "/images/gallery/gallery_14.JPG",
+    // "/images/gallery/gallery_15.JPG",
+    // "/images/gallery/gallery_16.JPG",
   ];
 
   const [showAll, setShowAll] = useState(false);
