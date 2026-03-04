@@ -32,9 +32,7 @@ export default function WeddingInvitation() {
     <SubwaySection key="subway" />,
     <ParkingSection key="parking" />,
     <ShareSection key="share" />,
-    <div key="footer" className={styles.footerPage}>
-      <footer className={styles.footer}>© DEVELOPED By Fern Nichanun</footer>
-    </div>,
+    
   ];
 
   return (

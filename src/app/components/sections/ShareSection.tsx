@@ -18,6 +18,9 @@ export default function ShareSection() {
           🔗 모바일 청첩장 링크 복사하기
         </button>
       </div>
+      <div key="footer" className={styles.footerPage}>
+      <footer className={styles.footer}>© DEVELOPED By Fern Nichanun</footer>
+    </div>,
     </div>
   );
 }

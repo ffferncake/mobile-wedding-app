@@ -27,22 +27,28 @@ function useIsMobile(breakpoint = 768) {
 export default function BookFlip({ pages, onPageChange }: BookFlipProps) {
   const isMobile = useIsMobile(768);
 
+  const [viewportWidth, setViewportWidth] = useState(420);
   const [viewportHeight, setViewportHeight] = useState(650);
 
   useEffect(() => {
-    const updateHeight = () => {
+    const updateSize = () => {
+      setViewportWidth(window.innerWidth);
       setViewportHeight(window.innerHeight);
     };
 
-    updateHeight();
-    window.addEventListener("resize", updateHeight);
+    updateSize();
+    window.addEventListener("resize", updateSize);
 
-    return () => window.removeEventListener("resize", updateHeight);
+    return () => window.removeEventListener("resize", updateSize);
   }, []);
 
-  const pageWidth = 420;
+  // 📱 Mobile = full width
+  // 💻 Desktop = fixed page width
+  const pageWidth = isMobile ? viewportWidth : 420;
 
-  const bookWidth = isMobile ? pageWidth : pageWidth * 2;
+  // 📱 Mobile = 1 page
+  // 💻 Desktop = 2 pages
+  const bookWidth = isMobile ? viewportWidth : pageWidth * 2;
 
   const bookProps = useMemo(
     () => ({
@@ -50,7 +56,7 @@ export default function BookFlip({ pages, onPageChange }: BookFlipProps) {
       height: viewportHeight,
       size: "fixed" as const,
       minWidth: 280,
-      maxWidth: 420,
+      maxWidth: pageWidth,
       minHeight: 300,
       maxHeight: viewportHeight,
       showCover: true,
@@ -62,11 +68,17 @@ export default function BookFlip({ pages, onPageChange }: BookFlipProps) {
       drawShadow: true,
       disableFlipByClick: false,
     }),
-    [viewportHeight],
+    [pageWidth, viewportHeight],
   );
 
   return (
-    <div className={styles.bookStage} style={{ maxWidth: bookWidth }}>
+    <div
+      className={styles.bookStage}
+      style={{
+        width: bookWidth,
+        height: viewportHeight,
+      }}
+    >
       <HTMLFlipBook
         {...(bookProps as any)}
         className={styles.flipBook}

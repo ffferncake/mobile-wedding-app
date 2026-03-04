@@ -5,7 +5,7 @@ import styles from "../../WeddingInvitation.module.css";
 
 export default function IntroductionSection() {
   return (
-    <>
+    <div className={styles.section}>
       <div id="introduction" className={styles.inviteMessage}>
         <p className={styles.title_en}>INTRODUCTION</p>
         <h3 className={styles.highlight}>신랑 & 신부 소개합니다</h3>
@@ -36,6 +36,6 @@ export default function IntroductionSection() {
           <p>프론트엔드 개발자</p>
         </div>
       </div>
-    </>
+    </div>
   );
 }
