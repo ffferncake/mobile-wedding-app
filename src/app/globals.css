@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* ① Import Google Fonts */
 @import url("https://fonts.googleapis.com/css2?family=GFS+Didot&family=League+Spartan:wght@100..900&family=Playfair+Display:wght@400;600;700&display=swap");
 
@@ -14,6 +18,15 @@
   }
 }
 
+/* Hide scrollbar but allow scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 /* ③ Define local fonts */
 @font-face {
   font-family: "NEXON Lv1 Gothic";
@@ -110,4 +123,14 @@ a {
 
 .mapboxgl-popup-close-button {
   display: none;
+}
+
+/* Hide scrollbar but allow scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
