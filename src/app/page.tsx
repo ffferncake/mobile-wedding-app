@@ -58,7 +58,7 @@ export default function WeddingInvitation() {
         <div className={styles.contentContainer} ref={contentRef}>
           <CoverSection />
 
-          {/* <ScrollSection>
+          <ScrollSection>
             <div id="date" className={styles.card}>
               <p>2026.09.13 2:00PM</p>
               <p>JK아트컨벤션 4층 엠버루체홀</p>
@@ -66,7 +66,7 @@ export default function WeddingInvitation() {
                 <p>은상 💍 펀</p>
               </strong>
             </div>
-          </ScrollSection> */}
+          </ScrollSection>
 
           <ScrollSection>
             <InvitationSection />
