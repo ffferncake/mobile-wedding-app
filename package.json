@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "clsx": "^2.1.1",
     "framer-motion": "^12.18.1",
     "i": "^0.3.7",
     "lucide": "^0.562.0",
@@ -20,7 +21,8 @@
     "react-dom": "^19.0.0",
     "react-intersection-observer": "^9.16.0",
     "react-kakao-maps-sdk": "^1.2.0",
-    "react-pageflip": "^2.0.3"
+    "react-pageflip": "^2.0.3",
+    "tailwind-merge": "^3.5.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -32,7 +34,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
     "postcss": "^8.5.8",
-    "tailwindcss": "^4.2.1",
+    "tailwindcss": "^3.4.19",
     "typescript": "^5"
   }
 }

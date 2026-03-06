@@ -48,21 +48,22 @@ export default function WeddingInfoSection() {
         return;
       }
 
-      const days = String(
-        Math.floor(diff / (1000 * 60 * 60 * 24))
-      ).padStart(2, "0");
+      const days = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(
+        2,
+        "0",
+      );
 
-      const hours = String(
-        Math.floor((diff / (1000 * 60 * 60)) % 24)
-      ).padStart(2, "0");
+      const hours = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(
+        2,
+        "0",
+      );
 
-      const minutes = String(
-        Math.floor((diff / (1000 * 60)) % 60)
-      ).padStart(2, "0");
+      const minutes = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(
+        2,
+        "0",
+      );
 
-      const seconds = String(
-        Math.floor((diff / 1000) % 60)
-      ).padStart(2, "0");
+      const seconds = String(Math.floor((diff / 1000) % 60)).padStart(2, "0");
 
       setTimeLeft({ days, hours, minutes, seconds });
     };
@@ -74,22 +75,21 @@ export default function WeddingInfoSection() {
   }, []);
 
   return (
-    <div id="weddinginfo" className={styles.inviteMessage}>
-      <p className={styles.title_en}>WEDDING HALL</p>
-      <h3 className={styles.highlight}>예식 안내</h3>
+    <div id="weddinginfo" className="section">
+      <p className="title-en">WEDDING HALL</p>
+      <h3 className="text-[#3b417b] font-bold text-[16px]">예식 안내</h3>
 
-      <div className={styles.locationInfo}>
-        <p className={styles.locationName}>
+      <div className="text-center text-[13px] leading-[1.8] mb-[10px]">
+        <p className="font-semibold text-[18px] mt-[15px]">
           JK Art Convention (JK아트컨벤션)
         </p>
-
-        <p className={styles.locationFloor}>
+        <p className="text-[#888] text-[14px]">
           4층 Amberluce Hall (엠버루체홀)
         </p>
       </div>
 
       {/* Hall slideshow */}
-      <div className={styles.weddingImgWrapper}>
+      <div className="relative w-full h-[300px] overflow-hidden rounded-lg cursor-pointer">
         {images.map((src, idx) => (
           <Image
             key={src}
@@ -97,14 +97,14 @@ export default function WeddingInfoSection() {
             alt="wedding hall"
             fill
             sizes="(max-width: 768px) 100vw, 600px"
-            className={`${styles.weddingImg} ${
-              idx === currentHallIndex ? styles.active : ""
+            className={`absolute inset-0 object-cover transition-opacity duration-[1600ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-opacity ${
+              idx === currentHallIndex ? "opacity-100" : "opacity-0"
             }`}
             onClick={() =>
               window.open(
                 "http://www.jkart.co.kr/wedding/amberluce/",
                 "_blank",
-                "noopener,noreferrer"
+                "noopener,noreferrer",
               )
             }
           />
@@ -115,33 +115,41 @@ export default function WeddingInfoSection() {
       <WeddingCalendar />
 
       {/* Countdown */}
-      <div className={styles.flipClock}>
-        <div className={styles.flipUnit}>
-          <div className={styles.flipCard}>
-            <span>{timeLeft.days}</span>
+      <div className="flex justify-center gap-[20px] mt-[20px] flex-wrap">
+        <div className="text-center">
+          <div className="px-[10px] py-[5px] bg-[#f3f3f3] rounded-md shadow-md text-[25px] font-bold flex justify-center items-center relative">
+            <span className="relative z-[2]">{timeLeft.days}</span>
           </div>
-          <div className={styles.flipLabel}>DAYS</div>
+          <div className="mt-[8px] text-[13px] text-[#444] font-medium">
+            DAYS
+          </div>
         </div>
 
-        <div className={styles.flipUnit}>
-          <div className={styles.flipCard}>
-            <span>{timeLeft.hours}</span>
+        <div className="text-center">
+          <div className="px-[10px] py-[5px] bg-[#f3f3f3] rounded-md shadow-md text-[25px] font-bold flex justify-center items-center relative">
+            <span className="relative z-[2]">{timeLeft.hours}</span>
           </div>
-          <div className={styles.flipLabel}>HOURS</div>
+          <div className="mt-[8px] text-[13px] text-[#444] font-medium">
+            HOURS
+          </div>
         </div>
 
-        <div className={styles.flipUnit}>
-          <div className={styles.flipCard}>
-            <span>{timeLeft.minutes}</span>
+        <div className="text-center">
+          <div className="px-[10px] py-[5px] bg-[#f3f3f3] rounded-md shadow-md text-[25px] font-bold flex justify-center items-center relative">
+            <span className="relative z-[2]">{timeLeft.minutes}</span>
           </div>
-          <div className={styles.flipLabel}>MINUTES</div>
+          <div className="mt-[8px] text-[13px] text-[#444] font-medium">
+            MINUTES
+          </div>
         </div>
 
-        <div className={styles.flipUnit}>
-          <div className={styles.flipCard}>
-            <span>{timeLeft.seconds}</span>
+        <div className="text-center">
+          <div className="px-[10px] py-[5px] bg-[#f3f3f3] rounded-md shadow-md text-[25px] font-bold flex justify-center items-center relative">
+            <span className="relative z-[2]">{timeLeft.seconds}</span>
           </div>
-          <div className={styles.flipLabel}>SECONDS</div>
+          <div className="mt-[8px] text-[13px] text-[#444] font-medium">
+            SECONDS
+          </div>
         </div>
       </div>
     </div>

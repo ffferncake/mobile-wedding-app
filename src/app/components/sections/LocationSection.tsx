@@ -63,9 +63,9 @@ export default function LocationSection() {
   }, [mapViewMode]);
 
   return (
-    <div id="location" className={styles.inviteMessage}>
-      <p className={styles.title_en}>LOCATION</p>
-      <h3 className={styles.highlight}>오시는 길</h3>
+    <div id="location" className="section">
+      <p className="title-en">LOCATION</p>
+      <h3 className="highlight">오시는 길</h3>
 
       <div className={styles.locationInfo}>
         <p>JK 아트컨벤션 4층 엠버루체홀</p>

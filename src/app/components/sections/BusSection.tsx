@@ -4,9 +4,9 @@ import styles from "../../WeddingInvitation.module.css";
 
 export default function BusSection() {
   return (
-    <div id="location-bus" className={styles.inviteMessage}>
-      <p className={styles.title_en}>BUS</p>
-      <h3 className={styles.highlight}>버스 이용시</h3>
+    <div id="location-bus" className="section">
+      <p className="title-en">BUS</p>
+      <h3 className="text-[#3b417b] font-bold text-[16px]">버스 이용시</h3>
 
       <div className={styles.busSection}>
         {/* 문래역 정류장 */}
@@ -53,9 +53,7 @@ export default function BusSection() {
 
         {/* 벽산메가트리움 */}
         <div className={styles.busBlock}>
-          <p className={styles.busStopTitle}>
-            ○ 벽산메가트리움APT 정류장 하차
-          </p>
+          <p className={styles.busStopTitle}>○ 벽산메가트리움APT 정류장 하차</p>
 
           <div className={styles.busRow}>
             <span className={`${styles.busTag} ${styles.busGreen}`}>

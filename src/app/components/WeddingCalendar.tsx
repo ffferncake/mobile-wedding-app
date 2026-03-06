@@ -21,29 +21,31 @@ export default function WeddingCalendar() {
 
   // Format heading
   const formattedDate = `${year}.${String(month + 1).padStart(2, "0")}.${String(
-    day
+    day,
   ).padStart(2, "0")}`;
   const formattedTime = "일요일 오후 2시";
 
   return (
-    <div className={styles.calendarWrapper}>
-      <div className={styles.dateHeader}>
-        <h3 className={styles.date}>{formattedDate}</h3>
-        <p className={styles.time}>{formattedTime}</p>
+    <div className="nexon-font text-center mt-6 text-[#555]">
+      {" "}
+      <div className="mb-[10px]">
+        <h3 className="text-[22px] font-semibold text-[#444] mb-1">
+          {formattedDate}
+        </h3>
+        <p className="text-sm text-gray-400">{formattedTime}</p>
       </div>
-
-      <div className={styles.calendarBox}>
-        <div className={styles.weekdays}>
-          <span className={styles.sun}>일</span>
+      <div className="max-w-[260px] mx-auto border-t border-b border-gray-200 py-[10px]">
+        <div className="grid grid-cols-7 text-[13px] mb-[6px] text-gray-400">
+          <span className="text-[#d69fa6]">일</span>
           <span>월</span>
           <span>화</span>
           <span>수</span>
           <span>목</span>
           <span>금</span>
-          <span className={styles.sat}>토</span>
+          <span className="text-[#5569a6]">토</span>
         </div>
 
-        <div className={styles.days}>
+        <div className="grid grid-cols-7 gap-y-[6px] text-[13px]">
           {days.map((d, i) => {
             const isSunday = i % 7 === 0;
             const isSaturday = i % 7 === 6;
@@ -52,10 +54,14 @@ export default function WeddingCalendar() {
             return (
               <span
                 key={i}
-                className={`${styles.day} 
-                  ${isSunday ? styles.sun : ""} 
-                  ${isSaturday ? styles.sat : ""} 
-                  ${isSelected ? styles.selected : ""}`}
+                className={`text-[#555]
+              ${isSunday ? "text-[#d69fa6]" : ""}
+              ${isSaturday ? "text-[#5569a6]" : ""}
+              ${
+                isSelected
+                  ? "bg-[#f4c5c5] text-white w-[22px] h-[22px] inline-flex items-center justify-center rounded-full mx-auto"
+                  : ""
+              }`}
               >
                 {d}
               </span>

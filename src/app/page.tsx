@@ -16,7 +16,6 @@ import ParkingSection from "./components/sections/ParkingSection";
 import ShareSection from "./components/sections/ShareSection";
 import Header from "./components/Header";
 import { useAudio } from "./hooks/useAudio";
-import { Bus } from "lucide-react";
 
 export default function WeddingInvitation() {
   const { isMuted, toggleMute } = useAudio("/songs/until-i-found-you.mp3");

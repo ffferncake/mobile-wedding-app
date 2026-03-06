@@ -5,9 +5,9 @@ import styles from "../../WeddingInvitation.module.css";
 
 export default function SubwaySection() {
   return (
-    <div id="location-subway" className={styles.inviteMessage}>
+    <div id="location-subway" className="section">
       <p className={styles.title_en}>SUBWAY</p>
-      <h3 className={styles.highlight}>지하철 이용시</h3>
+      <h3 className="highlight">지하철 이용시</h3>
 
       <div className={styles.subwayInfo}>
         <div className={styles.subwaylineInfo}>
