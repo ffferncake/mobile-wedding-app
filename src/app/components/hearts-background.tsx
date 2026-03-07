@@ -1,6 +1,6 @@
 "use client";
+
 import { useEffect, useRef } from "react";
-import styles from "./HeartsBackground.module.css";
 
 export default function HeartsBackground() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -9,38 +9,46 @@ export default function HeartsBackground() {
     const container = containerRef.current;
     if (!container) return;
 
+    const pastelColors = [
+      "#FFD1DC",
+      "#B7F64A",
+      "#F9EE9B",
+      "#D1C4E9",
+      "#78E1EF",
+      "#9291B6",
+    ];
+
     const createHeart = () => {
       const heart = document.createElement("div");
-      heart.className = styles.heart;
+      heart.className = "heart-shape";
 
-      // Randomize color, size, and position
-      const pastelColors = [
-        "#FFD1DC", // pink
-        "#b7f64aff", // mint
-        "#f9ee9bff", // lemon
-        "#D1C4E9", // lavender
-        "#78e1efff", // aqua
-        "#9291b6ff", // peach
-      ];
       const color =
         pastelColors[Math.floor(Math.random() * pastelColors.length)];
+
+      const size = Math.random() * 12 + 6;
+
       heart.style.background = color;
       heart.style.left = `${Math.random() * 100}%`;
-      heart.style.width = `${Math.random() * 12 + 6}px`;
-      heart.style.height = heart.style.width;
+      heart.style.width = `${size}px`;
+      heart.style.height = `${size}px`;
       heart.style.animationDuration = `${Math.random() * 3 + 3}s`;
 
       container.appendChild(heart);
 
-      // Remove when done animating
       setTimeout(() => {
         heart.remove();
       }, 6000);
     };
 
     const interval = setInterval(createHeart, 150);
+
     return () => clearInterval(interval);
   }, []);
 
-  return <div ref={containerRef} className={styles.heartContainer}></div>;
+  return (
+    <div
+      ref={containerRef}
+      className="fixed inset-0 overflow-hidden pointer-events-none z-[999]"
+    />
+  );
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import styles from "../../WeddingInvitation.module.css";
 
 export default function IntroductionSection() {
   return (
