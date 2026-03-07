@@ -65,9 +65,9 @@ export default function GallerySection() {
 
   return (
     <>
-      <div id="gallery" className={styles.inviteMessage}>
-        <p className={styles.title_en}>GALLERY</p>
-        <h3 className={styles.highlight}>웨딩 갤러리</h3>
+      <div id="gallery" className="section">
+        <p className="title-en">GALLERY</p>
+        <h3 className="highlight">웨딩 갤러리</h3>
       </div>
 
       <div className={styles.gallery}>

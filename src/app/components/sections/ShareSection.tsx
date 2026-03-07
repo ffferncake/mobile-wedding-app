@@ -9,9 +9,9 @@ export default function ShareSection() {
   };
 
   return (
-    <div id="rsvp" className={styles.inviteMessage}>
-      <p className={styles.title_en}>SHARE INVITATION</p>
-      <h3 className={styles.highlight}>초대장 공유</h3>
+    <div id="rsvp" className="section">
+      <p className="title-en">SHARE INVITATION</p>
+      <h3 className="highlight">초대장 공유</h3>
 
       <div className={styles.shareSection}>
         <button className={styles.copyLinkButton} onClick={copyLink}>

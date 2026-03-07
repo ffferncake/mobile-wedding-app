@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import styles from "../WeddingInvitation.module.css";
+import { cn } from "../lib/utils";
 
 interface HeaderProps {
   showHeader: boolean;
@@ -25,14 +26,17 @@ export default function Header({
   return (
     <>
       <div
-        className={`${styles.tabNavContainer} ${
-          showHeader ? styles.visible : styles.hidden
-        }`}
+        className={cn(
+          "fixed top-0 left-0 right-0 z-[1000] transition-all duration-500 ease-in-out",
+          showHeader
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 -translate-y-full",
+        )}
       >
-        <header className={styles.headerNav}>
+        <header className="pointer-events-auto flex items-center justify-between px-5 py-3 shadow-sm sticky top-0 z-[999] max-w-[420px] mx-auto bg-white">
           <button
             onClick={() => setIsMenuOpen((prev) => !prev)}
-            className={styles.menuBtn}
+            className="bg-transparent border-none cursor-pointer z-[1300]"
           >
             <Image
               src="/images/icon/hamburger_icon.svg"
@@ -42,11 +46,14 @@ export default function Header({
             />
           </button>
 
-          <div className={styles.titleCenter}>
-            은상<span className={styles.heart}>💍</span>펀
+          <div className="text-sm font-medium flex items-center gap-1.5 text-[#333]">
+            은상<span className="text-base">💍</span>펀
           </div>
 
-          <button onClick={toggleMute} className={styles.muteBtn}>
+          <button
+            onClick={toggleMute}
+            className="bg-none border-none cursor-pointer p-0"
+          >
             <Image
               src={
                 isMuted
@@ -63,10 +70,11 @@ export default function Header({
 
       {/* Hamburger menu */}
       {isMenuOpen && (
-        <div className={styles.hamburgerMenuWrapper}>
-          <div className={styles.hamburgerMenu}>
+        <div className="absolute top-[48px] left-0 w-full flex justify-center z-[998] bg-transparent">
+          <div className="w-full max-w-[420px] bg-white flex flex-col p-[14px] shadow-lg">
             <a
               href="#message"
+              className="text-[13px] text-[#333] no-underline p-2 hover:bg-gray-100"
               onClick={(e) => {
                 e.preventDefault();
                 scrollTo("#message");
@@ -77,6 +85,7 @@ export default function Header({
 
             <a
               href="#weddinginfo"
+              className="text-[13px] text-[#333] no-underline p-2 hover:bg-gray-100"
               onClick={(e) => {
                 e.preventDefault();
                 scrollTo("#weddinginfo");
@@ -87,6 +96,7 @@ export default function Header({
 
             <a
               href="#accountnumber"
+              className="text-[13px] text-[#333] no-underline p-2 hover:bg-gray-100"
               onClick={(e) => {
                 e.preventDefault();
                 scrollTo("#accountnumber");
@@ -97,6 +107,7 @@ export default function Header({
 
             <a
               href="#location"
+              className="text-[13px] text-[#333] no-underline p-2 hover:bg-gray-100"
               onClick={(e) => {
                 e.preventDefault();
                 scrollTo("#location");
@@ -107,6 +118,7 @@ export default function Header({
 
             <a
               href="#gallery"
+              className="text-[13px] text-[#333] no-underline p-2 hover:bg-gray-100"
               onClick={(e) => {
                 e.preventDefault();
                 scrollTo("#gallery");
