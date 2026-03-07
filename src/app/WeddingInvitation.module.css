@@ -50,7 +50,6 @@
   height: 14px;
 } */
 
-
 /* .parentInfo {
   margin-top: 30px;
   text-align: center;
@@ -209,7 +208,7 @@
   font-weight: 500;
 } */
 
-.mapContainer {
+/* .mapContainer {
   width: 100%;
   max-width: 420px;
   height: 350px;
@@ -283,9 +282,9 @@
   width: 100%;
   max-width: 420px;
   height: auto;
-}
+} */
 
-@keyframes bounce {
+/* @keyframes bounce {
   0%,
   100% {
     top: 0;
@@ -293,12 +292,11 @@
   50% {
     top: -6px;
   }
-}
+} */
 
-.gallery {
+/* .gallery {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  /* show 3 images per row */
   gap: 4px;
   justify-items: center;
   margin: 20px auto;
@@ -311,28 +309,17 @@
   border-radius: 4px;
   object-fit: cover;
   cursor: pointer;
-}
-
-.showMoreWrapper {
-  font-size: 16px;
-}
-
-.shareButton {
-  background-color: #fee500;
-  color: #000;
-  border: none;
-  padding: 10px 20px;
-  font-weight: bold;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
+} */
+/* 
 .footer {
   margin-top: 20px;
   font-size: 12px;
   color: #aaa;
   margin-bottom: 110px;
+} */
+
+/* .showMoreWrapper {
+  font-size: 16px;
 }
 
 .modalOverlay {
@@ -366,7 +353,8 @@
   object-fit: contain;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
-Z .modalClose,
+
+.modalClose,
 .modalPrev,
 .modalNext {
   position: absolute;
@@ -379,7 +367,7 @@ Z .modalClose,
 }
 
 .modalClose {
-  position: fixed; /* relative to viewport */
+  position: fixed; 
   top: 50px;
   right: 20px;
   background: none;
@@ -407,9 +395,9 @@ Z .modalClose,
   font-size: 14px;
   color: #ffffff;
   margin-top: 12px;
-}
+} */
 
-.subwayInfo {
+/* .subwayInfo {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -421,47 +409,16 @@ Z .modalClose,
   flex-direction: row;
   gap: 5px;
   align-items: center;
-}
-
+} */
+/* 
 .popupContent {
   display: flex;
   flex-direction: row;
   gap: 10px;
-}
+} */
 
-.closePopup {
-  background-color: transparent;
-  color: #727272;
-  font-size: 15px;
-}
 
-.scrollToTopBtn {
-  position: fixed;
-  bottom: 20px;
-  right: calc(50% - 200px); /* 50% viewport - half of content width (420/2) */
-  background: rgba(0, 0, 0, 0.15);
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
-  opacity: 0.7;
-  z-index: 1000;
-}
-
-.scrollToTopBtn img {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.scrollToTopBtn:hover {
-  transform: translateY(-3px);
-  opacity: 1;
-}
-
-.busSection {
+/* .busSection {
   margin-top: 10px;
   display: flex;
   flex-direction: column;
@@ -515,9 +472,9 @@ Z .modalClose,
 .busNumber {
   font-size: 13px;
   color: #333;
-}
+} */
 
-.shareSection {
+/* .shareSection {
   margin-top: 18px;
   display: flex;
   justify-content: center;
@@ -533,13 +490,13 @@ Z .modalClose,
   font-size: 13px;
   cursor: pointer;
   color: #000;
-  transition: all 0.2s ease; /* ✨ 부드러운 애니메이션 */
+  transition: all 0.2s ease; 
 }
 
 .copyLinkButton:hover {
   background: #111;
   color: #fff;
   border-color: #111;
-  transform: translateY(-1px); /* ✨ 살짝 떠오르는 느낌 */
+  transform: translateY(-1px); 
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
+} */

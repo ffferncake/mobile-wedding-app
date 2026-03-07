@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "../../WeddingInvitation.module.css";
-import WeddingCalendar from "../WeddingCalendar";
+import WeddingCalendar from "../wedding-calendar";
 
 export default function WeddingInfoSection() {
   const images = [

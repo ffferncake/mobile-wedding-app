@@ -1,16 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import styles from "../../WeddingInvitation.module.css";
 
 export default function SubwaySection() {
   return (
     <div id="location-subway" className="section">
-      <p className={styles.title_en}>SUBWAY</p>
+      <p className="title-en">SUBWAY</p>
       <h3 className="highlight">지하철 이용시</h3>
 
-      <div className={styles.subwayInfo}>
-        <div className={styles.subwaylineInfo}>
+      <div className="flex flex-row justify-center gap-5">
+        <div className="flex items-center gap-[5px]">
           <Image
             src="/images/icon/ellipse_green.svg"
             alt="line2"

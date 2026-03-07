@@ -45,7 +45,7 @@ export default function LocationSection() {
 
     const popupNode = document.createElement("div");
     popupNode.innerHTML = `
-      <div class="${styles.popupContent}">
+      <div class="flex flex-row gap-[10px]">
         <p>💒 JK 아트컨벤션</p>
       </div>
     `;
@@ -67,67 +67,75 @@ export default function LocationSection() {
       <p className="title-en">LOCATION</p>
       <h3 className="highlight">오시는 길</h3>
 
-      <div className={styles.locationInfo}>
+      <div>
         <p>JK 아트컨벤션 4층 엠버루체홀</p>
         <p>서울특별시 영등포구 문래로 164 (문래동3가 55-16번지) SK리더스뷰</p>
       </div>
 
       {/* Map Tabs */}
-      <div className={styles.mapTabBar}>
+      <div className="flex justify-center gap-2 mb-[10px]">
         <button
-          className={`${styles.mapTab} ${
-            mapViewMode === "MAP" ? styles.activeTab : ""
-          }`}
           onClick={() => setMapViewMode("MAP")}
+          className={`px-[14px] py-[6px] rounded-full border text-[14px] transition ${
+            mapViewMode === "MAP"
+              ? "bg-[#111] text-white border-[#111]"
+              : "bg-white text-black border-[#ddd] hover:bg-gray-100"
+          }`}
         >
           지도 보기
         </button>
 
         <button
-          className={`${styles.mapTab} ${
-            mapViewMode === "IMAGE" ? styles.activeTab : ""
-          }`}
           onClick={() => setMapViewMode("IMAGE")}
+          className={`px-[14px] py-[6px] rounded-full border text-[14px] transition ${
+            mapViewMode === "IMAGE"
+              ? "bg-[#111] text-white border-[#111]"
+              : "bg-white text-black border-[#ddd] hover:bg-gray-100"
+          }`}
         >
           약도 보기
         </button>
       </div>
 
       {mapViewMode === "MAP" ? (
-        <div ref={mapContainerRef} className={styles.mapContainer} />
+        <div
+          ref={mapContainerRef}
+          className="w-full max-w-[420px] h-[350px] mx-auto rounded-[10px] overflow-hidden shadow-md"
+        />
       ) : (
-        <div className={styles.mapImageWrapper}>
+        <div className="flex justify-center">
           <Image
             src="/images/jk_map.jpg"
             alt="JK Art Convention map"
             width={800}
             height={500}
-            className={styles.mapImage}
+            className="w-full max-w-[420px] h-auto rounded-xl"
             priority
           />
         </div>
       )}
 
-      {/* Navigation links */}
-      <div className={styles.mapLinks}>
-        <div className={styles.navLinks}>
+      <div className="flex justify-center gap-3 mt-[15px]">
+        <div className="flex items-center gap-[7px] bg-[#f8f8f8] px-4 py-[10px] rounded-lg font-medium text-[#333] shadow-sm hover:bg-[#eee] transition">
           <Image
             src="/images/kakao_navi.svg"
             alt="kakao icon"
             width={32}
             height={32}
+            className="rounded"
           />
           <a href="https://kko.to/Kg-9yiU8OY" target="_blank">
             카카오내비
           </a>
         </div>
 
-        <div className={styles.navLinks}>
+        <div className="flex items-center gap-[7px] bg-[#f8f8f8] px-4 py-[10px] rounded-lg font-medium text-[#333] shadow-sm hover:bg-[#eee] transition">
           <Image
             src="/images/naver_map.png"
             alt="naver icon"
             width={32}
             height={32}
+            className="rounded"
           />
           <a href="https://naver.me/Gn0yrSdR" target="_blank">
             네이버지도
