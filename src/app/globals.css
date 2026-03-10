@@ -52,12 +52,21 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "IBMPlexSansKR";
+  src: url("/font/IBMPlexSansKR-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 /* ④ Default font stack for body & buttons */
 button,
 body {
   font-family:
     "NEXON Lv1 Gothic", "League Spartan", Arial, sans-serif,
-    "BrittanySignature", "BODAR";
+    "BrittanySignature", "BODAR", "IBMPlexSansKR";
 }
 
 /* ⑤ Class-based usage */
@@ -83,6 +92,10 @@ body {
 
 .bodar-font {
   font-family: "BODAR", serif;
+}
+
+.ibmplex-font {
+  font-family: "IBMPlexSansKR", serif;
 }
 
 /* ⑥ General styling */
@@ -227,4 +240,14 @@ a {
 
 .animate-pageFade {
   animation: pageFade 0.45s ease forwards;
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
 }

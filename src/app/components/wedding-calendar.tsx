@@ -26,7 +26,7 @@ export default function WeddingCalendar() {
   const formattedTime = "일요일 오후 2시";
 
   return (
-    <div className="nexon-font text-center mt-6 text-[#555]">
+    <div className="ibmplex-font text-center mt-6 text-[#555]">
       {" "}
       <div className="mb-[10px]">
         <h3 className="text-[22px] font-semibold text-[#444] mb-1">

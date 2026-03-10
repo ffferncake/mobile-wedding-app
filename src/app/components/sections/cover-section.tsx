@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import styles from "../../WeddingInvitation.module.css";
 
 export default function CoverSection() {
   const [bgIndex, setBgIndex] = useState(0);
@@ -34,14 +33,14 @@ export default function CoverSection() {
       </p>
 
       <p
-        className={`absolute top-[25%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-[40px] tracking-[0.08em] whitespace-nowrap font-[BODAR] opacity-0 animate-fadeIn ${textColorClass}`}
+        className={`absolute top-[27%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-[40px] tracking-[0.08em] whitespace-nowrap font-[BODAR] opacity-0 animate-fadeIn ${textColorClass}`}
         style={{ animationDelay: "1s" }}
       >
         EUNSANG & FERN
       </p>
 
       <p
-        className={`absolute top-[29%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-[20px] tracking-[0.08em] whitespace-nowrap font-[BODAR] opacity-0 animate-fadeIn ${textColorClass}`}
+        className={`absolute top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-[20px] tracking-[0.08em] whitespace-nowrap font-[BODAR] opacity-0 animate-fadeIn ${textColorClass}`}
         style={{ animationDelay: "1.2s" }}
       >
         2026.09.13 2PM

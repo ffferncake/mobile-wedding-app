@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta property="og:url" content="https://fern-eunsang.vercel.app/" />
         <meta property="og:type" content="website" />
       </head>
-      <body className="nexon-font" suppressHydrationWarning={true}>
+      <body className="ibmplex-font" suppressHydrationWarning={true}>
         {children}
       </body>
     </html>
