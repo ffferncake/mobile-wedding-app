@@ -72,7 +72,7 @@ export default function LocationSection() {
       </div>
 
       {/* Map Tabs */}
-      <div className="flex justify-center gap-2 mb-[10px]">
+      <div className="flex justify-center gap-2 mb-4 mt-4">
         <button
           onClick={() => setMapViewMode("MAP")}
           className={`px-[14px] py-[6px] rounded-full border text-[14px] transition ${

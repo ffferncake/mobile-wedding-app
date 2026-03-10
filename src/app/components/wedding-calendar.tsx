@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import styles from "./WeddingCalendar.module.css";
 
 export default function WeddingCalendar() {
   // 📅 Target date
@@ -26,7 +25,7 @@ export default function WeddingCalendar() {
   const formattedTime = "일요일 오후 2시";
 
   return (
-    <div className="ibmplex-font text-center mt-6 text-[#555]">
+    <div className="typo-crayon-font text-center mt-3 text-[#555]">
       {" "}
       <div className="mb-[10px]">
         <h3 className="text-[22px] font-semibold text-[#444] mb-1">

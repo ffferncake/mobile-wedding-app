@@ -41,43 +41,46 @@ export default function AccountSection() {
     <div id="accountnumber" className="section">
       <p className="title-en">ACCOUNT</p>
 
-      <h3 className="text-[#3b417b] font-bold text-[16px]">마음 전하실 곳</h3>
+      <h3 className="highlight">마음 전하실 곳</h3>
 
-      <p>
+      <p className="text-center">
         소중한 축하를 보내주셔서 감사드리며,
         <br />
         따뜻한 마음에 깊이 감사드립니다.
       </p>
 
-      <div className="flex flex-col gap-3 mt-3">
+      <div className="flex flex-col gap-4 mt-5">
         {accounts.map((acc, i) => (
-          <div
-            key={i}
-            className="flex flex-col items-center bg-[#f8f8f8] rounded-lg shadow-sm p-[10px_14px]"
-          >
-            <div className="flex items-center justify-between gap-[7px] font-medium text-[#333] w-full">
-              <Image
-                src={acc.bankIcon}
-                alt={acc.bank}
-                width={32}
-                height={32}
-                className="rounded"
-              />
+          <div key={i} className="flex flex-col items-center w-full">
+            {/* Name OUTSIDE the box */}
+            <span className="text-sm font-semibold text-[#555] mb-1">
+              {acc.name}
+            </span>
 
-              <span>
-                {acc.bank} {acc.number}
-              </span>
+            {/* Account box */}
+            <div className="flex items-center justify-between gap-3 w-full bg-[#f8f8f8] rounded-lg shadow-sm px-4 py-3">
+              <div className="flex items-center gap-2">
+                <Image
+                  src={acc.bankIcon}
+                  alt={acc.bank}
+                  width={28}
+                  height={28}
+                  className="rounded"
+                />
+
+                <span className="text-sm font-medium text-[#333]">
+                  {acc.bank} {acc.number}
+                </span>
+              </div>
 
               <button
                 onClick={() => copyAccount(acc.number)}
-                className="bg-white border border-gray-300 px-[10px] py-[6px] text-[13px] rounded-md cursor-pointer flex items-center gap-[6px] hover:bg-gray-200"
+                className="flex items-center gap-1 bg-white border border-gray-300 px-3 py-1.5 text-xs rounded-md hover:bg-gray-100 transition"
               >
                 복사
-                <Copy className="w-[14px] h-[14px]" />
+                <Copy className="w-3.5 h-3.5" />
               </button>
             </div>
-
-            <span className="text-sm mt-1">{acc.name}</span>
           </div>
         ))}
       </div>

@@ -5,7 +5,7 @@ export default function BusSection() {
   return (
     <div id="location-bus" className="section">
       <p className="title-en">BUS</p>
-      <h3 className="text-[#3b417b] font-bold text-[16px]">버스 이용시</h3>
+      <h3 className="highlight">버스 이용시</h3>
 
       <div className="mt-[10px] flex flex-col gap-[15px] px-[10px]">
         {/* 문래역 정류장 */}

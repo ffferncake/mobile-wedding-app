@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import styles from "../../WeddingInvitation.module.css";
 
 export default function InvitationSection() {
   return (
@@ -9,17 +8,19 @@ export default function InvitationSection() {
       <p className="title-en">INVITATION</p>
       <p className="highlight">소중한 분들을 초대합니다.</p>
 
-      <p className="mt-2.5">작은 인연으로 만나 연인이 된 저희가</p>
-      <p>이제는 더욱 단단한 인연을 맺고자</p>
-      <p>저희 두 사람 결혼합니다.</p>
+      <p className="mt-2.5">서로를 만나</p>
+      <p>웃음이 더 많아진 저희 두 사람이</p>
+      <p>이제 평생의 짝이 되려 합니다.</p>
 
-      <p className="mt-2.5">
-        귀한 걸음으로 축하해 주시면
-        <br />더 없는 기쁨으로 간직하겠습니다.
-      </p>
+      <p className="mt-2.5">기쁜 날,</p>
+      <p>소중한 분들과</p>
+      <p>행복한 순간을 함께하고 싶습니다.</p>
+
+      <p>따뜻한 마음으로</p>
+      <p>축복해 주세요 🌷</p>
 
       {/* 부모님 소개 */}
-      <div className="mt-[30px] text-center text-[16px] leading-[1.8] text-[#333] flex flex-row items-start justify-center">
+      <div className="mt-6 text-center text-[16px] leading-[1.8] text-[#333] flex flex-row items-start justify-center">
         <div className="flex flex-col">
           <div className="flex items-center w-full">
             <p className="font-medium min-w-[70px]">유영운</p>
@@ -38,8 +39,9 @@ export default function InvitationSection() {
       </div>
 
       {/* 신랑 신부 */}
-      <div className="mt-[20px] flex flex-row items-center justify-center gap-[20px]">
-        <div className="flex flex-col items-center">
+      <div className="mt-[20px] flex flex-row items-center justify-center gap-[30px]">
+        {/* Groom */}
+        <div className="flex flex-col items-center text-center">
           <Image
             src="/images/oppa_kids_ver.png"
             alt="oppa img"
@@ -52,14 +54,18 @@ export default function InvitationSection() {
 
             <a
               href="tel:01033883415"
-              className="inline-block text-[24px] ml-[6px] cursor-pointer animate-bounce relative"
+              className="inline-block text-[22px] cursor-pointer animate-bounce"
             >
               📞
             </a>
           </div>
+
+          <p className="text-sm mt-[4px]">92년산 🍾🐒✨</p>
+          <p className="text-sm">건축공학 엔지니어</p>
         </div>
 
-        <div className="flex flex-col items-center">
+        {/* Bride */}
+        <div className="flex flex-col items-center text-center">
           <Image
             src="/images/me_kids_ver.png"
             alt="my img"
@@ -68,15 +74,18 @@ export default function InvitationSection() {
           />
 
           <div className="flex flex-row items-center justify-center gap-[10px] mt-[10px]">
-            <p className="font-bold text-[16px]">펀</p>
+            <p className="font-bold text-[16px]">펀 | FERN</p>
 
             <a
               href="tel:01053349912"
-              className="inline-block text-[24px] ml-[6px] cursor-pointer animate-bounce relative"
+              className="inline-block text-[22px] cursor-pointer animate-bounce"
             >
               📞
             </a>
           </div>
+
+          <p className="text-sm mt-[4px]">99년산 🍼🐰💖</p>
+          <p className="text-sm">프론트엔드 개발자</p>
         </div>
       </div>
     </div>

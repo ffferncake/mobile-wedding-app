@@ -15,6 +15,7 @@ import SubwaySection from "./components/sections/subway-section";
 import BusSection from "./components/sections/bus-section";
 import ParkingSection from "./components/sections/parking-section";
 import ShareSection from "./components/sections/share-section";
+import { useAudio } from "./hooks/useAudio";
 
 import {
   Heart,
@@ -26,6 +27,8 @@ import {
   MapPin,
   Bus,
   Share2,
+  Music4,
+  VolumeOff,
 } from "lucide-react";
 
 /* ---------- transport combined page ---------- */
@@ -42,12 +45,13 @@ function TransportSection() {
 /* ---------- main component ---------- */
 export default function WeddingInvitation() {
   const [pageIndex, setPageIndex] = useState(0);
+  const { isMuted, toggleMute } = useAudio("/songs/until-i-found-you.mp3");
 
   const pages = [
     <CoverSection key="cover" />,
     <InvitationSection key="invite" />,
     <WeddingInfoSection key="info" />,
-    <IntroductionSection key="intro" />,
+    // <IntroductionSection key="intro" />,
     <GallerySection key="gallery" />,
     <AccountSection key="account" />,
     <LocationSection key="location" />,
@@ -73,7 +77,7 @@ export default function WeddingInvitation() {
 
       <div className="w-full h-screen flex justify-center bg-[rgba(153,153,153,0.05)]">
         {/* invitation container */}
-        <div className="relative w-full max-w-[420px] bg-white h-screen overflow-y-auto scrollbar-hide text-[#333] text-center leading-relaxed">
+        <div className="relative w-full max-w-[420px] h-screen overflow-y-auto scrollbar-hide text-[#333] text-center leading-relaxed">
           {" "}
           {/* page content */}
           <div
@@ -85,8 +89,17 @@ export default function WeddingInvitation() {
               {pages[pageIndex]}
             </div>
           </div>
+          {/* music control */}
+          <div className="absolute top-4 right-4 z-50">
+            <button
+              onClick={toggleMute}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-xl bg-white/60 border border-white/30 shadow-md text-sm hover:bg-white transition"
+            >
+              {!isMuted ? <Music4 size={16} /> : <VolumeOff size={16} />}
+            </button>
+          </div>
           {/* bottom navigation */}
-          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 flex gap-2 backdrop-blur-xl bg-white/60 border border-white/30 px-2 py-2 rounded-full shadow-lg">
+          <div className="fixed bottom-3 left-1/2 -translate-x-1/2 flex gap-1 backdrop-blur-xl bg-white/60 border border-white/30 px-2 py-2 rounded-full shadow-lg">
             {icons.map((Icon, index) => (
               <button
                 key={index}
@@ -97,7 +110,7 @@ export default function WeddingInvitation() {
                     : "text-gray-600 hover:bg-white/60 hover:scale-105"
                 }`}
               >
-                <Icon size={20} />
+                <Icon size={18} />
               </button>
             ))}
           </div>

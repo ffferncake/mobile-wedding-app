@@ -2,21 +2,21 @@
 
 import { useEffect, useRef } from "react";
 
+export const pastelColors = [
+  "#FFD1DC",
+  "#89c424ff",
+  "#F9EE9B",
+  "#D1C4E9",
+  "#78E1EF",
+  "#9291B6",
+];
+
 export default function HeartsBackground() {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-
-    const pastelColors = [
-      "#FFD1DC",
-      "#B7F64A",
-      "#F9EE9B",
-      "#D1C4E9",
-      "#78E1EF",
-      "#9291B6",
-    ];
 
     const createHeart = () => {
       const heart = document.createElement("div");

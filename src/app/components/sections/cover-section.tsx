@@ -40,7 +40,7 @@ export default function CoverSection() {
       </p>
 
       <p
-        className={`absolute top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-[20px] tracking-[0.08em] whitespace-nowrap font-[BODAR] opacity-0 animate-fadeIn ${textColorClass}`}
+        className={`absolute top-[32%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-[20px] tracking-[0.08em] whitespace-nowrap font-[BODAR] opacity-0 animate-fadeIn ${textColorClass}`}
         style={{ animationDelay: "1.2s" }}
       >
         2026.09.13 2PM

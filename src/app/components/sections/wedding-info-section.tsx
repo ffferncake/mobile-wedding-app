@@ -77,10 +77,10 @@ export default function WeddingInfoSection() {
   return (
     <div id="weddinginfo" className="section">
       <p className="title-en">WEDDING HALL</p>
-      <h3 className="text-[#3b417b] font-bold text-[16px]">예식 안내</h3>
+      <h3 className="highlight">예식 안내</h3>
 
       <div className="text-center text-[13px] leading-[1.8] mb-[10px]">
-        <p className="font-semibold text-[18px] mt-[15px]">
+        <p className="font-semibold text-[18px] mt-2">
           JK Art Convention (JK아트컨벤션)
         </p>
         <p className="text-[#888] text-[14px]">
@@ -89,7 +89,8 @@ export default function WeddingInfoSection() {
       </div>
 
       {/* Hall slideshow */}
-      <div className="relative w-full h-[300px] overflow-hidden rounded-lg cursor-pointer">
+      <div className="relative w-full h-[220px] overflow-hidden rounded-lg cursor-pointer">
+        {" "}
         {images.map((src, idx) => (
           <Image
             key={src}
@@ -115,7 +116,7 @@ export default function WeddingInfoSection() {
       <WeddingCalendar />
 
       {/* Countdown */}
-      <div className="flex justify-center gap-[20px] mt-[20px] flex-wrap">
+      <div className="flex justify-center gap-[20px] mt-[10px] flex-wrap">
         <div className="text-center">
           <div className="px-[10px] py-[5px] bg-[#f3f3f3] rounded-md shadow-md text-[25px] font-bold flex justify-center items-center relative">
             <span className="relative z-[2]">{timeLeft.days}</span>
