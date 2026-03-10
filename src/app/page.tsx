@@ -29,7 +29,6 @@ import {
 } from "lucide-react";
 
 /* ---------- transport combined page ---------- */
-
 function TransportSection() {
   return (
     <div className="space-y-6 pb-20">
@@ -41,7 +40,6 @@ function TransportSection() {
 }
 
 /* ---------- main component ---------- */
-
 export default function WeddingInvitation() {
   const [pageIndex, setPageIndex] = useState(0);
 
@@ -75,7 +73,8 @@ export default function WeddingInvitation() {
 
       <div className="w-full h-screen flex justify-center bg-[rgba(153,153,153,0.05)]">
         {/* invitation container */}
-        <div className="relative w-full max-w-[420px] bg-white h-screen overflow-y-auto text-[#333] text-center leading-relaxed">
+        <div className="relative w-full max-w-[420px] bg-white h-screen overflow-y-auto scrollbar-hide text-[#333] text-center leading-relaxed">
+          {" "}
           {/* page content */}
           <div
             className={`transition-all duration-500 ease-out ${
@@ -86,7 +85,6 @@ export default function WeddingInvitation() {
               {pages[pageIndex]}
             </div>
           </div>
-
           {/* bottom navigation */}
           <div className="fixed bottom-6 left-1/2 -translate-x-1/2 flex gap-2 backdrop-blur-xl bg-white/60 border border-white/30 px-2 py-2 rounded-full shadow-lg">
             {icons.map((Icon, index) => (
