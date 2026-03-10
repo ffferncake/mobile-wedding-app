@@ -18,7 +18,7 @@ export default function CoverSection() {
   return (
     <section className="relative h-screen overflow-hidden">
       <p
-        className={`absolute top-[20%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-[30px] font-medium tracking-[0.08em] whitespace-normal drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)] font-[BrittanySignature] ${textColorClass}`}
+        className={`absolute top-[20%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-[30px] font-medium tracking-[0.08em] whitespace-normal sm:whitespace-nowrap drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)] font-[BrittanySignature] ${textColorClass}`}
         key={bgIndex}
       >
         {"We're getting married".split("").map((char, i) => (
@@ -33,14 +33,14 @@ export default function CoverSection() {
       </p>
 
       <p
-        className={`absolute top-[27%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-[40px] tracking-[0.08em] whitespace-normal font-[BODAR] opacity-0 animate-fadeIn ${textColorClass}`}
+        className={`absolute top-[27%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-[40px] tracking-[0.08em] whitespace-normal sm:whitespace-nowrap font-[BODAR] opacity-0 animate-fadeIn ${textColorClass}`}
         style={{ animationDelay: "1s" }}
       >
         EUNSANG & FERN
       </p>
 
       <p
-        className={`absolute top-[32%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-[20px] tracking-[0.08em] whitespace-normal font-[BODAR] opacity-0 animate-fadeIn ${textColorClass}`}
+        className={`absolute top-[32%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-[20px] tracking-[0.08em] whitespace-normal sm:whitespace-nowrap font-[BODAR] opacity-0 animate-fadeIn ${textColorClass}`}
         style={{ animationDelay: "1.2s" }}
       >
         2026.09.13 2PM

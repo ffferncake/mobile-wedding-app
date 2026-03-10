@@ -44,7 +44,7 @@ export default function LocationSection() {
 
     const popupNode = document.createElement("div");
     popupNode.innerHTML = `
-      <div class="flex flex-row gap-[10px]">
+      <div class="flex flex-row gap-[10px] typo-crayon-font">
         <p>💒 JK 아트컨벤션</p>
       </div>
     `;
@@ -68,14 +68,15 @@ export default function LocationSection() {
 
       <div>
         <p>JK 아트컨벤션 4층 엠버루체홀</p>
-        <p>서울특별시 영등포구 문래로 164 (문래동3가 55-16번지) SK리더스뷰</p>
+        <p>서울특별시 영등포구 문래로 164 (문래동3가 55-16번지)</p>
+        <p>SK리더스뷰</p>
       </div>
 
       {/* Map Tabs */}
       <div className="flex justify-center gap-2 mb-4 mt-4">
         <button
           onClick={() => setMapViewMode("MAP")}
-          className={`px-[14px] py-[6px] rounded-full border text-[14px] transition ${
+          className={`typo-crayon-font px-[14px] py-[6px] rounded-full border text-[14px] transition ${
             mapViewMode === "MAP"
               ? "bg-[#111] text-white border-[#111]"
               : "bg-white text-black border-[#ddd] hover:bg-gray-100"
@@ -86,7 +87,7 @@ export default function LocationSection() {
 
         <button
           onClick={() => setMapViewMode("IMAGE")}
-          className={`px-[14px] py-[6px] rounded-full border text-[14px] transition ${
+          className={`typo-crayon-font px-[14px] py-[6px] rounded-full border text-[14px] transition ${
             mapViewMode === "IMAGE"
               ? "bg-[#111] text-white border-[#111]"
               : "bg-white text-black border-[#ddd] hover:bg-gray-100"
