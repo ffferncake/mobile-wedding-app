@@ -63,7 +63,7 @@ export default function WeddingInvitation() {
     Heart,
     Mail,
     Calendar,
-    Users,
+    // Users,
     ImageIcon,
     Gift,
     MapPin,

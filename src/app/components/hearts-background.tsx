@@ -33,6 +33,9 @@ export default function HeartsBackground() {
       heart.style.height = `${size}px`;
       heart.style.animationDuration = `${Math.random() * 3 + 3}s`;
 
+      // crayon feeling
+      heart.style.transform = `rotate(${Math.random() * 40 - 20}deg)`;
+
       container.appendChild(heart);
 
       setTimeout(() => {
