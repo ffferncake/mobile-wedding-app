@@ -76,7 +76,6 @@
   font-display: swap;
 }
 
-
 /* ④ Default font stack for body & buttons */
 button,
 body {
@@ -199,7 +198,7 @@ a {
 
 @layer components {
   .title-en {
-    @apply crayon-font inline-block border-2 border-transparent text-[16px];
+    @apply crayon-font inline-block border-transparent text-[16px];
   }
   .section {
     @apply max-w-[420px] mx-auto mt-2 mb-4 px-[6px] text-[13px];
@@ -276,4 +275,26 @@ a {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
+}
+
+.floating-flower {
+  position: absolute;
+  bottom: -40px;
+  animation: floatFlower linear forwards;
+}
+
+@keyframes floatFlower {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.8;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-110vh) rotate(360deg);
+    opacity: 0;
+  }
 }

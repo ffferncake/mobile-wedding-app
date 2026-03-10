@@ -7,6 +7,7 @@ type Account = {
   bank: string;
   bankIcon: string;
   number: string;
+  role: string;
   name: string;
 };
 
@@ -16,19 +17,22 @@ export default function AccountSection() {
       bank: "토스뱅크",
       bankIcon: "/images/toss.png",
       number: "1001-5731-0736",
-      name: "신랑 · 신부",
+      role: "신랑 · 신부",
+      name: "",
     },
     {
       bank: "국민은행",
       bankIcon: "/images/kb.png",
       number: "247901-04-336806",
-      name: "신랑 아버지 · 유영운",
+      role: "신랑 아버지",
+      name: "유영운",
     },
     {
       bank: "국민은행",
       bankIcon: "/images/kb.png",
       number: "24721-0737-580",
-      name: "신랑 어머니 · 신혜원",
+      role: "신랑 어머니",
+      name: "신혜원",
     },
   ];
 
@@ -53,8 +57,15 @@ export default function AccountSection() {
         {accounts.map((acc, i) => (
           <div key={i} className="flex flex-col items-center w-full">
             {/* Name OUTSIDE the box */}
-            <span className="text-sm font-semibold text-[#555] mb-1">
-              {acc.name}
+            <span className="text-sm font-semibold mb-1">
+              {acc.name ? (
+                <>
+                  <span className="text-[#51698f]">{acc.role}</span>
+                  <span className="text-[#555]"> · {acc.name}</span>
+                </>
+              ) : (
+                <span className="text-[#555]">{acc.role}</span>
+              )}
             </span>
 
             {/* Account box */}
@@ -75,7 +86,7 @@ export default function AccountSection() {
 
               <button
                 onClick={() => copyAccount(acc.number)}
-                className="flex items-center gap-1 bg-white border border-gray-300 px-3 py-1.5 text-xs rounded-md hover:bg-gray-100 transition"
+                className="flex items-center gap-1 bg-white border border-gray-300 px-3 py-1.5 text-xs rounded-md hover:bg-gray-100 transition typo-text-[#51698f]-font"
               >
                 복사
                 <Copy className="w-3.5 h-3.5" />

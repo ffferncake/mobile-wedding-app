@@ -13,7 +13,7 @@ export const metadata = {
     siteName: "은상 ♥ 펀 모바일 청첩장",
     images: [
       {
-        url: "https://github.com/ffferncake/mobile-wedding-app/blob/main/public/gallery_5.JPG",
+        url: "https://github.com/ffferncake/mobile-wedding-app/blob/main/public/images/gallery/gallery_5.JPG",
         width: 800,
         height: 600,
         alt: "은상 ♥ 펀 웨딩 사진",
@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko">
       <head>
-        <link rel="shortcut icon" href="/images/icon/heart_icon.png" />
+        <link rel="shortcut icon" href="/images/icon/flowers.png" />
         <meta property="og:title" content="은상 ♥ 펀 결혼합니다!" />
         <meta
           property="og:description"
@@ -35,7 +35,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
         <meta
           property="og:image"
-          content="https://fern-eunsang.vercel.app/images/gallery_5.JPG"
+          content="https://fern-eunsang.vercel.app/images/gallery/gallery_5.JPG"
         />
         <meta property="og:url" content="https://fern-eunsang.vercel.app/" />
         <meta property="og:type" content="website" />

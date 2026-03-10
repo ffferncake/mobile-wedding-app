@@ -3,11 +3,11 @@
 import { useState } from "react";
 
 import HeartsBackground from "./components/hearts-background";
+import FlowerBackground from "./components/flower-background";
 
 import CoverSection from "./components/sections/cover-section";
 import InvitationSection from "./components/sections/invitation-section";
 import WeddingInfoSection from "./components/sections/wedding-info-section";
-import IntroductionSection from "./components/sections/introduction-section";
 import GallerySection from "./components/sections/gallery-section";
 import AccountSection from "./components/sections/account-section";
 import LocationSection from "./components/sections/location-section";
@@ -21,7 +21,6 @@ import {
   Heart,
   Mail,
   Calendar,
-  Users,
   Image as ImageIcon,
   Gift,
   MapPin,
@@ -38,6 +37,7 @@ function TransportSection() {
       <SubwaySection />
       <BusSection />
       <ParkingSection />
+      <ShareSection />
     </div>
   );
 }
@@ -73,7 +73,7 @@ export default function WeddingInvitation() {
 
   return (
     <>
-      <HeartsBackground />
+      <FlowerBackground />
 
       <div className="w-full h-screen flex justify-center bg-[rgba(153,153,153,0.05)]">
         {/* invitation container */}
@@ -82,7 +82,7 @@ export default function WeddingInvitation() {
           {/* page content */}
           <div
             className={`transition-all duration-500 ease-out ${
-              pageIndex === 0 ? "" : "px-4 pt-6 pb-24"
+              pageIndex === 0 ? "" : "px-4 pt-4 pb-24"
             }`}
           >
             <div key={pageIndex} className="animate-pageFade">
@@ -93,7 +93,7 @@ export default function WeddingInvitation() {
           <div className="absolute top-4 right-4 z-50">
             <button
               onClick={toggleMute}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-xl bg-white/60 border border-white/30 shadow-md text-sm hover:bg-white transition"
+              className="flex items-center gap-2 px-2 py-1.5 rounded-full backdrop-blur-xl bg-white/60 border border-white/30 shadow-md text-sm hover:bg-white transition"
             >
               {!isMuted ? <Music4 size={16} /> : <VolumeOff size={16} />}
             </button>

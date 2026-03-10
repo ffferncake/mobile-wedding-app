@@ -80,7 +80,7 @@ export default function WeddingInfoSection() {
       <h3 className="highlight">예식 안내</h3>
 
       <div className="text-center text-[13px] leading-[1.8] mb-[10px]">
-        <p className="font-semibold text-[18px] mt-2">
+        <p className="font-semibold text-[18px] mt-1">
           JK Art Convention (JK아트컨벤션)
         </p>
         <p className="text-[#888] text-[14px]">
