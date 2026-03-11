@@ -6,6 +6,27 @@ export default function CoverSection() {
   const [bgIndex, setBgIndex] = useState(0);
   const fullText = "We're getting married";
   const [typedText, setTypedText] = useState("");
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  useEffect(() => {
+    const img1 = new Image();
+    const img2 = new Image();
+
+    img1.src = "/images/bg_updated_1.JPG";
+    img2.src = "/images/bg_updated_2.JPG";
+
+    let loaded = 0;
+
+    const checkLoaded = () => {
+      loaded++;
+      if (loaded === 2) {
+        setImagesLoaded(true);
+      }
+    };
+
+    img1.onload = checkLoaded;
+    img2.onload = checkLoaded;
+  }, []);
 
   // Background switch
   useEffect(() => {
@@ -18,7 +39,9 @@ export default function CoverSection() {
 
   // Typing animation
   useEffect(() => {
-    setTypedText(""); // reset when bg changes
+    if (!imagesLoaded) return;
+
+    setTypedText("");
     let index = 0;
 
     const typing = setInterval(() => {
@@ -26,16 +49,15 @@ export default function CoverSection() {
       index++;
 
       if (index === fullText.length) clearInterval(typing);
-    }, 70); // typing speed
+    }, 70);
 
     return () => clearInterval(typing);
-  }, [bgIndex]);
+  }, [bgIndex, imagesLoaded]);
 
   const textColorClass = bgIndex === 1 ? "text-white" : "text-black";
 
   return (
     <section className="relative h-screen overflow-hidden">
-
       {/* Typing title */}
       <p
         className={`absolute top-[19%] left-1/2 -translate-x-1/2 -translate-y-1/2
@@ -48,7 +70,8 @@ export default function CoverSection() {
         drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)]
         font-[BrittanySignature]
         min-w-[90vw]
-        ${textColorClass}`}
+        ${textColorClass}
+        ${!imagesLoaded ? "opacity-0" : "opacity-100"}`}
       >
         {typedText}
         <span className="animate-blink"></span>
