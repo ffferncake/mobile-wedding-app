@@ -86,7 +86,7 @@ export default function AccountSection() {
 
               <button
                 onClick={() => copyAccount(acc.number)}
-                className="flex items-center gap-1 bg-white border border-gray-300 px-3 py-1.5 text-xs rounded-md hover:bg-gray-100 transition typo-text-[#51698f]-font"
+                className="flex items-center gap-1 bg-white border border-gray-300 px-3 py-1.5 text-xs rounded-md hover:bg-gray-100 transition text-[#51698f] typo-crayon-font"
               >
                 복사
                 <Copy className="w-3.5 h-3.5" />

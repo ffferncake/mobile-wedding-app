@@ -25,7 +25,6 @@ import {
   Gift,
   MapPin,
   Bus,
-  Share2,
   Music4,
   VolumeOff,
 } from "lucide-react";
@@ -51,24 +50,20 @@ export default function WeddingInvitation() {
     <CoverSection key="cover" />,
     <InvitationSection key="invite" />,
     <WeddingInfoSection key="info" />,
-    // <IntroductionSection key="intro" />,
     <GallerySection key="gallery" />,
     <AccountSection key="account" />,
     <LocationSection key="location" />,
     <TransportSection key="transport" />,
-    <ShareSection key="share" />,
   ];
 
   const icons = [
     Heart,
     Mail,
     Calendar,
-    // Users,
     ImageIcon,
     Gift,
     MapPin,
     Bus,
-    Share2,
   ];
 
   return (

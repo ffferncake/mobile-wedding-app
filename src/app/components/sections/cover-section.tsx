@@ -38,8 +38,8 @@ export default function CoverSection() {
 
       {/* Typing title */}
       <p
-        className={`absolute top-[20%] left-1/2 -translate-x-1/2 -translate-y-1/2
-        z-10
+        className={`absolute top-[19%] left-1/2 -translate-x-1/2 -translate-y-1/2
+        z-20
         text-[22px] sm:text-[30px]
         font-medium
         tracking-[0.05em]
@@ -47,10 +47,11 @@ export default function CoverSection() {
         text-center
         drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)]
         font-[BrittanySignature]
+        min-w-[90vw]
         ${textColorClass}`}
       >
         {typedText}
-        <span className="animate-blink">|</span>
+        <span className="animate-blink"></span>
       </p>
 
       {/* Couple name */}
