@@ -47,6 +47,9 @@ export default function InvitationSection() {
             alt="oppa img"
             width={100}
             height={100}
+            priority
+            unoptimized
+            className="rounded-full object-cover"
           />
 
           <div className="flex flex-row items-center justify-center gap-[10px] mt-[10px]">
@@ -71,6 +74,9 @@ export default function InvitationSection() {
             alt="my img"
             width={100}
             height={100}
+            priority
+            unoptimized
+            className="rounded-full object-cover"
           />
 
           <div className="flex flex-row items-center justify-center gap-[10px] mt-[10px]">

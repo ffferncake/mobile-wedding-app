@@ -1,46 +1,26 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function CoverSection() {
   const [bgIndex, setBgIndex] = useState(0);
   const fullText = "We're getting married";
   const [typedText, setTypedText] = useState("");
-  const [imagesLoaded, setImagesLoaded] = useState(false);
 
-  useEffect(() => {
-    const img1 = new Image();
-    const img2 = new Image();
+  const images = ["/images/bg_updated_1.JPG", "/images/bg_updated_2.JPG"];
 
-    img1.src = "/images/bg_updated_1.JPG";
-    img2.src = "/images/bg_updated_2.JPG";
-
-    let loaded = 0;
-
-    const checkLoaded = () => {
-      loaded++;
-      if (loaded === 2) {
-        setImagesLoaded(true);
-      }
-    };
-
-    img1.onload = checkLoaded;
-    img2.onload = checkLoaded;
-  }, []);
-
-  // Background switch
+  // background switch
   useEffect(() => {
     const interval = setInterval(() => {
-      setBgIndex((prev) => (prev === 0 ? 1 : 0));
+      setBgIndex((prev) => (prev + 1) % images.length);
     }, 5000);
 
     return () => clearInterval(interval);
   }, []);
 
-  // Typing animation
+  // typing animation
   useEffect(() => {
-    if (!imagesLoaded) return;
-
     setTypedText("");
     let index = 0;
 
@@ -52,12 +32,28 @@ export default function CoverSection() {
     }, 70);
 
     return () => clearInterval(typing);
-  }, [bgIndex, imagesLoaded]);
+  }, [bgIndex]);
 
   const textColorClass = bgIndex === 1 ? "text-white" : "text-black";
 
   return (
     <section className="relative h-screen overflow-hidden">
+      {/* Background images */}
+      {images.map((src, i) => (
+        <Image
+          key={src}
+          src={src}
+          alt="Wedding background"
+          fill
+          priority={i === 0}
+          unoptimized
+          sizes="100vw"
+          className={`object-cover transition-opacity duration-[2000ms] ${
+            i === bgIndex ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      ))}
+
       {/* Typing title */}
       <p
         className={`absolute top-[19%] left-1/2 -translate-x-1/2 -translate-y-1/2
@@ -70,8 +66,7 @@ export default function CoverSection() {
         drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)]
         font-[BrittanySignature]
         min-w-[90vw]
-        ${textColorClass}
-        ${!imagesLoaded ? "opacity-0" : "opacity-100"}`}
+        ${textColorClass}`}
       >
         {typedText}
         <span className="animate-blink"></span>
@@ -80,7 +75,7 @@ export default function CoverSection() {
       {/* Couple name */}
       <p
         className={`absolute top-[27%] left-1/2 -translate-x-1/2 -translate-y-1/2
-        z-10
+        z-20
         text-[40px] sm:text-[45px]
         font-[BODAR]
         tracking-[0.06em]
@@ -98,7 +93,7 @@ export default function CoverSection() {
       {/* Date */}
       <p
         className={`absolute top-[33%] left-1/2 -translate-x-1/2 -translate-y-1/2
-        z-10
+        z-20
         text-[18px] sm:text-[20px]
         font-[BODAR]
         tracking-[0.08em]
@@ -112,21 +107,6 @@ export default function CoverSection() {
       >
         2026.09.13&nbsp;&nbsp;2PM
       </p>
-
-      {/* Background Images */}
-      <div
-        className={`absolute inset-0 bg-cover bg-center transition-opacity duration-[1500ms] ${
-          bgIndex === 0 ? "opacity-100" : "opacity-0"
-        }`}
-        style={{ backgroundImage: 'url("/images/bg_updated_1.JPG")' }}
-      />
-
-      <div
-        className={`absolute inset-0 bg-cover bg-center transition-opacity duration-[1500ms] ${
-          bgIndex === 1 ? "opacity-100" : "opacity-0"
-        }`}
-        style={{ backgroundImage: 'url("/images/bg_updated_2.JPG")' }}
-      />
     </section>
   );
 }
