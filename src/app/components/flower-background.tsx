@@ -34,7 +34,7 @@ export default function FlowerBackground() {
       flower.style.pointerEvents = "none";
 
       // animation speed
-      flower.style.animationDuration = `${Math.random() * 4 + 4}s`;
+      flower.style.animationDuration = `${Math.random() * 6 + 8}s`;
 
       // slight crayon rotation feeling
       flower.style.transform = `rotate(${Math.random() * 40 - 20}deg)`;
