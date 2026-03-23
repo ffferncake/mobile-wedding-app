@@ -15,6 +15,7 @@ import SubwaySection from "./components/sections/subway-section";
 import BusSection from "./components/sections/bus-section";
 import ParkingSection from "./components/sections/parking-section";
 import ShareSection from "./components/sections/share-section";
+import RSVPSection from "./components/sections/rspv-section";
 import { useAudio } from "./hooks/useAudio";
 
 import {
@@ -41,6 +42,15 @@ function TransportSection() {
   );
 }
 
+function GiftSection() {
+  return (
+    <div className="space-y-6 pb-20">
+      <AccountSection />
+      <RSVPSection />
+    </div>
+  );
+}
+
 /* ---------- main component ---------- */
 export default function WeddingInvitation() {
   const [pageIndex, setPageIndex] = useState(0);
@@ -51,20 +61,12 @@ export default function WeddingInvitation() {
     <InvitationSection key="invite" />,
     <WeddingInfoSection key="info" />,
     <GallerySection key="gallery" />,
-    <AccountSection key="account" />,
+    <GiftSection key="gift" />,
     <LocationSection key="location" />,
     <TransportSection key="transport" />,
   ];
 
-  const icons = [
-    Heart,
-    Mail,
-    Calendar,
-    ImageIcon,
-    Gift,
-    MapPin,
-    Bus,
-  ];
+  const icons = [Heart, Mail, Calendar, ImageIcon, Gift, MapPin, Bus];
 
   return (
     <>
