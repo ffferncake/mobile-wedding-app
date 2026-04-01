@@ -2,14 +2,16 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import mapboxgl from "mapbox-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
 
-mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX!;
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
 
 export default function LocationSection() {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
-  const mapRef = useRef<mapboxgl.Map | null>(null);
+  const mapRef = useRef<any>(null);
   const mapInitializedRef = useRef(false);
 
   const [mapViewMode, setMapViewMode] = useState<"MAP" | "IMAGE">("MAP");
@@ -19,48 +21,55 @@ export default function LocationSection() {
     if (!mapContainerRef.current) return;
     if (mapInitializedRef.current) return;
 
-    mapInitializedRef.current = true;
+    const initMap = () => {
+      const kakao = window.kakao;
 
-    const map = new mapboxgl.Map({
-      container: mapContainerRef.current,
-      style: "mapbox://styles/mapbox/standard",
-      center: [126.8779692, 37.508535],
-      zoom: 17.5,
-      pitch: 60,
-      bearing: -17.6,
-      antialias: true,
-      preserveDrawingBuffer: true,
-      config: {
-        basemap: {
-          lightPreset: "dusk",
-          show3dObjects: true,
-        },
-      },
-    });
+      if (!kakao || !kakao.maps) {
+        console.error("❌ Kakao not loaded");
+        return;
+      }
 
-    mapRef.current = map;
+      kakao.maps.load(() => {
+        const center = new kakao.maps.LatLng(37.508535, 126.8779692);
 
-    new mapboxgl.Marker().setLngLat([126.8779692, 37.508535]).addTo(map);
+        const map = new kakao.maps.Map(mapContainerRef.current, {
+          center,
+          level: 3,
+        });
 
-    const popupNode = document.createElement("div");
-    popupNode.innerHTML = `
-      <div class="flex flex-row gap-[10px] typo-crayon-font">
-        <p>💒 JK 아트컨벤션</p>
-      </div>
-    `;
+        mapRef.current = map;
 
-    new mapboxgl.Popup({ closeOnClick: false, offset: 30 })
-      .setDOMContent(popupNode)
-      .setLngLat([126.8779692, 37.508535])
-      .addTo(map);
+        const marker = new kakao.maps.Marker({
+          position: center,
+        });
+        marker.setMap(map);
+
+        const infowindow = new kakao.maps.InfoWindow({
+          content: `
+          <div style="padding:8px 12px; font-size:14px;">
+            💒 JK 아트컨벤션
+          </div>
+        `,
+        });
+
+        infowindow.open(map, marker);
+
+        mapInitializedRef.current = true;
+      });
+    };
+
+    // ✅ WAIT until kakao is ready
+    const checkKakao = setInterval(() => {
+      if (window.kakao && window.kakao.maps) {
+        clearInterval(checkKakao);
+        initMap();
+      }
+    }, 100);
 
     return () => {
-      map.remove();
-      mapRef.current = null;
-      mapInitializedRef.current = false;
+      clearInterval(checkKakao);
     };
   }, [mapViewMode]);
-
   return (
     <div id="location" className="section">
       <p className="title-en">LOCATION</p>
@@ -68,11 +77,11 @@ export default function LocationSection() {
 
       <div>
         <p>JK 아트컨벤션 4층 엠버루체홀</p>
-        <p>서울특별시 영등포구 문래로 164 (문래동3가 55-16번지)</p>
+        <p>서울특별시 영등포구 문래로 164</p>
         <p>SK리더스뷰</p>
       </div>
 
-      {/* Map Tabs */}
+      {/* Tabs */}
       <div className="flex justify-center gap-2 mb-4 mt-4">
         <button
           onClick={() => setMapViewMode("MAP")}
@@ -100,48 +109,11 @@ export default function LocationSection() {
       {mapViewMode === "MAP" ? (
         <div
           ref={mapContainerRef}
-          className="w-full max-w-[420px] h-[350px] mx-auto rounded-[10px] overflow-hidden shadow-md"
+          className="w-full max-w-[420px] h-[350px] mx-auto rounded-[10px]"
         />
       ) : (
-        <div className="flex justify-center">
-          <Image
-            src="/images/jk_map.jpg"
-            alt="JK Art Convention map"
-            width={800}
-            height={500}
-            className="w-full max-w-[420px] h-auto rounded-xl"
-            priority
-          />
-        </div>
+        <Image src="/images/jk_map.jpg" alt="map" width={800} height={500} />
       )}
-
-      <div className="flex justify-center gap-3 mt-[15px]">
-        <div className="flex items-center gap-[7px] bg-[#f8f8f8] px-4 py-[10px] rounded-lg font-medium text-[#333] shadow-sm hover:bg-[#eee] transition">
-          <Image
-            src="/images/kakao_navi.svg"
-            alt="kakao icon"
-            width={32}
-            height={32}
-            className="rounded"
-          />
-          <a href="https://kko.to/Kg-9yiU8OY" target="_blank">
-            카카오내비
-          </a>
-        </div>
-
-        <div className="flex items-center gap-[7px] bg-[#f8f8f8] px-4 py-[10px] rounded-lg font-medium text-[#333] shadow-sm hover:bg-[#eee] transition">
-          <Image
-            src="/images/naver_map.png"
-            alt="naver icon"
-            width={32}
-            height={32}
-            className="rounded"
-          />
-          <a href="https://naver.me/Gn0yrSdR" target="_blank">
-            네이버지도
-          </a>
-        </div>
-      </div>
     </div>
   );
 }
