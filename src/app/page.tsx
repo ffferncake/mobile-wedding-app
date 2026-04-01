@@ -15,7 +15,6 @@ import SubwaySection from "./components/sections/subway-section";
 import BusSection from "./components/sections/bus-section";
 import ParkingSection from "./components/sections/parking-section";
 import ShareSection from "./components/sections/share-section";
-import RSVPSection from "./components/sections/rspv-section";
 import { useAudio } from "./hooks/useAudio";
 
 import {
@@ -26,6 +25,7 @@ import {
   Gift,
   MapPin,
   Bus,
+  Share2,
   Music4,
   VolumeOff,
 } from "lucide-react";
@@ -42,15 +42,6 @@ function TransportSection() {
   );
 }
 
-function GiftSection() {
-  return (
-    <div className="space-y-6 pb-20">
-      <AccountSection />
-      <RSVPSection />
-    </div>
-  );
-}
-
 /* ---------- main component ---------- */
 export default function WeddingInvitation() {
   const [pageIndex, setPageIndex] = useState(0);
@@ -60,13 +51,25 @@ export default function WeddingInvitation() {
     <CoverSection key="cover" />,
     <InvitationSection key="invite" />,
     <WeddingInfoSection key="info" />,
+    // <IntroductionSection key="intro" />,
     <GallerySection key="gallery" />,
-    <GiftSection key="gift" />,
+    <AccountSection key="account" />,
     <LocationSection key="location" />,
     <TransportSection key="transport" />,
+    <ShareSection key="share" />,
   ];
 
-  const icons = [Heart, Mail, Calendar, ImageIcon, Gift, MapPin, Bus];
+  const icons = [
+    Heart,
+    Mail,
+    Calendar,
+    // Users,
+    ImageIcon,
+    Gift,
+    MapPin,
+    Bus,
+    Share2,
+  ];
 
   return (
     <>
