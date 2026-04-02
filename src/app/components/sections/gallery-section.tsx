@@ -11,14 +11,16 @@ export default function GallerySection() {
       "/images/gallery/gallery_2.JPG",
       "/images/gallery/gallery_3.JPG",
       "/images/gallery/gallery_4.JPG",
-    ],
-    summer: [
       "/images/gallery/gallery_5.JPG",
       "/images/gallery/gallery_6.JPG",
+    ],
+    summer: [
       "/images/gallery/gallery_7.JPG",
       "/images/gallery/gallery_8.JPG",
       "/images/gallery/gallery_9.JPG",
       "/images/gallery/gallery_10.JPG",
+      "/images/gallery/gallery_11.JPG",
+      "/images/gallery/gallery_12.JPG",
     ],
   };
 
@@ -27,7 +29,7 @@ export default function GallerySection() {
     { key: "summer", label: "여름" },
   ] as const;
 
-  const [tab, setTab] = useState<"winter" | "summer">("winter");
+  const [tab, setTab] = useState<"winter" | "summer">("summer");
   const [index, setIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
 
