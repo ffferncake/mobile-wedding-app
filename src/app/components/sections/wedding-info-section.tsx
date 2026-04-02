@@ -118,7 +118,7 @@ export default function WeddingInfoSection() {
       {/* Countdown */}
       <div className="flex justify-center gap-[20px] mt-[10px] flex-wrap">
         <div className="text-center">
-          <div className="px-[10px] py-[5px] bg-[#f3f3f3] rounded-md shadow-md text-[25px] font-bold flex justify-center items-center relative">
+          <div className="px-[10px] py-[5px] bg-[#f3f3f3] rounded-md shadow-md text-[20px] font-bold flex justify-center items-center relative">
             <span className="relative z-[2]">{timeLeft.days}</span>
           </div>
           <div className="mt-[8px] text-[13px] text-[#444] font-medium">
@@ -127,7 +127,7 @@ export default function WeddingInfoSection() {
         </div>
 
         <div className="text-center">
-          <div className="px-[10px] py-[5px] bg-[#f3f3f3] rounded-md shadow-md text-[25px] font-bold flex justify-center items-center relative">
+          <div className="px-[10px] py-[5px] bg-[#f3f3f3] rounded-md shadow-md text-[20px] font-bold flex justify-center items-center relative">
             <span className="relative z-[2]">{timeLeft.hours}</span>
           </div>
           <div className="mt-[8px] text-[13px] text-[#444] font-medium">
@@ -136,7 +136,7 @@ export default function WeddingInfoSection() {
         </div>
 
         <div className="text-center">
-          <div className="px-[10px] py-[5px] bg-[#f3f3f3] rounded-md shadow-md text-[25px] font-bold flex justify-center items-center relative">
+          <div className="px-[10px] py-[5px] bg-[#f3f3f3] rounded-md shadow-md text-[20px] font-bold flex justify-center items-center relative">
             <span className="relative z-[2]">{timeLeft.minutes}</span>
           </div>
           <div className="mt-[8px] text-[13px] text-[#444] font-medium">
@@ -145,7 +145,7 @@ export default function WeddingInfoSection() {
         </div>
 
         <div className="text-center">
-          <div className="px-[10px] py-[5px] bg-[#f3f3f3] rounded-md shadow-md text-[25px] font-bold flex justify-center items-center relative">
+          <div className="px-[10px] py-[5px] bg-[#f3f3f3] rounded-md shadow-md text-[20px] font-bold flex justify-center items-center relative">
             <span className="relative z-[2]">{timeLeft.seconds}</span>
           </div>
           <div className="mt-[8px] text-[13px] text-[#444] font-medium">

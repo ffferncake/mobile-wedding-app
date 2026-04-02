@@ -30,6 +30,16 @@ import {
   VolumeOff,
 } from "lucide-react";
 
+const navItems = [
+  { icon: Heart, label: "소개" },
+  { icon: Mail, label: "초대장" },
+  { icon: Calendar, label: "일정" },
+  { icon: ImageIcon, label: "갤러리" },
+  { icon: Gift, label: "마음전하기" },
+  { icon: MapPin, label: "오시는길" },
+  { icon: Bus, label: "교통안내" },
+];
+
 /* ---------- transport combined page ---------- */
 function TransportSection() {
   return (
@@ -44,7 +54,7 @@ function TransportSection() {
 
 function GiftSection() {
   return (
-    <div className="space-y-6 pb-20">
+    <div className="space-y-4 pb-6">
       <AccountSection />
       <RSVPSection />
     </div>
@@ -96,20 +106,45 @@ export default function WeddingInvitation() {
             </button>
           </div>
           {/* bottom navigation */}
-          <div className="fixed bottom-3 left-1/2 -translate-x-1/2 flex gap-1 backdrop-blur-xl bg-white/60 border border-white/30 px-2 py-2 rounded-full shadow-lg">
-            {icons.map((Icon, index) => (
-              <button
-                key={index}
-                onClick={() => setPageIndex(index)}
-                className={`p-2 rounded-full transition-all duration-300 ${
-                  pageIndex === index
-                    ? "bg-black text-white scale-110 shadow-md"
-                    : "text-gray-600 hover:bg-white/60 hover:scale-105"
-                }`}
-              >
-                <Icon size={18} />
-              </button>
-            ))}
+          <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[95%] max-w-[410px] z-50">
+            <div className="relative flex items-center backdrop-blur-xl bg-white/70 border border-white/30 rounded-full px-2 shadow-lg">
+              {/* ✅ sliding circle (완벽 중앙) */}
+              <div
+                className="absolute top-1/2 -translate-y-1/2 h-[48px] bg-white rounded-full shadow-md transition-all duration-300"
+                style={{
+                  width: `calc((100% - 16px) / ${navItems.length})`,
+                  left: `calc(${pageIndex} * ((100% - 16px) / ${navItems.length}) + 8px)`,
+                }}
+              />
+
+              {/* buttons */}
+              {navItems.map(({ icon: Icon, label }, index) => {
+                const isActive = pageIndex === index;
+
+                return (
+                  <button
+                    key={index}
+                    onClick={() => setPageIndex(index)}
+                    className="relative z-10 flex flex-col items-center justify-center flex-1 h-[56px] gap-1 transition-all duration-300"
+                  >
+                    <Icon
+                      size={18}
+                      className={`transition-all duration-300 ${
+                        isActive ? "text-black scale-105" : "text-gray-400"
+                      }`}
+                    />
+
+                    <span
+                      className={`text-[8px] leading-none mt-[2px] transition-all duration-300 ${
+                        isActive ? "text-black font-medium" : "text-gray-400"
+                      }`}
+                    >
+                      {label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

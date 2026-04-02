@@ -53,7 +53,7 @@ export default function AccountSection() {
         따뜻한 마음에 깊이 감사드립니다.
       </p>
 
-      <div className="flex flex-col gap-4 mt-5">
+      <div className="flex flex-col gap-4 mt-3">
         {accounts.map((acc, i) => (
           <div key={i} className="flex flex-col items-center w-full">
             {/* Name OUTSIDE the box */}

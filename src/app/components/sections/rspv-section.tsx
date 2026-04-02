@@ -58,7 +58,7 @@ const handleSend = async () => {
       <div className="flex gap-3 mt-3 text-sm">
         <button
           onClick={() => setAttend("yes")}
-          className={`flex-1 py-3 rounded-xl border typo-crayon-font transition ${
+          className={`flex-1 py-2 rounded-xl border typo-crayon-font transition ${
             attend === "yes"
               ? "border-[#c48a8a] bg-[#fff5f5] text-[#c48a8a]"
               : "border-gray-200 text-gray-400"
@@ -69,7 +69,7 @@ const handleSend = async () => {
 
         <button
           onClick={() => setAttend("no")}
-          className={`flex-1 py-3 rounded-xl border typo-crayon-font transition ${
+          className={`flex-1 py-2 rounded-xl border typo-crayon-font transition ${
             attend === "no"
               ? "border-[#c48a8a] bg-[#fff5f5] text-[#c48a8a]"
               : "border-gray-200 text-gray-400"
