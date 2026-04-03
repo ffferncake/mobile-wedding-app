@@ -80,7 +80,7 @@ export default function WeddingInfoSection() {
       <h3 className="highlight">예식 안내</h3>
 
       <div className="text-center text-[13px] leading-[1.8] mb-[10px]">
-        <p className="font-semibold text-[18px] mt-1">
+        <p className="font-semibold text-[18px]">
           JK Art Convention (JK아트컨벤션)
         </p>
         <p className="text-[#888] text-[14px]">
@@ -116,7 +116,7 @@ export default function WeddingInfoSection() {
       <WeddingCalendar />
 
       {/* Countdown */}
-      <div className="flex justify-center gap-[20px] mt-[10px] flex-wrap">
+      <div className="flex justify-center gap-[20px] mt-[8px] flex-wrap">
         <div className="text-center">
           <div className="px-[10px] py-[5px] bg-[#f3f3f3] rounded-md shadow-md text-[20px] font-bold flex justify-center items-center relative">
             <span className="relative z-[2]">{timeLeft.days}</span>

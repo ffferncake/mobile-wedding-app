@@ -67,7 +67,7 @@ export default function GallerySection() {
       </div>
 
       {/* ✅ tab bar */}
-      <div className="w-full max-w-[420px] mx-auto mt-4">
+      <div className="w-full max-w-[420px] mx-auto mt-2">
         <div className="relative flex border-b border-gray-200">
           {tabs.map((t) => (
             <button

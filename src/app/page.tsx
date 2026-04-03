@@ -43,7 +43,7 @@ const navItems = [
 /* ---------- transport combined page ---------- */
 function TransportSection() {
   return (
-    <div className="space-y-6 pb-20">
+    <div className="space-y-4 pb-6">
       <SubwaySection />
       <BusSection />
       <ParkingSection />

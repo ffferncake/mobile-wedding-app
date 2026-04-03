@@ -33,7 +33,7 @@ export default function WeddingCalendar() {
         </h3>
         <p className="text-sm text-gray-400">{formattedTime}</p>
       </div>
-      <div className="max-w-[260px] mx-auto border-t border-b border-gray-200 py-[10px]">
+      <div className="max-w-[260px] mx-auto border-t border-b border-gray-200 py-[5px]">
         <div className="grid grid-cols-7 text-[13px] mb-[6px] text-gray-400">
           <span className="text-[#d69fa6]">일</span>
           <span>월</span>
@@ -44,7 +44,7 @@ export default function WeddingCalendar() {
           <span className="text-[#5569a6]">토</span>
         </div>
 
-        <div className="grid grid-cols-7 gap-y-[6px] text-[13px]">
+        <div className="grid grid-cols-7 gap-y-[1px] text-[13px]">
           {days.map((d, i) => {
             const isSunday = i % 7 === 0;
             const isSaturday = i % 7 === 6;
