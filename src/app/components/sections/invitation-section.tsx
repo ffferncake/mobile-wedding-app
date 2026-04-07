@@ -12,7 +12,7 @@ export default function InvitationSection({ lang }: Props) {
   const fontClass = isTH ? "pg-bathbomb" : "typo-crayon-font";
   const sectionSize = isTH ? "text-[20px]" : "text-[13px]";
   const titleSize = isTH ? "text-[22px]" : "text-[16px]";
-  const contentSize = isTH ? "text-[18px]" : "text-[16px]";
+  const contentSize = isTH ? "text-[16px]" : "text-[16px]";
   const highlightSize = isTH ? "text-[24px]" : "text-[18px]";
   const subTextSize = isTH ? "text-[18px]" : "text-[14px]";
 
@@ -104,24 +104,29 @@ export default function InvitationSection({ lang }: Props) {
           </div>
 
           {/* Bride side */}
-          <div className="flex items-center w-full justify-center">
+          <div className="flex flex-col items-center w-full">
             {lang === "ko" ? (
-              <>
+              <div className="flex items-center">
                 <p className="font-medium min-w-[85px]">Nhong</p>
                 <p className="mx-2">·</p>
                 <p className="font-medium w-[100px]">Kagh</p>
                 <p>의 딸 👰🏻‍♀️</p>
-              </>
+              </div>
             ) : (
               <>
-                <p>👰🏻‍♀️</p>
-                <p className="mx-1">บุตรสาวของ</p>
+                <div className="flex items-center justify-center">
+                  <p>👰🏻‍♀️</p>
+                  <p className="mx-1">บุตรสาวของ</p>
+                  <p className="font-medium mx-1">พ่อเฉลิมชัย</p>
+                  <p className="mx-1">·</p>
+                  <p className="font-medium">แม่มลฤดี</p>
+                </div>
 
-                <p className="font-medium mx-1">พ่อเฉลิมชัย (พ่อโหน่ง)</p>
-
-                <p className="mx-1">·</p>
-
-                <p className="font-medium">แม่มลฤดี (แม่แขก)</p>
+                <div className="flex items-center justify-center text-[#555]">
+                  <p className="font-medium mx-1">(พ่อโหน่ง</p>
+                  <p className="mx-1">·</p>
+                  <p className="font-medium">แม่แขก)</p>
+                </div>
               </>
             )}
           </div>
@@ -137,7 +142,7 @@ export default function InvitationSection({ lang }: Props) {
             width={100}
             height={100}
             priority
-            unoptimized
+            quality={75}
             className="rounded-full object-cover"
           />
 
@@ -170,7 +175,7 @@ export default function InvitationSection({ lang }: Props) {
             width={100}
             height={100}
             priority
-            unoptimized
+            quality={75}
             className="rounded-full object-cover"
           />
 

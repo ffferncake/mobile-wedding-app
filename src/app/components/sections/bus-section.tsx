@@ -14,7 +14,7 @@ export default function BusSection({ lang }: Props) {
   const subTextSize = isTH ? "text-[18px]" : "text-[14px]";
 
   const busNumberSize = isTH ? "text-[12px]" : "text-[13px]";
-  const busLabelSize = isTH ? "text-[12px]" : "text-[11px]";
+  const busLabelSize = isTH ? "text-[10px]" : "text-[11px]";
 
   return (
     <div id="location-bus" className={`section ${fontClass} ${sectionSize}`}>
@@ -24,7 +24,7 @@ export default function BusSection({ lang }: Props) {
         {lang === "ko" ? "버스 이용시" : "การเดินทางด้วยรถบัส"}
       </h3>
 
-      <div className="mt-[10px] flex flex-col gap-[15px] px-[10px]">
+      <div className="mt-[10px] flex flex-col gap-[15px]">
         {/* 문래역 */}
         <div className="flex flex-col">
           <p className={`${subTextSize} font-medium text-[#222]`}>

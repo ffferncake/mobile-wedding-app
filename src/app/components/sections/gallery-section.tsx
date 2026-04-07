@@ -121,6 +121,7 @@ export default function GallerySection({ lang }: Props) {
             src={images[index]}
             alt={`${tab}-${index}`}
             fill
+            quality={75}
             className={`object-cover transition-all duration-300 ${
               animating ? "opacity-0 scale-95" : "opacity-100 scale-100"
             }`}

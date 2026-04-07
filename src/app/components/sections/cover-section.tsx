@@ -46,7 +46,7 @@ export default function CoverSection() {
           alt="Wedding background"
           fill
           priority={i === 0}
-          unoptimized
+          quality={75}
           sizes="100vw"
           className={`object-cover transition-opacity duration-[2000ms] ${
             i === bgIndex ? "opacity-100" : "opacity-0"
