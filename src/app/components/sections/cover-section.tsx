@@ -4,57 +4,87 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 export default function CoverSection() {
-  const [bgIndex, setBgIndex] = useState(0);
+  const images = ["/images/bg_updated_1.webp", "/images/bg_updated_2.webp"];
+
+  const [current, setCurrent] = useState(0);
+  const [next, setNext] = useState(1);
+
   const fullText = "We're getting married";
   const [typedText, setTypedText] = useState("");
 
-  const images = ["/images/bg_updated_1.JPG", "/images/bg_updated_2.JPG"];
+  // 🔥 preload next image
+  useEffect(() => {
+    const img = new window.Image();
+    img.src = images[next];
+  }, [next]);
 
-  // background switch
+  // 🔥 background switching
   useEffect(() => {
     const interval = setInterval(() => {
-      setBgIndex((prev) => (prev + 1) % images.length);
+      setCurrent((prev) => {
+        const newIndex = (prev + 1) % images.length;
+        setNext((newIndex + 1) % images.length);
+        return newIndex;
+      });
     }, 5000);
 
     return () => clearInterval(interval);
   }, []);
 
-  // typing animation
+  // 🔥 typing animation (이미지 바뀔 때마다 실행)
   useEffect(() => {
-    setTypedText("");
     let index = 0;
 
-    const typing = setInterval(() => {
-      setTypedText(fullText.slice(0, index + 1));
-      index++;
+    const delay = setTimeout(() => {
+      setTypedText(""); // 초기화
 
-      if (index === fullText.length) clearInterval(typing);
-    }, 70);
+      const typing = setInterval(
+        () => {
+          setTypedText(fullText.slice(0, index + 1));
+          index++;
 
-    return () => clearInterval(typing);
-  }, [bgIndex]);
+          if (index === fullText.length) {
+            clearInterval(typing);
+          }
+        },
+        50 + Math.random() * 40,
+      ); // 자연스러운 타이핑
 
-  const textColorClass = bgIndex === 1 ? "text-white" : "text-black";
+      return () => clearInterval(typing);
+    }, 300); // 살짝 delay
+
+    return () => clearTimeout(delay);
+  }, [current]);
+
+  const textColorClass = current === 1 ? "text-white" : "text-black";
 
   return (
     <section className="relative h-screen overflow-hidden">
-      {/* Background images */}
-      {images.map((src, i) => (
-        <Image
-          key={src}
-          src={src}
-          alt="Wedding background"
-          fill
-          priority={i === 0}
-          quality={75}
-          sizes="100vw"
-          className={`object-cover transition-opacity duration-[2000ms] ${
-            i === bgIndex ? "opacity-100" : "opacity-0"
-          }`}
-        />
-      ))}
+      {/* 🟢 current image */}
+      <Image
+        src={images[current]}
+        alt="Wedding background"
+        fill
+        priority
+        quality={75}
+        sizes="100vw"
+        className="object-cover transition-opacity duration-1000 opacity-100"
+      />
 
-      {/* Typing title */}
+      {/* 🔵 next image (crossfade용) */}
+      <Image
+        src={images[next]}
+        alt="Next background"
+        fill
+        quality={75}
+        sizes="100vw"
+        className="object-cover transition-opacity duration-1000 opacity-0"
+      />
+
+      {/* ✨ overlay */}
+      <div className="absolute inset-0 bg-black/10 z-10" />
+
+      {/* 📝 typing text */}
       <p
         className={`absolute top-[19%] left-1/2 -translate-x-1/2 -translate-y-1/2
         z-20
@@ -68,10 +98,10 @@ export default function CoverSection() {
         ${textColorClass}`}
       >
         {typedText}
-        <span className="animate-blink"></span>
+        <span className="ml-1 animate-blink"></span>
       </p>
 
-      {/* Couple name */}
+      {/* 💍 couple name */}
       <p
         className={`absolute top-[27%] left-1/2 -translate-x-1/2 -translate-y-1/2
         z-20
@@ -89,7 +119,7 @@ export default function CoverSection() {
         EUNSANG & FERN
       </p>
 
-      {/* Date */}
+      {/* 📅 date */}
       <p
         className={`absolute top-[33%] left-1/2 -translate-x-1/2 -translate-y-1/2
         z-20
