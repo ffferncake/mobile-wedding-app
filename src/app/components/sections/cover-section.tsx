@@ -63,7 +63,6 @@ export default function CoverSection() {
         tracking-[0.05em]
         whitespace-nowrap
         text-center
-        drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)]
         font-[BrittanySignature]
         min-w-[90vw]
         ${textColorClass}`}

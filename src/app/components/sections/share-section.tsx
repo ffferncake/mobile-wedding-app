@@ -7,7 +7,10 @@ type Props = {
 };
 
 export default function ShareSection({ lang }: Props) {
-  const fontClass = lang === "th" ? "pg-bathbomb" : "typo-crayon-font";
+  const isTH = lang === "th";
+
+  const fontClass = isTH ? "pg-bathbomb" : "typo-crayon-font";
+  const subTextSize = isTH ? "text-[18px]" : "text-[14px]";
 
   const copyLink = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -23,7 +26,7 @@ export default function ShareSection({ lang }: Props) {
     <div className="mt-6 flex justify-center">
       <button
         onClick={copyLink}
-        className={`flex items-center gap-2 bg-[#f3f3f3] border border-[#ddd] px-4 py-2 rounded-full text-sm text-black transition-all duration-200 hover:bg-black hover:text-white hover:border-black hover:-translate-y-[1px] hover:shadow-md ${fontClass}`}
+        className={`flex items-center gap-2 bg-[#f3f3f3] border border-[#ddd] px-4 py-2 rounded-full text-sm text-black transition-all duration-200 hover:bg-black hover:text-white hover:border-black hover:-translate-y-[1px] hover:shadow-md ${fontClass} ${subTextSize}`}
       >
         <Share2 size={16} />
 

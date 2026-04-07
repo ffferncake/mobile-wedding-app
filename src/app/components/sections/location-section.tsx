@@ -12,7 +12,13 @@ type Props = {
 };
 
 export default function LocationSection({ lang }: Props) {
-  const fontClass = lang === "th" ? "pg-bathbomb" : "typo-crayon-font";
+  const isTH = lang === "th";
+
+  const fontClass = isTH ? "pg-bathbomb" : "typo-crayon-font";
+  const sectionSize = isTH ? "text-[20px]" : "text-[13px]";
+  const titleSize = isTH ? "text-[22px]" : "text-[16px]";
+  const highlightSize = isTH ? "text-[24px]" : "text-[18px]";
+  const subTextSize = isTH ? "text-[18px]" : "text-[14px]";
 
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
@@ -63,14 +69,14 @@ export default function LocationSection({ lang }: Props) {
   }, [mapViewMode, lang]);
 
   return (
-    <div id="location" className={`section ${fontClass}`}>
-      <p className={`title-en ${fontClass}`}>LOCATION</p>
+    <div id="location" className={`section ${fontClass} ${sectionSize}`}>
+      <p className={`title-en ${fontClass} ${titleSize}`}>LOCATION</p>
 
-      <h3 className={`highlight ${fontClass}`}>
+      <h3 className={`highlight ${fontClass} ${highlightSize}`}>
         {lang === "ko" ? "오시는 길" : "การเดินทาง"}
       </h3>
 
-      <div className="text-center leading-[1.8]">
+      <div className={`text-center leading-[1.8] ${subTextSize}`}>
         <p>
           {lang === "ko"
             ? "JK 아트컨벤션 4층 엠버루체홀"
@@ -90,7 +96,7 @@ export default function LocationSection({ lang }: Props) {
       <div className="flex justify-center gap-2 mb-4 mt-4">
         <button
           onClick={() => setMapViewMode("MAP")}
-          className={`px-[14px] py-[6px] rounded-full border text-[14px] transition ${fontClass} ${
+          className={`px-[14px] py-[6px] rounded-full border ${subTextSize} transition ${fontClass} ${
             mapViewMode === "MAP"
               ? "bg-[#111] text-white"
               : "bg-white text-black border-[#ddd]"
@@ -101,7 +107,7 @@ export default function LocationSection({ lang }: Props) {
 
         <button
           onClick={() => setMapViewMode("IMAGE")}
-          className={`px-[14px] py-[6px] rounded-full border text-[14px] transition ${fontClass} ${
+          className={`px-[14px] py-[6px] rounded-full border ${subTextSize} transition ${fontClass} ${
             mapViewMode === "IMAGE"
               ? "bg-[#111] text-white"
               : "bg-white text-black border-[#ddd]"
@@ -130,7 +136,9 @@ export default function LocationSection({ lang }: Props) {
       )}
 
       {/* navigation buttons */}
-      <div className="flex justify-center gap-3 mt-[15px]">
+      <div
+        className={`flex justify-center gap-3 mt-[15px] ${subTextSize} ${fontClass}`}
+      >
         <a
           href="https://kko.to/Kg-9yiU8OY"
           target="_blank"

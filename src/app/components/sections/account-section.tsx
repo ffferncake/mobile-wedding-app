@@ -58,17 +58,23 @@ export default function AccountSection({
     );
   };
 
-  const fontClass = lang === "th" ? "pg-bathbomb" : "typo-crayon-font";
+  const isTH = lang === "th";
+
+  const fontClass = isTH ? "pg-bathbomb" : "typo-crayon-font";
+  const sectionSize = isTH ? "text-[20px]" : "text-[13px]";
+  const titleSize = isTH ? "text-[22px]" : "text-[16px]";
+  const highlightSize = isTH ? "text-[24px]" : "text-[18px]";
+  const subTextSize = isTH ? "text-[18px]" : "text-[14px]";
 
   return (
     <div id="accountnumber" className="section">
-      <p className={`title-en ${fontClass}`}>ACCOUNT</p>
+      <p className={`title-en ${fontClass} ${titleSize}`}>ACCOUNT</p>
 
-      <h3 className={`highlight ${fontClass}`}>
+      <h3 className={`highlight ${fontClass} ${highlightSize}`}>
         {lang === "ko" ? "마음 전하실 곳" : "ช่องทางแสดงความยินดี"}
       </h3>
 
-      <p className={`text-center ${fontClass}`}>
+      <p className={`text-center ${fontClass} ${subTextSize}`}>
         {lang === "ko" ? (
           <>
             소중한 축하를 보내주셔서 감사드리며,
@@ -88,7 +94,7 @@ export default function AccountSection({
         {accounts.map((acc, i) => (
           <div key={i} className="flex flex-col items-center w-full">
             <span
-              className={`text-sm font-semibold mb-1 text-[#555] ${fontClass}`}
+              className={`${subTextSize} font-semibold mb-1 text-[#555] ${fontClass}`}
             >
               {acc.role}
               {acc.name && <span> · {acc.name}</span>}
@@ -105,7 +111,7 @@ export default function AccountSection({
                 />
 
                 <span
-                  className={`text-sm font-medium text-[#333] ${fontClass}`}
+                  className={`${subTextSize} font-medium text-[#333] ${fontClass}`}
                 >
                   {acc.bank} {acc.number}
                 </span>

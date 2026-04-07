@@ -222,16 +222,16 @@ a {
 
 @layer components {
   .title-en {
-    @apply crayon-font inline-block border-transparent text-[16px];
+    @apply crayon-font inline-block border-transparent;
   }
   .section {
-    @apply max-w-[420px] mx-auto mt-2 px-[6px] text-[13px];
+    @apply max-w-[420px] mx-auto mt-2 px-[6px];
   }
   .text-sm {
-    @apply text-[14px] font-medium;
+    @apply font-medium;
   }
   .highlight {
-    @apply typo-crayon-font text-[#8DBEE1] font-bold text-[18px];
+    @apply typo-crayon-font text-[#8DBEE1] font-bold;
   }
 }
 

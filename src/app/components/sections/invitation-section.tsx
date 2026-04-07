@@ -7,13 +7,23 @@ type Props = {
 };
 
 export default function InvitationSection({ lang }: Props) {
-  const fontClass = lang === "th" ? "pg-bathbomb" : "typo-crayon-font";
+  const isTH = lang === "th";
+
+  const fontClass = isTH ? "pg-bathbomb" : "typo-crayon-font";
+  const sectionSize = isTH ? "text-[20px]" : "text-[13px]";
+  const titleSize = isTH ? "text-[22px]" : "text-[16px]";
+  const contentSize = isTH ? "text-[18px]" : "text-[16px]";
+  const highlightSize = isTH ? "text-[24px]" : "text-[18px]";
+  const subTextSize = isTH ? "text-[18px]" : "text-[14px]";
 
   return (
-    <div id="message" className={`section text-center ${fontClass}`}>
-      <p className={`title-en ${fontClass}`}>INVITATION</p>
+    <div
+      id="message"
+      className={`section text-center ${fontClass} ${sectionSize}`}
+    >
+      <p className={`title-en ${fontClass} ${titleSize}`}>INVITATION</p>
 
-      <p className={`highlight ${fontClass}`}>
+      <p className={`highlight ${fontClass} ${highlightSize}`}>
         {lang === "ko"
           ? "소중한 분들을 초대합니다."
           : "ขอเรียนเชิญทุกท่านมาร่วมเป็นเกียรติ"}
@@ -21,40 +31,60 @@ export default function InvitationSection({ lang }: Props) {
 
       {lang === "ko" ? (
         <>
-          <p className={`mt-2.5 ${fontClass}`}>서로를 만나</p>
-          <p>웃음이 더 많아진 저희 두 사람이</p>
-          <p>이제 평생의 짝이 되려 합니다.</p>
+          <p className={`mt-2.5 ${fontClass} ${subTextSize}`}>서로를 만나</p>
+          <p className={`mt-2.5 ${fontClass} ${subTextSize}`}>
+            웃음이 더 많아진 저희 두 사람이
+          </p>
+          <p className={`mt-2.5 ${fontClass} ${subTextSize}`}>
+            이제 평생의 짝이 되려 합니다.
+          </p>
 
-          <p className={`mt-2.5 ${fontClass}`}>기쁜 날,</p>
-          <p>소중한 분들과</p>
-          <p>행복한 순간을 함께하고 싶습니다.</p>
+          <p className={`mt-2.5 ${fontClass} ${subTextSize}`}>기쁜 날,</p>
+          <p className={`mt-2.5 ${fontClass} ${subTextSize}`}>소중한 분들과</p>
+          <p className={`mt-2.5 ${fontClass} ${subTextSize}`}>
+            행복한 순간을 함께하고 싶습니다.
+          </p>
 
-          <p>따뜻한 마음으로</p>
-          <p>축복해 주세요 🌷</p>
+          <p className={`mt-2.5 ${fontClass} ${subTextSize}`}>
+            따뜻한 마음으로
+          </p>
+          <p className={`mt-2.5 ${fontClass} ${subTextSize}`}>
+            축복해 주세요 🌷
+          </p>
         </>
       ) : (
         <>
-          <p className={`mt-2.5 ${fontClass}`}></p>
+          <p></p>
           <p></p>
           <p></p>
 
-          <p className={`mt-2.5 ${fontClass}`}>ในวันสำคัญนี้</p>
-          <p>เราขอเชิญทุกท่าน</p>
-          <p>มาร่วมแบ่งปันช่วงเวลาแห่งความสุขกับเรา</p>
+          <p className={`mt-2.5 ${fontClass} ${subTextSize}`}>ในวันสำคัญนี้</p>
+          <p className={`mt-2.5 ${fontClass} ${subTextSize}`}>
+            เราขอเชิญทุกท่าน
+          </p>
+          <p className={`mt-2.5 ${fontClass} ${subTextSize}`}>
+            มาร่วมแบ่งปันช่วงเวลาแห่งความสุขกับเรา
+          </p>
 
-          <p>ด้วยความยินดีจากใจ</p>
-          <p>ขอให้ทุกท่านร่วมอวยพรให้กับเรา 🌷</p>
+          <p className={`mt-2.5 ${fontClass} ${subTextSize}`}>
+            ด้วยความยินดีจากใจ
+          </p>
+          <p className={`mt-2.5 ${fontClass} ${subTextSize}`}>
+            ขอให้ทุกท่านร่วมอวยพรให้กับเรา 🌷
+          </p>
         </>
       )}
 
       {/* 부모님 소개 */}
-      <div className="mt-6 text-center text-[16px] leading-[1.8] text-[#333] flex flex-row items-start justify-center">
+      <div
+        className={`mt-6 text-center ${contentSize} leading-[1.8] text-[#333] flex flex-row items-start justify-center`}
+      >
         <div className="flex flex-col">
           {/* Groom side */}
           <div className="flex items-center w-full justify-center">
             {lang === "ko" ? (
               <>
-                <p className="font-medium min-w-[70px]">유영운</p>
+                <p className="font-medium min-w-[100px]">유영운</p>
                 <p className="mx-2">·</p>
                 <p className="font-medium w-[100px]">신혜원</p>
                 <p>의 아들 🤵🏻</p>
@@ -77,7 +107,7 @@ export default function InvitationSection({ lang }: Props) {
           <div className="flex items-center w-full justify-center">
             {lang === "ko" ? (
               <>
-                <p className="font-medium min-w-[70px]">Nhong</p>
+                <p className="font-medium min-w-[85px]">Nhong</p>
                 <p className="mx-2">·</p>
                 <p className="font-medium w-[100px]">Kagh</p>
                 <p>의 딸 👰🏻‍♀️</p>
@@ -112,7 +142,7 @@ export default function InvitationSection({ lang }: Props) {
           />
 
           <div className="flex flex-row items-center justify-center gap-[10px] mt-[10px]">
-            <p className="font-bold text-[16px]">
+            <p className={`font-bold ${contentSize}`}>
               {lang === "ko" ? "유은상" : <>ยูอึนซัง</>}
             </p>
 
@@ -124,11 +154,11 @@ export default function InvitationSection({ lang }: Props) {
             </a>
           </div>
 
-          <p className="text-sm mt-[4px]">
+          <p className={`${subTextSize} mt-[4px]`}>
             {lang === "ko" ? "92년산 🍾🐒✨" : "เกิดปี 1992 🍾🐒✨"}
           </p>
-          <p className="text-sm">
-            {lang === "ko" ? "건축공학 엔지니어" : "วิศวกร"}
+          <p className={`${subTextSize}`}>
+            {lang === "ko" ? "건축공학 엔지니어" : "Architectural Engineer"}
           </p>
         </div>
 
@@ -145,7 +175,7 @@ export default function InvitationSection({ lang }: Props) {
           />
 
           <div className="flex flex-row items-center justify-center gap-[10px] mt-[10px]">
-            <p className="font-bold text-[16px]">
+            <p className={`font-bold ${contentSize}`}>
               {lang === "ko" ? "펀 | FERN" : <>เฟิร์น</>}
             </p>
 
@@ -157,10 +187,10 @@ export default function InvitationSection({ lang }: Props) {
             </a>
           </div>
 
-          <p className="text-sm mt-[4px]">
+          <p className={`${subTextSize} mt-[4px]`}>
             {lang === "ko" ? "99년산 🍼🐰💖" : "เกิดปี 1999 🍼🐰💖"}
           </p>
-          <p className="text-sm">
+          <p className={`${subTextSize}`}>
             {lang === "ko" ? "프론트엔드 개발자" : "Frontend Developer"}
           </p>
         </div>

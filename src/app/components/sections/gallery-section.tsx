@@ -9,7 +9,13 @@ type Props = {
 };
 
 export default function GallerySection({ lang }: Props) {
-  const fontClass = lang === "th" ? "pg-bathbomb" : "typo-crayon-font";
+  const isTH = lang === "th";
+
+  const fontClass = isTH ? "pg-bathbomb" : "typo-crayon-font";
+  const sectionSize = isTH ? "text-[20px]" : "text-[13px]";
+  const titleSize = isTH ? "text-[22px]" : "text-[16px]";
+  const highlightSize = isTH ? "text-[24px]" : "text-[18px]";
+  const subTextSize = isTH ? "text-[18px]" : "text-[14px]";
 
   const gallery = {
     winter: [
@@ -73,9 +79,9 @@ export default function GallerySection({ lang }: Props) {
   return (
     <>
       {/* title */}
-      <div id="gallery" className={`section ${fontClass}`}>
-        <p className={`title-en ${fontClass}`}>GALLERY</p>
-        <h3 className={`highlight ${fontClass}`}>
+      <div id="gallery" className={`section ${fontClass} ${sectionSize}`}>
+        <p className={`title-en ${fontClass} ${titleSize}`}>GALLERY</p>
+        <h3 className={`highlight ${fontClass} ${highlightSize}`}>
           {lang === "ko" ? "웨딩 갤러리" : "แกลเลอรี่"}
         </h3>
       </div>
@@ -87,7 +93,7 @@ export default function GallerySection({ lang }: Props) {
             <button
               key={t.key}
               onClick={() => setTab(t.key)}
-              className={`flex-1 py-2 text-sm font-medium transition ${fontClass} ${
+              className={`flex-1 py-2 font-medium transition ${fontClass} ${subTextSize} ${
                 tab === t.key
                   ? "text-[#004483]"
                   : "text-gray-400 hover:text-gray-600"
@@ -98,7 +104,7 @@ export default function GallerySection({ lang }: Props) {
           ))}
 
           <div
-            className="absolute bottom-0 h-[2px] bg-[#004483] transition-all duration-300"
+            className={`absolute bottom-0 h-[2px] bg-[#004483] transition-all duration-300 ${fontClass} ${subTextSize}`}
             style={{
               width: "50%",
               left: tab === "winter" ? "0%" : "50%",
@@ -138,7 +144,9 @@ export default function GallerySection({ lang }: Props) {
         </button>
 
         {/* counter */}
-        <p className={`text-center mt-3 text-sm text-gray-500 ${fontClass}`}>
+        <p
+          className={`text-center mt-3 text-gray-500 ${fontClass} ${subTextSize}`}
+        >
           {index + 1} / {images.length}
         </p>
       </div>

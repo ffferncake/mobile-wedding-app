@@ -9,7 +9,17 @@ type Props = {
 };
 
 export default function WeddingInfoSection({ lang }: Props) {
-  const fontClass = lang === "th" ? "pg-bathbomb" : "typo-crayon-font";
+  const isTH = lang === "th";
+
+  const fontClass = isTH ? "pg-bathbomb" : "typo-crayon-font";
+  const sectionSize = isTH ? "text-[20px]" : "text-[13px]";
+  const titleSize = isTH ? "text-[22px]" : "text-[16px]";
+  const highlightSize = isTH ? "text-[24px]" : "text-[18px]";
+
+  const hallNameSize = isTH ? "text-[23px]" : "text-[18px]";
+  const subTextSize = isTH ? "text-[18px]" : "text-[14px]";
+  const countNumberSize = isTH ? "text-[23px]" : "text-[20px]";
+  const countLabelSize = isTH ? "text-[18px]" : "text-[13px]";
 
   const images = [
     "/images/hall_1.jpg",
@@ -70,21 +80,23 @@ export default function WeddingInfoSection({ lang }: Props) {
   }, []);
 
   return (
-    <div id="weddinginfo" className={`section ${fontClass}`}>
-      <p className={`title-en ${fontClass}`}>WEDDING HALL</p>
+    <div id="weddinginfo" className={`section ${fontClass} ${sectionSize}`}>
+      <p className={`title-en ${fontClass} ${titleSize}`}>WEDDING HALL</p>
 
-      <h3 className={`highlight ${fontClass}`}>
+      <h3 className={`highlight ${fontClass} ${highlightSize}`}>
         {lang === "ko" ? "예식 안내" : "รายละเอียดสถานที่จัดงาน"}
       </h3>
 
       <div className="text-center text-[13px] leading-[1.8] mb-[10px]">
-        <p className="font-semibold text-[18px]">
+        <p className={`font-semibold ${hallNameSize}`}>
+          {" "}
           {lang === "ko"
             ? " JK Art Convention (JK아트컨벤션)"
             : " JK Art Convention"}
         </p>
 
-        <p className="text-[#888] text-[14px]">
+        <p className={`text-[#888] ${subTextSize}`}>
+          {" "}
           {lang === "ko"
             ? "4층 Amberluce Hall (엠버루체홀)"
             : "ชั้น 4 Amberluce Hall"}
@@ -120,11 +132,16 @@ export default function WeddingInfoSection({ lang }: Props) {
           { value: timeLeft.seconds, label: lang === "ko" ? "초" : "วินาที" },
         ].map((item, i) => (
           <div key={i} className="text-center">
-            <div className="px-[10px] py-[5px] bg-[#f3f3f3] rounded-md shadow-md text-[20px] font-bold">
+            <div
+              className={`px-[10px] py-[5px] bg-[#f3f3f3] rounded-md shadow-md font-bold ${countNumberSize}`}
+            >
+              {" "}
               {item.value}
             </div>
 
-            <div className="mt-[8px] text-[13px] text-[#444] font-medium">
+            <div
+              className={`mt-[8px] text-[#444] font-medium ${countLabelSize}`}
+            >
               {item.label}
             </div>
           </div>

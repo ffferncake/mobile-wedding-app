@@ -6,7 +6,15 @@ type Props = {
 };
 
 export default function WeddingCalendar({ lang }: Props) {
-  const fontClass = lang === "th" ? "pg-bathbomb" : "typo-crayon-font";
+  const isTH = lang === "th";
+
+  const fontClass = isTH ? "pg-bathbomb" : "typo-crayon-font";
+
+  const dateSize = isTH ? "text-[27px]" : "text-[22px]";
+  const subTextSize = isTH ? "text-[18px]" : "text-[14px]";
+  const weekSize = isTH ? "text-[18px]" : "text-[13px]";
+  const daySize = isTH ? "text-[18px]" : "text-[13px]";
+  const circleSize = isTH ? "w-[27px] h-[27px]" : "w-[22px] h-[22px]";
 
   const targetDate = new Date(2026, 8, 13);
   const year = targetDate.getFullYear();
@@ -47,14 +55,15 @@ export default function WeddingCalendar({ lang }: Props) {
       }`}
     >
       <div className="mb-[5px]">
-        <h3 className="text-[22px] font-semibold text-[#444] mb-1">
+        <h3 className={`${dateSize} font-semibold text-[#444] mb-1`}>
           {formattedDate}
         </h3>
-        <p className="text-sm text-gray-400">{formattedTime}</p>
+        <p className={`${subTextSize} text-gray-400`}>{formattedTime}</p>
       </div>
 
       <div className="max-w-[260px] mx-auto border-t border-b border-gray-200 py-[5px]">
-        <div className="grid grid-cols-7 text-[13px] mb-[6px] text-gray-400">
+        <div className={`grid grid-cols-7 ${weekSize} mb-[6px] text-gray-400`}>
+          {" "}
           {weekDays.map((d, i) => (
             <span
               key={i}
@@ -67,7 +76,8 @@ export default function WeddingCalendar({ lang }: Props) {
           ))}
         </div>
 
-        <div className="grid grid-cols-7 gap-y-[1px] text-[13px]">
+        <div className={`grid grid-cols-7 gap-y-[1px] ${daySize}`}>
+          {" "}
           {days.map((d, i) => {
             const isSunday = i % 7 === 0;
             const isSaturday = i % 7 === 6;
@@ -81,7 +91,7 @@ export default function WeddingCalendar({ lang }: Props) {
                 ${isSaturday ? "text-[#5569a6]" : ""}
                 ${
                   isSelected
-                    ? "bg-[#f4c5c5] text-white w-[22px] h-[22px] inline-flex items-center justify-center rounded-full mx-auto"
+                    ? `bg-[#f4c5c5] text-white ${circleSize} inline-flex items-center justify-center rounded-full mx-auto`
                     : ""
                 }`}
               >

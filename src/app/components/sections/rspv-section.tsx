@@ -12,7 +12,13 @@ export default function RSVPSection({ lang }: Props) {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const fontClass = lang === "th" ? "pg-bathbomb" : "typo-crayon-font";
+  const isTH = lang === "th";
+
+  const fontClass = isTH ? "pg-bathbomb" : "typo-crayon-font";
+  const sectionSize = isTH ? "text-[20px]" : "text-[13px]";
+  const titleSize = isTH ? "text-[22px]" : "text-[16px]";
+  const highlightSize = isTH ? "text-[24px]" : "text-[18px]";
+  const subTextSize = isTH ? "text-[18px]" : "text-[14px]";
 
   const handleSend = async () => {
     if (!attend) {
@@ -67,21 +73,23 @@ export default function RSVPSection({ lang }: Props) {
   };
 
   return (
-    <div className="section text-center">
-      <p className={`title-en ${fontClass}`}>R.S.V.P.</p>
+    <div className={`section text-center ${fontClass} ${sectionSize}`}>
+      <p className={`title-en ${fontClass} ${titleSize}`}>R.S.V.P.</p>
 
-      <h3 className={`highlight ${fontClass} text-[#c48a8a]`}>
+      <h3 className={`highlight ${fontClass} text-[#c48a8a] ${highlightSize}`}>
         {lang === "ko" ? "참석 의사 전달" : "ยืนยันการเข้าร่วม"}
       </h3>
 
-      <p className={`mt-3 text-gray-600 ${fontClass} leading-relaxed`}>
+      <p
+        className={`mt-3 text-gray-600 ${fontClass} ${subTextSize} leading-relaxed`}
+      >
         {lang === "ko"
           ? "참석 여부를 선택 후 전달해 주세요."
           : "กรุณาเลือกและส่งสถานะการเข้าร่วม"}
       </p>
 
       {/* 참석 여부 */}
-      <div className="flex gap-2 mt-3 text-sm justify-center">
+      <div className={`flex gap-2 mt-3 ${subTextSize} justify-center`}>
         <button
           onClick={() => setAttend("yes")}
           disabled={loading}
@@ -114,7 +122,7 @@ export default function RSVPSection({ lang }: Props) {
             value={name}
             onChange={(e) => setName(e.target.value)}
             disabled={loading}
-            className={`w-full border-b border-gray-300 py-2 outline-none text-center text-gray-800 ${fontClass} placeholder-gray-400 bg-transparent text-sm`}
+            className={`w-full border-b border-gray-300 py-2 outline-none text-center text-gray-800 ${fontClass} placeholder-gray-400 bg-transparent ${subTextSize}`}
             placeholder={
               lang === "ko" ? "성함을 입력해 주세요" : "กรุณากรอกชื่อ"
             }
@@ -123,7 +131,7 @@ export default function RSVPSection({ lang }: Props) {
           <button
             onClick={handleSend}
             disabled={loading}
-            className={`w-full mt-3 py-2.5 rounded-full border border-[#e5caca] text-[#c48a8a] ${fontClass} hover:bg-[#fff5f5] transition text-sm disabled:opacity-50 flex items-center justify-center gap-2`}
+            className={`w-full mt-3 py-2.5 rounded-full border border-[#e5caca] text-[#c48a8a] ${fontClass} hover:bg-[#fff5f5] transition ${subTextSize} disabled:opacity-50 flex items-center justify-center gap-2`}
           >
             {loading ? (
               <>
