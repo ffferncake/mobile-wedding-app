@@ -3,23 +3,33 @@
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 
-export default function RSVPSection() {
+type Props = {
+  lang: "ko" | "th";
+};
+
+export default function RSVPSection({ lang }: Props) {
   const [attend, setAttend] = useState<"yes" | "no" | null>(null);
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const fontClass = lang === "th" ? "pg-bathbomb" : "typo-crayon-font";
+
   const handleSend = async () => {
     if (!attend) {
-      alert("참석 여부를 선택해주세요");
+      alert(
+        lang === "ko"
+          ? "참석 여부를 선택해주세요"
+          : "กรุณาเลือกว่าจะเข้าร่วมหรือไม่",
+      );
       return;
     }
 
     if (!name) {
-      alert("이름을 입력해주세요");
+      alert(lang === "ko" ? "이름을 입력해주세요" : "กรุณากรอกชื่อ");
       return;
     }
 
-    setLoading(true); // ✅ start loading
+    setLoading(true);
 
     try {
       await fetch(
@@ -32,31 +42,42 @@ export default function RSVPSection() {
           },
           body: new URLSearchParams({
             name: name,
-            attend: attend === "yes" ? "참석" : "불참",
+            attend:
+              attend === "yes"
+                ? lang === "ko"
+                  ? "참석"
+                  : "เข้าร่วม"
+                : lang === "ko"
+                  ? "불참"
+                  : "ไม่เข้าร่วม",
           }),
         },
       );
 
-      alert("전송 완료 🎉");
+      alert(lang === "ko" ? "전송 완료 🎉" : "ส่งเรียบร้อย 🎉");
 
       setName("");
       setAttend(null);
     } catch (error) {
       console.error(error);
-      alert("전송 실패 😢");
+      alert(lang === "ko" ? "전송 실패 😢" : "ส่งไม่สำเร็จ 😢");
     } finally {
-      setLoading(false); // ✅ always stop loading
+      setLoading(false);
     }
   };
 
   return (
     <div className="section text-center">
-      <p className="title-en">R.S.V.P.</p>
+      <p className={`title-en ${fontClass}`}>R.S.V.P.</p>
 
-      <h3 className="highlight text-[#c48a8a]">참석 의사 전달</h3>
+      <h3 className={`highlight ${fontClass} text-[#c48a8a]`}>
+        {lang === "ko" ? "참석 의사 전달" : "ยืนยันการเข้าร่วม"}
+      </h3>
 
-      <p className="mt-3 text-gray-600 leading-relaxed">
-        참석 여부를 선택 후 전달해 주세요.
+      <p className={`mt-3 text-gray-600 ${fontClass} leading-relaxed`}>
+        {lang === "ko"
+          ? "참석 여부를 선택 후 전달해 주세요."
+          : "กรุณาเลือกและส่งสถานะการเข้าร่วม"}
       </p>
 
       {/* 참석 여부 */}
@@ -64,53 +85,55 @@ export default function RSVPSection() {
         <button
           onClick={() => setAttend("yes")}
           disabled={loading}
-          className={`px-4 py-1.5 rounded-full border typo-crayon-font transition flex items-center gap-1 ${
+          className={`px-4 py-1.5 rounded-full border ${fontClass} transition flex items-center gap-1 ${
             attend === "yes"
               ? "border-[#c48a8a] bg-[#fff5f5] text-[#c48a8a]"
               : "border-gray-200 text-gray-400"
           }`}
         >
-          🙌🏼 참석
+          🙌🏼 {lang === "ko" ? "참석" : "เข้าร่วม"}
         </button>
 
         <button
           onClick={() => setAttend("no")}
           disabled={loading}
-          className={`px-4 py-1.5 rounded-full border typo-crayon-font transition flex items-center gap-1 ${
+          className={`px-4 py-1.5 rounded-full border ${fontClass} transition flex items-center gap-1 ${
             attend === "no"
               ? "border-[#c48a8a] bg-[#fff5f5] text-[#c48a8a]"
               : "border-gray-200 text-gray-400"
           }`}
         >
-          🙏 불참
+          🙏 {lang === "ko" ? "불참" : "ไม่เข้าร่วม"}
         </button>
       </div>
 
       {/* 이름 */}
       <div className="mt-3 flex flex-col items-center gap-3">
         <div className="w-[260px] max-w-[80%]">
-          {/* input */}
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
             disabled={loading}
-            className="w-full border-b border-gray-300 py-2 outline-none text-center text-gray-800 placeholder-gray-400 bg-transparent text-sm"
-            placeholder="성함을 입력해 주세요"
+            className={`w-full border-b border-gray-300 py-2 outline-none text-center text-gray-800 ${fontClass} placeholder-gray-400 bg-transparent text-sm`}
+            placeholder={
+              lang === "ko" ? "성함을 입력해 주세요" : "กรุณากรอกชื่อ"
+            }
           />
 
-          {/* send button */}
           <button
             onClick={handleSend}
             disabled={loading}
-            className="w-full mt-3 py-2.5 rounded-full border border-[#e5caca] text-[#c48a8a] typo-crayon-font hover:bg-[#fff5f5] transition text-sm disabled:opacity-50 flex items-center justify-center gap-2"
+            className={`w-full mt-3 py-2.5 rounded-full border border-[#e5caca] text-[#c48a8a] ${fontClass} hover:bg-[#fff5f5] transition text-sm disabled:opacity-50 flex items-center justify-center gap-2`}
           >
             {loading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                전송 중...
+                {lang === "ko" ? "전송 중..." : "กำลังส่ง..."}
               </>
-            ) : (
+            ) : lang === "ko" ? (
               "보내기"
+            ) : (
+              "ส่ง"
             )}
           </button>
         </div>

@@ -2,42 +2,101 @@
 
 import Image from "next/image";
 
-export default function InvitationSection() {
+type Props = {
+  lang: "ko" | "th";
+};
+
+export default function InvitationSection({ lang }: Props) {
+  const fontClass = lang === "th" ? "pg-bathbomb" : "typo-crayon-font";
+
   return (
-    <div id="message" className="section">
-      <p className="title-en">INVITATION</p>
-      <p className="highlight">소중한 분들을 초대합니다.</p>
+    <div id="message" className={`section text-center ${fontClass}`}>
+      <p className={`title-en ${fontClass}`}>INVITATION</p>
 
-      <p className="mt-2.5">서로를 만나</p>
-      <p>웃음이 더 많아진 저희 두 사람이</p>
-      <p>이제 평생의 짝이 되려 합니다.</p>
+      <p className={`highlight ${fontClass}`}>
+        {lang === "ko"
+          ? "소중한 분들을 초대합니다."
+          : "ขอเรียนเชิญทุกท่านมาร่วมเป็นเกียรติ"}
+      </p>
 
-      <p className="mt-2.5">기쁜 날,</p>
-      <p>소중한 분들과</p>
-      <p>행복한 순간을 함께하고 싶습니다.</p>
+      {lang === "ko" ? (
+        <>
+          <p className={`mt-2.5 ${fontClass}`}>서로를 만나</p>
+          <p>웃음이 더 많아진 저희 두 사람이</p>
+          <p>이제 평생의 짝이 되려 합니다.</p>
 
-      <p>따뜻한 마음으로</p>
-      <p>축복해 주세요 🌷</p>
+          <p className={`mt-2.5 ${fontClass}`}>기쁜 날,</p>
+          <p>소중한 분들과</p>
+          <p>행복한 순간을 함께하고 싶습니다.</p>
+
+          <p>따뜻한 마음으로</p>
+          <p>축복해 주세요 🌷</p>
+        </>
+      ) : (
+        <>
+          <p className={`mt-2.5 ${fontClass}`}></p>
+          <p></p>
+          <p></p>
+
+          <p className={`mt-2.5 ${fontClass}`}>ในวันสำคัญนี้</p>
+          <p>เราขอเชิญทุกท่าน</p>
+          <p>มาร่วมแบ่งปันช่วงเวลาแห่งความสุขกับเรา</p>
+
+          <p>ด้วยความยินดีจากใจ</p>
+          <p>ขอให้ทุกท่านร่วมอวยพรให้กับเรา 🌷</p>
+        </>
+      )}
 
       {/* 부모님 소개 */}
       <div className="mt-6 text-center text-[16px] leading-[1.8] text-[#333] flex flex-row items-start justify-center">
         <div className="flex flex-col">
-          <div className="flex items-center w-full">
-            <p className="font-medium min-w-[70px]">유영운</p>
-            <p className="mx-2">·</p>
-            <p className="font-medium w-[100px]">신혜원</p>
-            <p>의 아들 🤵🏻</p>
+          {/* Groom side */}
+          <div className="flex items-center w-full justify-center">
+            {lang === "ko" ? (
+              <>
+                <p className="font-medium min-w-[70px]">유영운</p>
+                <p className="mx-2">·</p>
+                <p className="font-medium w-[100px]">신혜원</p>
+                <p>의 아들 🤵🏻</p>
+              </>
+            ) : (
+              <>
+                <p>🤵🏻</p>
+                <p className="mx-1">บุตรชายของ</p>
+
+                <p className="font-medium mx-1">พ่อยูยองอุน</p>
+
+                <p className="mx-1">·</p>
+
+                <p className="font-medium">แม่ชินฮเยวอน</p>
+              </>
+            )}
           </div>
 
-          <div className="flex items-center w-full">
-            <p className="font-medium min-w-[70px]">Nhong</p>
-            <p className="mx-2">·</p>
-            <p className="font-medium w-[100px]">Kagh</p>
-            <p>의 딸 👰🏻‍♀️</p>
+          {/* Bride side */}
+          <div className="flex items-center w-full justify-center">
+            {lang === "ko" ? (
+              <>
+                <p className="font-medium min-w-[70px]">Nhong</p>
+                <p className="mx-2">·</p>
+                <p className="font-medium w-[100px]">Kagh</p>
+                <p>의 딸 👰🏻‍♀️</p>
+              </>
+            ) : (
+              <>
+                <p>👰🏻‍♀️</p>
+                <p className="mx-1">บุตรสาวของ</p>
+
+                <p className="font-medium mx-1">พ่อเฉลิมชัย (พ่อโหน่ง)</p>
+
+                <p className="mx-1">·</p>
+
+                <p className="font-medium">แม่มลฤดี (แม่แขก)</p>
+              </>
+            )}
           </div>
         </div>
       </div>
-
       {/* 신랑 신부 */}
       <div className="mt-[20px] flex flex-row items-center justify-center gap-[30px]">
         {/* Groom */}
@@ -53,7 +112,9 @@ export default function InvitationSection() {
           />
 
           <div className="flex flex-row items-center justify-center gap-[10px] mt-[10px]">
-            <p className="font-bold text-[16px]">유은상</p>
+            <p className="font-bold text-[16px]">
+              {lang === "ko" ? "유은상" : <>ยูอึนซัง</>}
+            </p>
 
             <a
               href="tel:01033883415"
@@ -63,8 +124,12 @@ export default function InvitationSection() {
             </a>
           </div>
 
-          <p className="text-sm mt-[4px]">92년산 🍾🐒✨</p>
-          <p className="text-sm">건축공학 엔지니어</p>
+          <p className="text-sm mt-[4px]">
+            {lang === "ko" ? "92년산 🍾🐒✨" : "เกิดปี 1992 🍾🐒✨"}
+          </p>
+          <p className="text-sm">
+            {lang === "ko" ? "건축공학 엔지니어" : "วิศวกร"}
+          </p>
         </div>
 
         {/* Bride */}
@@ -80,7 +145,9 @@ export default function InvitationSection() {
           />
 
           <div className="flex flex-row items-center justify-center gap-[10px] mt-[10px]">
-            <p className="font-bold text-[16px]">펀 | FERN</p>
+            <p className="font-bold text-[16px]">
+              {lang === "ko" ? "펀 | FERN" : <>เฟิร์น</>}
+            </p>
 
             <a
               href="tel:01053349912"
@@ -90,8 +157,12 @@ export default function InvitationSection() {
             </a>
           </div>
 
-          <p className="text-sm mt-[4px]">99년산 🍼🐰💖</p>
-          <p className="text-sm">프론트엔드 개발자</p>
+          <p className="text-sm mt-[4px]">
+            {lang === "ko" ? "99년산 🍼🐰💖" : "เกิดปี 1999 🍼🐰💖"}
+          </p>
+          <p className="text-sm">
+            {lang === "ko" ? "프론트엔드 개발자" : "Frontend Developer"}
+          </p>
         </div>
       </div>
     </div>

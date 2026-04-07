@@ -1,24 +1,22 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useRouter, usePathname } from "next/navigation";
 
-import HeartsBackground from "./components/hearts-background";
-import FlowerBackground from "./components/flower-background";
-import LanguagePopup from "./components/language-popup";
+import FlowerBackground from "../components/flower-background";
+import LanguagePopup from "../components/language-popup";
 
-import CoverSection from "./components/sections/cover-section";
-import InvitationSection from "./components/sections/invitation-section";
-import WeddingInfoSection from "./components/sections/wedding-info-section";
-import GallerySection from "./components/sections/gallery-section";
-import AccountSection from "./components/sections/account-section";
-import LocationSection from "./components/sections/location-section";
-import SubwaySection from "./components/sections/subway-section";
-import BusSection from "./components/sections/bus-section";
-import ParkingSection from "./components/sections/parking-section";
-import ShareSection from "./components/sections/share-section";
-import RSVPSection from "./components/sections/rspv-section";
-import { useAudio } from "./hooks/useAudio";
+import CoverSection from "../components/sections/cover-section";
+import InvitationSection from "../components/sections/invitation-section";
+import WeddingInfoSection from "../components/sections/wedding-info-section";
+import GallerySection from "../components/sections/gallery-section";
+import AccountSection from "../components/sections/account-section";
+import LocationSection from "../components/sections/location-section";
+import SubwaySection from "../components/sections/subway-section";
+import BusSection from "../components/sections/bus-section";
+import ParkingSection from "../components/sections/parking-section";
+import ShareSection from "../components/sections/share-section";
+import RSVPSection from "../components/sections/rspv-section";
+import { useAudio } from "../hooks/useAudio";
 
 import {
   Heart,
@@ -31,27 +29,27 @@ import {
   Music4,
   VolumeOff,
 } from "lucide-react";
-import BottomNav from "./components/bottom-nav";
+import BottomNav from "../components/bottom-nav";
 
 /* ---------- nav items ---------- */
 const navItems = [
-  { icon: Heart, label: "소개" },
-  { icon: Mail, label: "초대장" },
-  { icon: Calendar, label: "일정" },
-  { icon: ImageIcon, label: "갤러리" },
-  { icon: Gift, label: "마음전하기" },
-  { icon: MapPin, label: "오시는길" },
-  { icon: Bus, label: "교통안내" },
+  { icon: Heart, label: "About" }, // 소개
+  { icon: Mail, label: "Invitation" }, // 초대장
+  { icon: Calendar, label: "Schedule" }, // 일정
+  { icon: ImageIcon, label: "Gallery" }, // 갤러리
+  { icon: Gift, label: "Gift" }, // 💡 어색해서 영어 유지
+  { icon: MapPin, label: "Location" }, // 오시는길
+  { icon: Bus, label: "Transport" }, // 교통안내
 ];
 
 /* ---------- combined sections ---------- */
 function TransportSection() {
   return (
     <div className="space-y-4 pb-6">
-      <SubwaySection lang="ko" />
-      <BusSection lang="ko" />
-      <ParkingSection lang="ko" />
-      <ShareSection lang="ko" />
+      <SubwaySection lang="th" />
+      <BusSection lang="th" />
+      <ParkingSection lang="th" />
+      <ShareSection lang="th" />
     </div>
   );
 }
@@ -59,8 +57,8 @@ function TransportSection() {
 function GiftSection() {
   return (
     <div className="space-y-4 pb-6">
-      <AccountSection lang="ko" />
-      <RSVPSection lang="ko" />
+      <AccountSection lang="th" />
+      <RSVPSection lang="th" />
     </div>
   );
 }
@@ -84,20 +82,11 @@ export default function WeddingInvitation() {
     useRef<HTMLDivElement>(null),
   ];
 
-  const router = useRouter();
-  const pathname = usePathname();
+  /* ---------- show language popup ---------- */
+  // useEffect(() => {
+  //   setShowLangPopup(true);
+  // }, []);
 
-  useEffect(() => {
-    const savedLang = localStorage.getItem("lang");
-
-    // 🚨 prevent overriding manual navigation
-    if (!savedLang) return;
-
-    if (savedLang === "th" && pathname === "/") {
-      router.replace("/th");
-    }
-  }, [pathname]);
-  
   /* ---------- scroll to section ---------- */
   const handleScrollTo = (index: number) => {
     sectionRefs[index].current?.scrollIntoView({
@@ -133,11 +122,6 @@ export default function WeddingInvitation() {
     <>
       <FlowerBackground />
 
-      {/* 🌸 LANGUAGE POPUP */}
-      {/* {showLangPopup && (
-        <LanguagePopup onClose={() => setShowLangPopup(false)} />
-      )} */}
-
       <div className="w-full h-screen flex justify-center bg-[rgba(153,153,153,0.05)]">
         <div
           ref={containerRef}
@@ -151,15 +135,15 @@ export default function WeddingInvitation() {
           {/* Other sections */}
           <div className="px-4 pt-4 pb-32 space-y-10">
             <div ref={sectionRefs[1]}>
-              <InvitationSection lang="ko" />
+              <InvitationSection lang="th" />
             </div>
 
             <div ref={sectionRefs[2]}>
-              <WeddingInfoSection lang="ko" />
+              <WeddingInfoSection lang="th" />
             </div>
 
             <div ref={sectionRefs[3]}>
-              <GallerySection lang="ko" />
+              <GallerySection lang="th" />
             </div>
 
             <div ref={sectionRefs[4]}>
@@ -167,7 +151,7 @@ export default function WeddingInvitation() {
             </div>
 
             <div ref={sectionRefs[5]}>
-              <LocationSection lang="ko" />
+              <LocationSection lang="th" />
             </div>
 
             <div ref={sectionRefs[6]}>

@@ -4,7 +4,13 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-export default function GallerySection() {
+type Props = {
+  lang: "ko" | "th";
+};
+
+export default function GallerySection({ lang }: Props) {
+  const fontClass = lang === "th" ? "pg-bathbomb" : "typo-crayon-font";
+
   const gallery = {
     winter: [
       "/images/gallery/gallery_1.JPG",
@@ -25,8 +31,14 @@ export default function GallerySection() {
   };
 
   const tabs = [
-    { key: "winter", label: "겨울" },
-    { key: "summer", label: "여름" },
+    {
+      key: "winter",
+      label: lang === "ko" ? "겨울" : "winter set",
+    },
+    {
+      key: "summer",
+      label: lang === "ko" ? "여름" : "summer set",
+    },
   ] as const;
 
   const [tab, setTab] = useState<"winter" | "summer">("summer");
@@ -61,19 +73,21 @@ export default function GallerySection() {
   return (
     <>
       {/* title */}
-      <div id="gallery" className="section">
-        <p className="title-en">GALLERY</p>
-        <h3 className="highlight">웨딩 갤러리</h3>
+      <div id="gallery" className={`section ${fontClass}`}>
+        <p className={`title-en ${fontClass}`}>GALLERY</p>
+        <h3 className={`highlight ${fontClass}`}>
+          {lang === "ko" ? "웨딩 갤러리" : "แกลเลอรี่"}
+        </h3>
       </div>
 
-      {/* ✅ tab bar */}
+      {/* tab */}
       <div className="w-full max-w-[420px] mx-auto mt-2">
         <div className="relative flex border-b border-gray-200">
           {tabs.map((t) => (
             <button
               key={t.key}
               onClick={() => setTab(t.key)}
-              className={`flex-1 py-2 text-sm font-medium transition typo-crayon-font ${
+              className={`flex-1 py-2 text-sm font-medium transition ${fontClass} ${
                 tab === t.key
                   ? "text-[#004483]"
                   : "text-gray-400 hover:text-gray-600"
@@ -83,7 +97,6 @@ export default function GallerySection() {
             </button>
           ))}
 
-          {/* 🔥 underline indicator */}
           <div
             className="absolute bottom-0 h-[2px] bg-[#004483] transition-all duration-300"
             style={{
@@ -102,9 +115,6 @@ export default function GallerySection() {
             src={images[index]}
             alt={`${tab}-${index}`}
             fill
-            priority={index === 0}
-            quality={85}
-            sizes="(max-width: 420px) 100vw, 420px"
             className={`object-cover transition-all duration-300 ${
               animating ? "opacity-0 scale-95" : "opacity-100 scale-100"
             }`}
@@ -128,7 +138,7 @@ export default function GallerySection() {
         </button>
 
         {/* counter */}
-        <p className="text-center mt-3 text-sm text-gray-500">
+        <p className={`text-center mt-3 text-sm text-gray-500 ${fontClass}`}>
           {index + 1} / {images.length}
         </p>
       </div>

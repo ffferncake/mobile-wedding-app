@@ -7,7 +7,13 @@ import "mapbox-gl/dist/mapbox-gl.css";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX!;
 
-export default function LocationSection() {
+type Props = {
+  lang: "ko" | "th";
+};
+
+export default function LocationSection({ lang }: Props) {
+  const fontClass = lang === "th" ? "pg-bathbomb" : "typo-crayon-font";
+
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const mapInitializedRef = useRef(false);
@@ -30,12 +36,7 @@ export default function LocationSection() {
       bearing: -17.6,
       antialias: true,
       preserveDrawingBuffer: true,
-      config: {
-        basemap: {
-          lightPreset: "dusk",
-          show3dObjects: true,
-        },
-      },
+      config: { basemap: { lightPreset: "dusk", show3dObjects: true } },
     });
 
     mapRef.current = map;
@@ -44,8 +45,8 @@ export default function LocationSection() {
 
     const popupNode = document.createElement("div");
     popupNode.innerHTML = `
-      <div class="flex flex-row gap-[10px] typo-crayon-font">
-        <p>💒 JK 아트컨벤션</p>
+      <div class="flex gap-[6px] ${fontClass}">
+        <p>💒 ${lang === "ko" ? "JK 아트컨벤션" : "JK Art Convention"}</p>
       </div>
     `;
 
@@ -59,44 +60,58 @@ export default function LocationSection() {
       mapRef.current = null;
       mapInitializedRef.current = false;
     };
-  }, [mapViewMode]);
+  }, [mapViewMode, lang]);
 
   return (
-    <div id="location" className="section">
-      <p className="title-en">LOCATION</p>
-      <h3 className="highlight">오시는 길</h3>
+    <div id="location" className={`section ${fontClass}`}>
+      <p className={`title-en ${fontClass}`}>LOCATION</p>
 
-      <div>
-        <p>JK 아트컨벤션 4층 엠버루체홀</p>
-        <p>서울특별시 영등포구 문래로 164 (문래동3가 55-16번지)</p>
-        <p>SK리더스뷰</p>
+      <h3 className={`highlight ${fontClass}`}>
+        {lang === "ko" ? "오시는 길" : "การเดินทาง"}
+      </h3>
+
+      <div className="text-center leading-[1.8]">
+        <p>
+          {lang === "ko"
+            ? "JK 아트컨벤션 4층 엠버루체홀"
+            : "JK Art Convention ชั้น 4 Amberluce Hall"}
+        </p>
+
+        <p>
+          {lang === "ko"
+            ? "서울특별시 영등포구 문래로 164 (문래동3가 55-16번지)"
+            : "164 Mullae-ro, Yeongdeungpo-gu, Seoul"}
+        </p>
+
+        <p>{lang === "ko" ? "SK리더스뷰" : "SK Leaders View"}</p>
       </div>
 
-      {/* Map Tabs */}
+      {/* tabs */}
       <div className="flex justify-center gap-2 mb-4 mt-4">
         <button
           onClick={() => setMapViewMode("MAP")}
-          className={`typo-crayon-font px-[14px] py-[6px] rounded-full border text-[14px] transition ${
+          className={`px-[14px] py-[6px] rounded-full border text-[14px] transition ${fontClass} ${
             mapViewMode === "MAP"
-              ? "bg-[#111] text-white border-[#111]"
-              : "bg-white text-black border-[#ddd] hover:bg-gray-100"
+              ? "bg-[#111] text-white"
+              : "bg-white text-black border-[#ddd]"
           }`}
         >
-          지도 보기
+          {lang === "ko" ? "지도 보기" : "แผนที่"}
         </button>
 
         <button
           onClick={() => setMapViewMode("IMAGE")}
-          className={`typo-crayon-font px-[14px] py-[6px] rounded-full border text-[14px] transition ${
+          className={`px-[14px] py-[6px] rounded-full border text-[14px] transition ${fontClass} ${
             mapViewMode === "IMAGE"
-              ? "bg-[#111] text-white border-[#111]"
-              : "bg-white text-black border-[#ddd] hover:bg-gray-100"
+              ? "bg-[#111] text-white"
+              : "bg-white text-black border-[#ddd]"
           }`}
         >
-          약도 보기
+          {lang === "ko" ? "약도 보기" : "แผนที่ภาพ"}
         </button>
       </div>
 
+      {/* map / image */}
       {mapViewMode === "MAP" ? (
         <div
           ref={mapContainerRef}
@@ -106,41 +121,43 @@ export default function LocationSection() {
         <div className="flex justify-center">
           <Image
             src="/images/jk_map.jpg"
-            alt="JK Art Convention map"
+            alt="map"
             width={800}
             height={500}
-            className="w-full max-w-[420px] h-auto rounded-xl"
-            priority
+            className="w-full max-w-[420px] rounded-xl"
           />
         </div>
       )}
 
+      {/* navigation buttons */}
       <div className="flex justify-center gap-3 mt-[15px]">
-        <div className="flex items-center gap-[7px] bg-[#f8f8f8] px-4 py-[10px] rounded-lg font-medium text-[#333] shadow-sm hover:bg-[#eee] transition">
+        <a
+          href="https://kko.to/Kg-9yiU8OY"
+          target="_blank"
+          className="flex items-center gap-[7px] bg-[#f8f8f8] px-4 py-[10px] rounded-lg shadow-sm hover:bg-[#eee]"
+        >
           <Image
             src="/images/kakao_navi.svg"
-            alt="kakao icon"
+            alt="kakao"
             width={32}
             height={32}
-            className="rounded"
           />
-          <a href="https://kko.to/Kg-9yiU8OY" target="_blank">
-            카카오내비
-          </a>
-        </div>
+          {lang === "ko" ? "카카오내비" : "Kakao Map"}
+        </a>
 
-        <div className="flex items-center gap-[7px] bg-[#f8f8f8] px-4 py-[10px] rounded-lg font-medium text-[#333] shadow-sm hover:bg-[#eee] transition">
+        <a
+          href="https://naver.me/Gn0yrSdR"
+          target="_blank"
+          className="flex items-center gap-[7px] bg-[#f8f8f8] px-4 py-[10px] rounded-lg shadow-sm hover:bg-[#eee]"
+        >
           <Image
             src="/images/naver_map.png"
-            alt="naver icon"
+            alt="naver"
             width={32}
             height={32}
-            className="rounded"
           />
-          <a href="https://naver.me/Gn0yrSdR" target="_blank">
-            네이버지도
-          </a>
-        </div>
+          {lang === "ko" ? "네이버지도" : "Naver Map"}
+        </a>
       </div>
     </div>
   );

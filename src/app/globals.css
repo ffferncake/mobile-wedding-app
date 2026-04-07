@@ -76,6 +76,22 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "PG_Bathbomb";
+  src: url("/font/PG_BathbombV3.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PG_Crayon";
+  src: url("/font/PG_Crayon.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ④ Default font stack for body & buttons */
 button,
 body {
@@ -115,6 +131,14 @@ body {
 
 .typo-crayon-font {
   font-family: "TypoCrayon", serif;
+}
+
+.pg-bathbomb {
+  font-family: "PG_Bathbomb", serif;
+}
+
+.pg-crayon {
+  font-family: "PG_Crayon", serif;
 }
 
 /* General styling */
