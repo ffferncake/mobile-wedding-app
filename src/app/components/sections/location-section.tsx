@@ -33,40 +33,80 @@ export default function LocationSection({ lang }: Props) {
 
     mapInitializedRef.current = true;
 
+    const center: [number, number] = [126.8779692, 37.508535];
+
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/standard",
-      center: [126.8779692, 37.508535],
-      zoom: 17.5,
+      center,
+      zoom: 19.5,
       pitch: 60,
       bearing: -17.6,
       antialias: true,
       preserveDrawingBuffer: true,
-      config: { basemap: { lightPreset: "dusk", show3dObjects: true } },
+      config: {
+        basemap: { lightPreset: "dusk", show3dObjects: true },
+      },
     });
 
     mapRef.current = map;
 
-    new mapboxgl.Marker().setLngLat([126.8779692, 37.508535]).addTo(map);
+    // 👉 wait until map is fully loaded
+    map.on("load", () => {
+      // =========================
+      // 🎯 Custom Marker
+      // =========================
+      const el = document.createElement("div");
+      el.className = "custom-marker";
 
-    const popupNode = document.createElement("div");
-    popupNode.innerHTML = `
+      el.style.backgroundImage = "url(/images/kids_map_icon.png)";
+      el.style.width = "65px";
+      el.style.height = "65px";
+      el.style.backgroundSize = "contain";
+      el.style.backgroundRepeat = "no-repeat";
+      el.style.cursor = "pointer";
+
+      // optional: center alignment tweak
+      el.style.transform = "translate(-50%, -100%)";
+
+      // =========================
+      // 🎯 Popup (building name)
+      // =========================
+      const popupNode = document.createElement("div");
+      popupNode.innerHTML = `
       <div class="flex gap-[6px] ${fontClass}">
         <p>💒 ${lang === "ko" ? "JK 아트컨벤션" : "JK Art Convention"}</p>
       </div>
     `;
 
-    new mapboxgl.Popup({ closeOnClick: false, offset: 30 })
-      .setDOMContent(popupNode)
-      .setLngLat([126.8779692, 37.508535])
-      .addTo(map);
+      const popup = new mapboxgl.Popup({
+        closeOnClick: false,
+        offset: [0, -30], // adjust based on icon height
+      }).setDOMContent(popupNode);
 
+      // =========================
+      // 🎯 Marker + Popup 연결
+      // =========================
+      const marker = new mapboxgl.Marker(el)
+        .setLngLat(center)
+        .setPopup(popup)
+        .addTo(map);
+
+      // 👉 keep popup always visible
+      popup.addTo(map);
+    });
+
+    // =========================
+    // 🧹 Cleanup
+    // =========================
     return () => {
-      map.remove();
-      mapRef.current = null;
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+      }
       mapInitializedRef.current = false;
     };
-  }, [mapViewMode, lang]);
+  }, [mapViewMode, lang, fontClass]);
 
   return (
     <div id="location" className={`section ${fontClass} ${sectionSize}`}>
