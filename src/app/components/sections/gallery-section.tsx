@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 
 type Props = {
   lang: "ko" | "th";
@@ -32,7 +32,16 @@ export default function GallerySection({ lang }: Props) {
       "/images/gallery/gallery_9.JPG",
       "/images/gallery/gallery_10.JPG",
       "/images/gallery/gallery_11.JPG",
+    ],
+    studio: [
       "/images/gallery/gallery_12.JPG",
+      "/images/gallery/gallery_13.JPG",
+      "/images/gallery/gallery_14.JPG",
+      "/images/gallery/gallery_15.JPG",
+      "/images/gallery/gallery_16.JPG",
+      "/images/gallery/gallery_17.JPG",
+      "/images/gallery/gallery_18.JPG",
+      "/images/gallery/gallery_19.JPG",
     ],
   };
 
@@ -45,26 +54,63 @@ export default function GallerySection({ lang }: Props) {
       key: "summer",
       label: lang === "ko" ? "여름" : "summer set",
     },
+    {
+      key: "studio",
+      label: lang === "ko" ? "스튜디오" : "studio set",
+    },
   ] as const;
 
-  const [tab, setTab] = useState<"winter" | "summer">("summer");
+  const [tab, setTab] = useState<"winter" | "summer" | "studio">("summer");
   const [index, setIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
+  const loadedImagesRef = useRef<Set<string>>(new Set());
 
   const images = gallery[tab];
+  const currentImage = images[index];
 
   useEffect(() => {
     setIndex(0);
+    setImageLoading(true);
   }, [tab]);
 
+  useEffect(() => {
+    if (loadedImagesRef.current.has(currentImage)) {
+      setImageLoading(false);
+      setAnimating(false);
+      return;
+    }
+
+    let active = true;
+    setImageLoading(true);
+
+    const img = new window.Image();
+    img.onload = () => {
+      if (!active) return;
+      loadedImagesRef.current.add(currentImage);
+      setImageLoading(false);
+      setAnimating(false);
+    };
+    img.onerror = () => {
+      if (!active) return;
+      setImageLoading(false);
+      setAnimating(false);
+    };
+    img.src = currentImage;
+
+    return () => {
+      active = false;
+    };
+  }, [currentImage]);
+
   const changeImage = (next: number) => {
-    if (animating) return;
+    if (animating || next === index) return;
 
     setAnimating(true);
+    setImageLoading(true);
 
     setTimeout(() => {
       setIndex(next);
-      setAnimating(false);
     }, 150);
   };
 
@@ -106,8 +152,8 @@ export default function GallerySection({ lang }: Props) {
           <div
             className={`absolute bottom-0 h-[2px] bg-[#004483] transition-all duration-300 ${fontClass} ${subTextSize}`}
             style={{
-              width: "50%",
-              left: tab === "winter" ? "0%" : "50%",
+              width: `${100 / tabs.length}%`,
+              left: `${tabs.findIndex((t) => t.key === tab) * (100 / tabs.length)}%`,
             }}
           />
         </div>
@@ -115,15 +161,33 @@ export default function GallerySection({ lang }: Props) {
 
       {/* slider */}
       <div className="relative w-full max-w-[420px] mx-auto my-6">
-        <div className="relative w-full aspect-[3/4] overflow-hidden rounded-xl">
+        <div className="relative w-full aspect-[3/4] overflow-hidden rounded-xl bg-gray-100">
+          {imageLoading && (
+            <div className="absolute inset-0 z-20 flex items-center justify-center bg-white/45 backdrop-blur-[1px]">
+              <Loader2 className="h-8 w-8 animate-spin text-[#004483]" />
+            </div>
+          )}
+
           <Image
-            key={index}
-            src={images[index]}
+            key={currentImage}
+            src={currentImage}
             alt={`${tab}-${index}`}
             fill
             quality={75}
+            unoptimized
+            onLoad={() => {
+              loadedImagesRef.current.add(currentImage);
+              setImageLoading(false);
+              setAnimating(false);
+            }}
+            onError={() => {
+              setImageLoading(false);
+              setAnimating(false);
+            }}
             className={`object-cover transition-all duration-300 ${
-              animating ? "opacity-0 scale-95" : "opacity-100 scale-100"
+              animating || imageLoading
+                ? "opacity-0 scale-95"
+                : "opacity-100 scale-100"
             }`}
           />
         </div>
