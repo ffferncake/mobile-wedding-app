@@ -59,7 +59,7 @@ export default function GallerySection({ lang }: Props) {
     },
     {
       key: "studio",
-      label: lang === "ko" ? "스튜디오" : "studio set",
+      label: lang === "ko" ? "스튜디오" : "สตูดิโอ",
     },
   ] as const;
 
