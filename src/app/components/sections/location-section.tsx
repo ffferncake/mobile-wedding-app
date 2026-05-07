@@ -2,16 +2,31 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { ExternalLink, MapPin } from "lucide-react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX!;
 
+const thailandMapUrl = "https://share.google/0HDQwrLsv1TnFUwOJ";
+const thailandWebsiteUrl =
+  "https://www.facebook.com/MellowGardenWineDineRestaurant";
+const thailandMapEmbedUrl =
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3874.188559588486!2d100.6301381!3d13.8277133!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x311d62860825a6a3%3A0xac71df54306132d7!2sMellow%20Garden!5e0!3m2!1sen!2skr!4v1778139853564!5m2!1sen!2skr";
+
 type Props = {
   lang: "ko" | "th";
+  selectedVenue?: VenueMode;
+  onSelectVenue?: (venue: VenueMode) => void;
 };
 
-export default function LocationSection({ lang }: Props) {
+type VenueMode = "KOREA" | "THAILAND";
+
+export default function LocationSection({
+  lang,
+  selectedVenue: controlledSelectedVenue,
+  onSelectVenue,
+}: Props) {
   const isTH = lang === "th";
 
   const fontClass = isTH ? "pg-bathbomb" : "typo-crayon-font";
@@ -24,9 +39,17 @@ export default function LocationSection({ lang }: Props) {
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const mapInitializedRef = useRef(false);
 
+  const [internalVenueMode, setInternalVenueMode] =
+    useState<VenueMode>("KOREA");
+  const venueMode = controlledSelectedVenue ?? internalVenueMode;
+  const setVenueMode = (venue: VenueMode) => {
+    setInternalVenueMode(venue);
+    onSelectVenue?.(venue);
+  };
   const [mapViewMode, setMapViewMode] = useState<"MAP" | "IMAGE">("MAP");
 
   useEffect(() => {
+    if (venueMode !== "KOREA") return;
     if (mapViewMode !== "MAP") return;
     if (!mapContainerRef.current) return;
     if (mapInitializedRef.current) return;
@@ -106,7 +129,7 @@ export default function LocationSection({ lang }: Props) {
       }
       mapInitializedRef.current = false;
     };
-  }, [mapViewMode, lang, fontClass]);
+  }, [venueMode, mapViewMode, lang, fontClass]);
 
   return (
     <div id="location" className={`section ${fontClass} ${sectionSize}`}>
@@ -116,97 +139,177 @@ export default function LocationSection({ lang }: Props) {
         {lang === "ko" ? "오시는 길" : "การเดินทาง"}
       </h3>
 
-      <div className={`text-center leading-[1.8] ${subTextSize}`}>
-        <p>
-          {lang === "ko"
-            ? "JK 아트컨벤션 4층 엠버루체홀"
-            : "JK Art Convention ชั้น 4 Amberluce Hall"}
-        </p>
-
-        <p>
-          {lang === "ko"
-            ? "서울특별시 영등포구 문래로 164 (문래동3가 55-16번지)"
-            : "164 Mullae-ro, Yeongdeungpo-gu, Seoul"}
-        </p>
-
-        <p>{lang === "ko" ? "SK리더스뷰" : "SK Leaders View"}</p>
-      </div>
-
-      {/* tabs */}
       <div className="flex justify-center gap-2 mb-4 mt-4">
         <button
-          onClick={() => setMapViewMode("MAP")}
+          onClick={() => setVenueMode("KOREA")}
           className={`px-[14px] py-[6px] rounded-full border ${subTextSize} transition ${fontClass} ${
-            mapViewMode === "MAP"
+            venueMode === "KOREA"
               ? "bg-[#111] text-white"
               : "bg-white text-black border-[#ddd]"
           }`}
         >
-          {lang === "ko" ? "지도 보기" : "แผนที่"}
+          {lang === "ko" ? "한국 결혼식" : "งานแต่งที่เกาหลี"}
         </button>
 
         <button
-          onClick={() => setMapViewMode("IMAGE")}
+          onClick={() => setVenueMode("THAILAND")}
           className={`px-[14px] py-[6px] rounded-full border ${subTextSize} transition ${fontClass} ${
-            mapViewMode === "IMAGE"
+            venueMode === "THAILAND"
               ? "bg-[#111] text-white"
               : "bg-white text-black border-[#ddd]"
           }`}
         >
-          {lang === "ko" ? "약도 보기" : "แผนที่ภาพ"}
+          {lang === "ko"
+            ? "태국 축하 파티 & 애프터 파티"
+            : "งานฉลองที่ไทย & After Party"}
         </button>
       </div>
 
-      {/* map / image */}
-      {mapViewMode === "MAP" ? (
-        <div
-          ref={mapContainerRef}
-          className="w-full max-w-[420px] h-[350px] mx-auto rounded-[10px] overflow-hidden shadow-md"
-        />
+      {venueMode === "KOREA" ? (
+        <>
+          <div className={`text-center leading-[1.8] ${subTextSize}`}>
+            <p>
+              {lang === "ko"
+                ? "JK 아트컨벤션 4층 엠버루체홀"
+                : "JK Art Convention ชั้น 4 Amberluce Hall"}
+            </p>
+
+            <p>
+              {lang === "ko"
+                ? "서울특별시 영등포구 문래로 164 (문래동3가 55-16번지)"
+                : "164 Mullae-ro, Yeongdeungpo-gu, Seoul"}
+            </p>
+
+            <p>{lang === "ko" ? "SK리더스뷰" : "SK Leaders View"}</p>
+          </div>
+
+          <div className="flex justify-center gap-2 mb-4 mt-4">
+            <button
+              onClick={() => setMapViewMode("MAP")}
+              className={`px-[14px] py-[6px] rounded-full border ${subTextSize} transition ${fontClass} ${
+                mapViewMode === "MAP"
+                  ? "bg-[#111] text-white"
+                  : "bg-white text-black border-[#ddd]"
+              }`}
+            >
+              {lang === "ko" ? "지도 보기" : "แผนที่"}
+            </button>
+
+            <button
+              onClick={() => setMapViewMode("IMAGE")}
+              className={`px-[14px] py-[6px] rounded-full border ${subTextSize} transition ${fontClass} ${
+                mapViewMode === "IMAGE"
+                  ? "bg-[#111] text-white"
+                  : "bg-white text-black border-[#ddd]"
+              }`}
+            >
+              {lang === "ko" ? "약도 보기" : "แผนที่ภาพ"}
+            </button>
+          </div>
+
+          {mapViewMode === "MAP" ? (
+            <div
+              ref={mapContainerRef}
+              className="w-full max-w-[420px] h-[350px] mx-auto rounded-[10px] overflow-hidden shadow-md"
+            />
+          ) : (
+            <div className="flex justify-center">
+              <Image
+                src="/images/jk_map.jpg"
+                alt="map"
+                width={800}
+                height={500}
+                className="w-full max-w-[420px] rounded-xl"
+              />
+            </div>
+          )}
+
+          <div
+            className={`flex justify-center gap-3 mt-[15px] ${subTextSize} ${fontClass}`}
+          >
+            <a
+              href="https://kko.to/Kg-9yiU8OY"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-[7px] bg-[#f8f8f8] px-4 py-[10px] rounded-lg shadow-sm hover:bg-[#eee]"
+            >
+              <Image
+                src="/images/kakao_navi.svg"
+                alt="kakao"
+                width={32}
+                height={32}
+              />
+              {lang === "ko" ? "카카오내비" : "Kakao Map"}
+            </a>
+
+            <a
+              href="https://naver.me/Gn0yrSdR"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-[7px] bg-[#f8f8f8] px-4 py-[10px] rounded-lg shadow-sm hover:bg-[#eee]"
+            >
+              <Image
+                src="/images/naver_map.png"
+                alt="naver"
+                width={32}
+                height={32}
+              />
+              {lang === "ko" ? "네이버지도" : "Naver Map"}
+            </a>
+          </div>
+        </>
       ) : (
-        <div className="flex justify-center">
-          <Image
-            src="/images/jk_map.jpg"
-            alt="map"
-            width={800}
-            height={500}
-            className="w-full max-w-[420px] rounded-xl"
-          />
+        <div>
+          <div className="mt-4 w-full max-w-[420px] h-[330px] mx-auto rounded-[10px] overflow-hidden shadow-md bg-white">
+            <iframe
+              title="Mellow Garden Google Map"
+              src={thailandMapEmbedUrl}
+              className="h-full w-full border-0"
+              allowFullScreen
+              loading="eager"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+
+          <div className={`text-center leading-[1.8] pt-3 ${subTextSize}`}>
+            <p className="font-semibold">Mellow Garden Wine & Dine Restaurant</p>
+            <p>
+              {lang === "ko"
+                ? "10/895 Prasert-Manukitch Rd, Soi 33"
+                : "10/895 ถนนประเสริฐมนูญกิจ ซอย 33"}
+            </p>
+            <p>
+              {lang === "ko"
+                ? "Nuanchan, Bueng Kum, Bangkok 10230"
+              : "แขวงนวลจันทร์ เขตบึงกุ่ม กรุงเทพฯ 10230"}
+            </p>
+          </div>
+
+          <div
+            className={`flex flex-wrap justify-center gap-3 mt-[15px] ${subTextSize} ${fontClass}`}
+          >
+            <a
+              href={thailandMapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-[7px] bg-[#f8f8f8] px-4 py-[10px] rounded-lg shadow-sm hover:bg-[#eee]"
+            >
+              <MapPin size={20} />
+              Google Maps
+            </a>
+
+            <a
+              href={thailandWebsiteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-[7px] bg-[#f8f8f8] px-4 py-[10px] rounded-lg shadow-sm hover:bg-[#eee]"
+            >
+              <ExternalLink size={20} />
+              {lang === "ko" ? "웹사이트" : "Facebook"}
+            </a>
+          </div>
         </div>
       )}
-
-      {/* navigation buttons */}
-      <div
-        className={`flex justify-center gap-3 mt-[15px] ${subTextSize} ${fontClass}`}
-      >
-        <a
-          href="https://kko.to/Kg-9yiU8OY"
-          target="_blank"
-          className="flex items-center gap-[7px] bg-[#f8f8f8] px-4 py-[10px] rounded-lg shadow-sm hover:bg-[#eee]"
-        >
-          <Image
-            src="/images/kakao_navi.svg"
-            alt="kakao"
-            width={32}
-            height={32}
-          />
-          {lang === "ko" ? "카카오내비" : "Kakao Map"}
-        </a>
-
-        <a
-          href="https://naver.me/Gn0yrSdR"
-          target="_blank"
-          className="flex items-center gap-[7px] bg-[#f8f8f8] px-4 py-[10px] rounded-lg shadow-sm hover:bg-[#eee]"
-        >
-          <Image
-            src="/images/naver_map.png"
-            alt="naver"
-            width={32}
-            height={32}
-          />
-          {lang === "ko" ? "네이버지도" : "Naver Map"}
-        </a>
-      </div>
     </div>
   );
 }

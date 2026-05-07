@@ -54,7 +54,7 @@ export default function CoverSection() {
         </p>
 
         <h1
-          className="font-[BODAR] text-[82px] font-normal uppercase leading-none tracking-[0.018em] text-black/90 opacity-0 drop-shadow-[0_2px_18px_rgba(255,255,255,0.88)] animate-fadeIn sm:text-[94px]"
+          className="font-[BODAR] text-[74px] font-normal uppercase leading-none tracking-[0.018em] text-black/90 opacity-0 drop-shadow-[0_2px_18px_rgba(255,255,255,0.88)] animate-fadeIn sm:text-[86px]"
           style={{ animationDelay: "0.35s" }}
         >
           WEDDING

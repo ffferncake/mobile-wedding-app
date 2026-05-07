@@ -160,7 +160,7 @@ export default function InvitationSection({ lang }: Props) {
           </div>
 
           <p className={`${subTextSize} mt-[4px]`}>
-            {lang === "ko" ? "92년산 🍾🐒✨" : "เกิดปี 1992 🍾🐒✨"}
+            {lang === "ko" ? "92년산 🍾🐒✨" : "Born in 1992 🍾🐒✨"}
           </p>
           <p className={`${subTextSize}`}>
             {lang === "ko" ? "건축공학 엔지니어" : "Architectural Engineer"}
@@ -193,7 +193,7 @@ export default function InvitationSection({ lang }: Props) {
           </div>
 
           <p className={`${subTextSize} mt-[4px]`}>
-            {lang === "ko" ? "99년산 🍼🐰💖" : "เกิดปี 1999 🍼🐰💖"}
+            {lang === "ko" ? "99년산 🍼🐰💖" : "Born in 1999 🍼🐰💖"}
           </p>
           <p className={`${subTextSize}`}>
             {lang === "ko" ? "프론트엔드 개발자" : "Frontend Developer"}

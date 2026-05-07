@@ -42,6 +42,8 @@ const navItems = [
   { icon: Bus, label: "Transport" }, // 교통안내
 ];
 
+type VenueMode = "KOREA" | "THAILAND";
+
 /* ---------- combined sections ---------- */
 function TransportSection() {
   return (
@@ -69,6 +71,9 @@ export default function WeddingInvitation() {
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [showLangPopup, setShowLangPopup] = useState(false);
+  const [selectedVenue, setSelectedVenue] = useState<VenueMode>("KOREA");
+  const visibleNavItems =
+    selectedVenue === "THAILAND" ? navItems.slice(0, 6) : navItems;
 
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -102,7 +107,7 @@ export default function WeddingInvitation() {
 
     const handleScroll = () => {
       const offsets = sectionRefs.map((ref) => {
-        if (!ref.current) return 0;
+        if (!ref.current) return Number.POSITIVE_INFINITY;
         const rect = ref.current.getBoundingClientRect();
         return Math.abs(rect.top);
       });
@@ -139,7 +144,11 @@ export default function WeddingInvitation() {
             </div>
 
             <div ref={sectionRefs[2]}>
-              <WeddingInfoSection lang="th" />
+              <WeddingInfoSection
+                lang="th"
+                selectedVenue={selectedVenue}
+                onSelectVenue={setSelectedVenue}
+              />
             </div>
 
             <div ref={sectionRefs[3]}>
@@ -151,12 +160,18 @@ export default function WeddingInvitation() {
             </div>
 
             <div ref={sectionRefs[5]}>
-              <LocationSection lang="th" />
+              <LocationSection
+                lang="th"
+                selectedVenue={selectedVenue}
+                onSelectVenue={setSelectedVenue}
+              />
             </div>
 
-            <div ref={sectionRefs[6]}>
-              <TransportSection />
-            </div>
+            {selectedVenue !== "THAILAND" && (
+              <div ref={sectionRefs[6]}>
+                <TransportSection />
+              </div>
+            )}
           </div>
 
           {/* music button */}
@@ -171,7 +186,7 @@ export default function WeddingInvitation() {
 
           {/* bottom nav */}
           <BottomNav
-            navItems={navItems}
+            navItems={visibleNavItems}
             activeIndex={activeIndex}
             onClick={handleScrollTo}
           />
