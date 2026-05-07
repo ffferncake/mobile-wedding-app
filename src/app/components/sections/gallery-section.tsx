@@ -1,8 +1,14 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Grid2X2,
+  Image as ImageIcon,
+  Loader2,
+} from "lucide-react";
 
 type Props = {
   lang: "ko" | "th";
@@ -64,21 +70,30 @@ export default function GallerySection({ lang }: Props) {
   ] as const;
 
   const [tab, setTab] = useState<"winter" | "summer" | "studio">("summer");
-  const [index, setIndex] = useState(0);
+  const [viewMode, setViewMode] = useState<"single" | "grid">("single");
+  const [startIndex, setStartIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
   const loadedImagesRef = useRef<Set<string>>(new Set());
 
+  const pageSize = viewMode === "single" ? 1 : 4;
   const images = gallery[tab];
-  const currentImage = images[index];
+  const lastPageStart = Math.floor((images.length - 1) / pageSize) * pageSize;
+  const currentImages = images.slice(startIndex, startIndex + pageSize);
+  const pageKey = currentImages.join("|");
+  const visibleEnd = Math.min(startIndex + currentImages.length, images.length);
 
   useEffect(() => {
-    setIndex(0);
+    setStartIndex(0);
     setImageLoading(true);
   }, [tab]);
 
   useEffect(() => {
-    if (loadedImagesRef.current.has(currentImage)) {
+    const allLoaded = currentImages.every((img) =>
+      loadedImagesRef.current.has(img),
+    );
+
+    if (allLoaded) {
       setImageLoading(false);
       setAnimating(false);
       return;
@@ -87,47 +102,66 @@ export default function GallerySection({ lang }: Props) {
     let active = true;
     setImageLoading(true);
 
-    const img = new window.Image();
-    img.onload = () => {
+    Promise.all(
+      currentImages.map(
+        (src) =>
+          new Promise<void>((resolve) => {
+            if (loadedImagesRef.current.has(src)) {
+              resolve();
+              return;
+            }
+
+            const img = new window.Image();
+            img.onload = () => {
+              loadedImagesRef.current.add(src);
+              resolve();
+            };
+            img.onerror = () => resolve();
+            img.src = src;
+          }),
+      ),
+    ).then(() => {
       if (!active) return;
-      loadedImagesRef.current.add(currentImage);
       setImageLoading(false);
       setAnimating(false);
-    };
-    img.onerror = () => {
-      if (!active) return;
-      setImageLoading(false);
-      setAnimating(false);
-    };
-    img.src = currentImage;
+    });
 
     return () => {
       active = false;
     };
-  }, [currentImage]);
+  }, [pageKey]);
 
-  const changeImage = (next: number) => {
-    if (animating || next === index) return;
+  const changePage = (next: number) => {
+    if (animating || next === startIndex) return;
 
     setAnimating(true);
     setImageLoading(true);
 
     setTimeout(() => {
-      setIndex(next);
+      setStartIndex(next);
     }, 150);
   };
 
+  const changeViewMode = (nextMode: "single" | "grid") => {
+    if (nextMode === viewMode) return;
+
+    const nextPageSize = nextMode === "single" ? 1 : 4;
+    setViewMode(nextMode);
+    setStartIndex(Math.floor(startIndex / nextPageSize) * nextPageSize);
+    setImageLoading(true);
+  };
+
   const next = () => {
-    changeImage((index + 1) % images.length);
+    const nextIndex = startIndex + pageSize;
+    changePage(nextIndex >= images.length ? 0 : nextIndex);
   };
 
   const prev = () => {
-    changeImage((index - 1 + images.length) % images.length);
+    changePage(startIndex - pageSize < 0 ? lastPageStart : startIndex - pageSize);
   };
 
   return (
     <>
-      {/* title */}
       <div id="gallery" className={`section ${fontClass} ${sectionSize}`}>
         <p className={`title-en ${fontClass} ${titleSize}`}>GALLERY</p>
         <h3 className={`highlight ${fontClass} ${highlightSize}`}>
@@ -135,7 +169,6 @@ export default function GallerySection({ lang }: Props) {
         </h3>
       </div>
 
-      {/* tab */}
       <div className="w-full max-w-[420px] mx-auto mt-2">
         <div className="relative flex border-b border-gray-200">
           {tabs.map((t) => (
@@ -162,60 +195,104 @@ export default function GallerySection({ lang }: Props) {
         </div>
       </div>
 
-      {/* slider */}
-      <div className="relative w-full max-w-[420px] mx-auto my-6">
-        <div className="relative w-full aspect-[3/4] overflow-hidden rounded-xl bg-gray-100">
+      <div className="mx-auto mt-3 flex w-full max-w-[420px] justify-center">
+        <div className="flex rounded-full border border-gray-200 bg-white/75 p-1 shadow-sm">
+          <button
+            type="button"
+            onClick={() => changeViewMode("single")}
+            title={lang === "ko" ? "한 장씩 보기" : "ดูทีละรูป"}
+            aria-label={lang === "ko" ? "한 장씩 보기" : "ดูทีละรูป"}
+            className={`flex h-8 min-w-12 items-center justify-center gap-1 rounded-full px-3 transition ${
+              viewMode === "single"
+                ? "bg-[#004483] text-white shadow"
+                : "text-gray-400"
+            }`}
+          >
+            <ImageIcon size={16} />
+            <span className={`text-[12px] ${fontClass}`}>1</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => changeViewMode("grid")}
+            title={lang === "ko" ? "네 장씩 보기" : "ดูทีละ 4 รูป"}
+            aria-label={lang === "ko" ? "네 장씩 보기" : "ดูทีละ 4 รูป"}
+            className={`flex h-8 min-w-12 items-center justify-center gap-1 rounded-full px-3 transition ${
+              viewMode === "grid"
+                ? "bg-[#004483] text-white shadow"
+                : "text-gray-400"
+            }`}
+          >
+            <Grid2X2 size={16} />
+            <span className={`text-[12px] ${fontClass}`}>4</span>
+          </button>
+        </div>
+      </div>
+
+      <div className="relative w-full max-w-[420px] mx-auto my-3">
+        <div
+          className={`relative grid w-full overflow-hidden rounded-xl bg-gray-100 ${
+            viewMode === "single"
+              ? "grid-cols-1 p-0"
+              : "grid-cols-2 gap-2 p-2"
+          }`}
+        >
           {imageLoading && (
             <div className="absolute inset-0 z-20 flex items-center justify-center bg-white/45 backdrop-blur-[1px]">
               <Loader2 className="h-8 w-8 animate-spin text-[#004483]" />
             </div>
           )}
 
-          <Image
-            key={currentImage}
-            src={currentImage}
-            alt={`${tab}-${index}`}
-            fill
-            quality={75}
-            unoptimized
-            onLoad={() => {
-              loadedImagesRef.current.add(currentImage);
-              setImageLoading(false);
-              setAnimating(false);
-            }}
-            onError={() => {
-              setImageLoading(false);
-              setAnimating(false);
-            }}
-            className={`object-cover transition-all duration-300 ${
-              animating || imageLoading
-                ? "opacity-0 scale-95"
-                : "opacity-100 scale-100"
-            }`}
-          />
+          {currentImages.map((image, imageIndex) => (
+            <div
+              key={image}
+              className={`relative aspect-[3/4] overflow-hidden bg-white ${
+                viewMode === "single" ? "rounded-xl" : "rounded-lg"
+              }`}
+            >
+              <Image
+                src={image}
+                alt={`${tab}-${startIndex + imageIndex}`}
+                fill
+                quality={75}
+                unoptimized
+                onLoad={() => {
+                  loadedImagesRef.current.add(image);
+                }}
+                className={`object-cover transition-all duration-300 ${
+                  animating || imageLoading
+                    ? "opacity-0 scale-95"
+                    : "opacity-100 scale-100"
+                }`}
+              />
+            </div>
+          ))}
         </div>
 
-        {/* prev */}
-        <button
-          onClick={prev}
-          className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white p-2 rounded-full backdrop-blur"
-        >
-          <ChevronLeft size={28} />
-        </button>
+        {images.length > pageSize && (
+          <>
+            <button
+              onClick={prev}
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white p-2 rounded-full backdrop-blur"
+            >
+              <ChevronLeft size={28} />
+            </button>
 
-        {/* next */}
-        <button
-          onClick={next}
-          className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white p-2 rounded-full backdrop-blur"
-        >
-          <ChevronRight size={28} />
-        </button>
+            <button
+              onClick={next}
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white p-2 rounded-full backdrop-blur"
+            >
+              <ChevronRight size={28} />
+            </button>
+          </>
+        )}
 
-        {/* counter */}
         <p
           className={`text-center mt-3 text-gray-500 ${fontClass} ${subTextSize}`}
         >
-          {index + 1} / {images.length}
+          {viewMode === "single"
+            ? `${startIndex + 1} / ${images.length}`
+            : `${startIndex + 1}-${visibleEnd} / ${images.length}`}
         </p>
       </div>
     </>
