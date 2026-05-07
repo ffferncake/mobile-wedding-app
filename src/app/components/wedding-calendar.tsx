@@ -21,7 +21,7 @@ type EventSchedule = {
   websiteUrl?: string;
 };
 
-const googleMapsUrl = "https://share.google/0HDQwrLsv1TnFUwOJ";
+const googleMapsUrl = "https://maps.app.goo.gl/KmSegrZQkE7tfJri8";
 const websiteUrl =
   "https://www.facebook.com/MellowGardenWineDineRestaurant";
 const mellowImages = [

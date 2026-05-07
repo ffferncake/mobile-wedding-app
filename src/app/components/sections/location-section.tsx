@@ -8,7 +8,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX!;
 
-const thailandMapUrl = "https://share.google/0HDQwrLsv1TnFUwOJ";
+const thailandMapUrl = "https://maps.app.goo.gl/KmSegrZQkE7tfJri8";
 const thailandWebsiteUrl =
   "https://www.facebook.com/MellowGardenWineDineRestaurant";
 const thailandMapEmbedUrl =
