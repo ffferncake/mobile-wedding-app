@@ -224,6 +224,32 @@ export default function WeddingInfoSection({
         {lang === "ko" ? "예식 안내" : "รายละเอียดสถานที่จัดงาน"}
       </h3>
 
+      <div className="flex justify-center gap-2 mb-4 mt-4">
+        <button
+          onClick={() => setSelectedVenue("KOREA")}
+          className={`px-[14px] py-[6px] rounded-full border ${subTextSize} transition ${fontClass} ${
+            selectedVenue === "KOREA"
+              ? "bg-[#111] text-white"
+              : "bg-white text-black border-[#ddd]"
+          }`}
+        >
+          {lang === "ko" ? "한국 결혼식" : "งานแต่งที่เกาหลี"}
+        </button>
+
+        <button
+          onClick={() => setSelectedVenue("THAILAND")}
+          className={`px-[14px] py-[6px] rounded-full border ${subTextSize} transition ${fontClass} ${
+            selectedVenue === "THAILAND"
+              ? "bg-[#111] text-white"
+              : "bg-white text-black border-[#ddd]"
+          }`}
+        >
+          {lang === "ko"
+            ? "태국 축하 파티 & 애프터 파티"
+            : "งานฉลองที่ไทย & After Party"}
+        </button>
+      </div>
+
       <div className="text-center text-[13px] leading-[1.8] mb-[10px]">
         <p className={`text-[#8DBEE1] ${subTextSize}`}>
           {selectedInfo.label}

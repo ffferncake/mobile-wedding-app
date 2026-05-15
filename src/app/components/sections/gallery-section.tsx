@@ -38,11 +38,11 @@ export default function GallerySection({ lang }: Props) {
       "/images/gallery/optimized/gallery_9.JPG",
       "/images/gallery/optimized/gallery_10.JPG",
       "/images/gallery/optimized/gallery_11.JPG",
-    ],
-    studio: [
       "/images/gallery/optimized/gallery_12.JPG",
       "/images/gallery/optimized/gallery_13.JPG",
       "/images/gallery/optimized/gallery_14.JPG",
+    ],
+    studio: [
       "/images/gallery/optimized/gallery_15.JPG",
       "/images/gallery/optimized/gallery_16.JPG",
       "/images/gallery/optimized/gallery_17.JPG",
@@ -51,6 +51,9 @@ export default function GallerySection({ lang }: Props) {
       "/images/gallery/optimized/gallery_20.JPG",
       "/images/gallery/optimized/gallery_21.JPG",
       "/images/gallery/optimized/gallery_22.JPG",
+      "/images/gallery/optimized/gallery_23.JPG",
+      "/images/gallery/optimized/gallery_24.JPG",
+      "/images/gallery/optimized/gallery_25.JPG",
     ],
   };
 

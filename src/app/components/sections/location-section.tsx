@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { ExternalLink, MapPin } from "lucide-react";
+import { Crosshair, ExternalLink, MapPin } from "lucide-react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
@@ -13,6 +13,13 @@ const thailandWebsiteUrl =
   "https://www.facebook.com/MellowGardenWineDineRestaurant";
 const thailandMapEmbedUrl =
   "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3874.188559588486!2d100.6301381!3d13.8277133!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x311d62860825a6a3%3A0xac71df54306132d7!2sMellow%20Garden!5e0!3m2!1sen!2skr!4v1778139853564!5m2!1sen!2skr";
+const koreaMapCenter: [number, number] = [126.8779692, 37.508535];
+const koreaMapView = {
+  center: koreaMapCenter,
+  zoom: 19.5,
+  pitch: 60,
+  bearing: -17.6,
+};
 
 type Props = {
   lang: "ko" | "th";
@@ -48,6 +55,14 @@ export default function LocationSection({
   };
   const [mapViewMode, setMapViewMode] = useState<"MAP" | "IMAGE">("MAP");
 
+  const moveToKoreaVenue = () => {
+    mapRef.current?.flyTo({
+      ...koreaMapView,
+      duration: 900,
+      essential: true,
+    });
+  };
+
   useEffect(() => {
     if (venueMode !== "KOREA") return;
     if (mapViewMode !== "MAP") return;
@@ -56,15 +71,10 @@ export default function LocationSection({
 
     mapInitializedRef.current = true;
 
-    const center: [number, number] = [126.8779692, 37.508535];
-
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/standard",
-      center,
-      zoom: 19.5,
-      pitch: 60,
-      bearing: -17.6,
+      ...koreaMapView,
       antialias: true,
       preserveDrawingBuffer: true,
       config: {
@@ -111,7 +121,7 @@ export default function LocationSection({
       // 🎯 Marker + Popup 연결
       // =========================
       const marker = new mapboxgl.Marker(el)
-        .setLngLat(center)
+        .setLngLat(koreaMapCenter)
         .setPopup(popup)
         .addTo(map);
 
@@ -208,10 +218,26 @@ export default function LocationSection({
           </div>
 
           {mapViewMode === "MAP" ? (
-            <div
-              ref={mapContainerRef}
-              className="w-full max-w-[420px] h-[350px] mx-auto rounded-[10px] overflow-hidden shadow-md"
-            />
+            <div className="relative w-full max-w-[420px] h-[350px] mx-auto rounded-[10px] overflow-hidden shadow-md">
+              <div ref={mapContainerRef} className="h-full w-full" />
+              <button
+                type="button"
+                onClick={moveToKoreaVenue}
+                aria-label={
+                  lang === "ko"
+                    ? "예식장 위치로 이동"
+                    : "กลับไปตำแหน่งสถานที่จัดงาน"
+                }
+                title={
+                  lang === "ko"
+                    ? "예식장 위치로 이동"
+                    : "กลับไปตำแหน่งสถานที่จัดงาน"
+                }
+                className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-white/70 bg-white/90 text-[#333] shadow-md transition hover:bg-black hover:text-white"
+              >
+                <Crosshair size={18} />
+              </button>
+            </div>
           ) : (
             <div className="flex justify-center">
               <Image
