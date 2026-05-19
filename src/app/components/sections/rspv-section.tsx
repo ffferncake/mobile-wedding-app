@@ -9,6 +9,9 @@ type Props = {
 
 export default function RSVPSection({ lang }: Props) {
   const [attend, setAttend] = useState<"yes" | "no" | null>(null);
+  const [eventLocation, setEventLocation] = useState<
+    "korea" | "thailand" | "both" | null
+  >(null);
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -35,11 +38,44 @@ export default function RSVPSection({ lang }: Props) {
       return;
     }
 
+    if (attend === "yes" && !eventLocation) {
+      alert(
+        lang === "ko"
+          ? "참석하실 장소를 선택해주세요"
+          : "กรุณาเลือกสถานที่ที่จะเข้าร่วม",
+      );
+      return;
+    }
+
     setLoading(true);
+
+    const attendText =
+      attend === "yes"
+        ? lang === "ko"
+          ? "참석"
+          : "เข้าร่วม"
+        : lang === "ko"
+          ? "불참"
+          : "ไม่เข้าร่วม";
+
+    const locationText =
+      attend === "yes" && eventLocation
+        ? eventLocation === "korea"
+          ? lang === "ko"
+            ? "한국"
+            : "Korea"
+          : eventLocation === "thailand"
+            ? lang === "ko"
+              ? "태국"
+              : "Thailand"
+            : lang === "ko"
+              ? "한국 + 태국"
+              : "Korea + Thailand"
+        : "-";
 
     try {
       await fetch(
-        "https://script.google.com/macros/s/AKfycbxq5u4TXvYFs3xGc2MvGeJ10UeXL4ddOQ-_eHeDpO9ra81Ylu6kKuXf9YpgIajgwOkL/exec",
+        "https://script.google.com/macros/s/AKfycbyNyeagsiV0qxq1y2_57qAROQvKYcbWHV4mAXNi3A__sNIxwVIwdKmW20APwqKF15Rb/exec",
         {
           method: "POST",
           mode: "no-cors",
@@ -48,14 +84,8 @@ export default function RSVPSection({ lang }: Props) {
           },
           body: new URLSearchParams({
             name: name,
-            attend:
-              attend === "yes"
-                ? lang === "ko"
-                  ? "참석"
-                  : "เข้าร่วม"
-                : lang === "ko"
-                  ? "불참"
-                  : "ไม่เข้าร่วม",
+            attend: attendText,
+            location: locationText,
           }),
         },
       );
@@ -64,6 +94,7 @@ export default function RSVPSection({ lang }: Props) {
 
       setName("");
       setAttend(null);
+      setEventLocation(null);
     } catch (error) {
       console.error(error);
       alert(lang === "ko" ? "전송 실패 😢" : "ส่งไม่สำเร็จ 😢");
@@ -103,7 +134,10 @@ export default function RSVPSection({ lang }: Props) {
         </button>
 
         <button
-          onClick={() => setAttend("no")}
+          onClick={() => {
+            setAttend("no");
+            setEventLocation(null);
+          }}
           disabled={loading}
           className={`px-4 py-1.5 rounded-full border ${fontClass} transition flex items-center gap-1 ${
             attend === "no"
@@ -113,6 +147,45 @@ export default function RSVPSection({ lang }: Props) {
         >
           🙏 {lang === "ko" ? "불참" : "ไม่เข้าร่วม"}
         </button>
+      </div>
+
+      {/* 참석 장소 */}
+      <div className={`mt-3 ${subTextSize}`}>
+        <p className={`${fontClass} mb-2 text-[#666]`}>
+          {lang === "ko"
+            ? "참석하실 장소"
+            : "สถานที่ที่จะเข้าร่วม"}
+        </p>
+
+        <div className="flex flex-wrap justify-center gap-2">
+          {[
+            {
+              value: "korea" as const,
+              label: lang === "ko" ? "🇰🇷 한국" : "🇰🇷 Korea",
+            },
+            {
+              value: "thailand" as const,
+              label: lang === "ko" ? "🇹🇭 태국" : "🇹🇭 Thailand",
+            },
+            {
+              value: "both" as const,
+              label: lang === "ko" ? "🇰🇷+🇹🇭 둘 다" : "🇰🇷+🇹🇭 Both",
+            },
+          ].map((item) => (
+            <button
+              key={item.value}
+              onClick={() => setEventLocation(item.value)}
+              disabled={loading || attend === "no"}
+              className={`px-3 py-1.5 rounded-full border ${fontClass} transition ${
+                eventLocation === item.value
+                  ? "border-[#c48a8a] bg-[#fff5f5] text-[#c48a8a]"
+                  : "border-gray-200 text-gray-400"
+              } ${attend === "no" ? "opacity-40" : ""}`}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* 이름 */}
