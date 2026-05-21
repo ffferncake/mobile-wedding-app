@@ -9,19 +9,13 @@ import {
   Image as ImageIcon,
   Loader2,
 } from "lucide-react";
+import { galleryImages } from "../../data/gallery";
 
 type Props = {
   lang: "ko" | "th";
 };
 
 type GalleryTab = "winter" | "summer" | "studio";
-type GalleryImages = Record<GalleryTab, string[]>;
-
-const emptyGallery: GalleryImages = {
-  winter: [],
-  summer: [],
-  studio: [],
-};
 
 export default function GallerySection({ lang }: Props) {
   const isTH = lang === "th";
@@ -47,7 +41,6 @@ export default function GallerySection({ lang }: Props) {
     },
   ] as const;
 
-  const [gallery, setGallery] = useState<GalleryImages>(emptyGallery);
   const [tab, setTab] = useState<GalleryTab>("summer");
   const [viewMode, setViewMode] = useState<"single" | "grid">("single");
   const [startIndex, setStartIndex] = useState(0);
@@ -56,29 +49,11 @@ export default function GallerySection({ lang }: Props) {
   const loadedImagesRef = useRef<Set<string>>(new Set());
 
   const pageSize = viewMode === "single" ? 1 : 4;
-  const images = gallery[tab];
+  const images: readonly string[] = galleryImages[tab];
   const lastPageStart = Math.floor((images.length - 1) / pageSize) * pageSize;
   const currentImages = images.slice(startIndex, startIndex + pageSize);
   const pageKey = currentImages.join("|");
   const visibleEnd = Math.min(startIndex + currentImages.length, images.length);
-
-  useEffect(() => {
-    let active = true;
-
-    fetch("/api/gallery")
-      .then((res) => res.json())
-      .then((data: GalleryImages) => {
-        if (!active) return;
-        setGallery(data);
-      })
-      .catch((error) => {
-        console.error("Failed to load gallery images", error);
-      });
-
-    return () => {
-      active = false;
-    };
-  }, []);
 
   useEffect(() => {
     setStartIndex(0);
@@ -255,8 +230,8 @@ export default function GallerySection({ lang }: Props) {
                 src={image}
                 alt={`${tab}-${startIndex + imageIndex}`}
                 fill
-                quality={75}
-                unoptimized
+                quality={70}
+                sizes="(max-width: 420px) 100vw, 420px"
                 onLoad={() => {
                   loadedImagesRef.current.add(image);
                 }}

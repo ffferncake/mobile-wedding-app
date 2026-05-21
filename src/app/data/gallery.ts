@@ -1,0 +1,37 @@
+export const galleryImages = {
+  "winter": [
+    "/images/gallery/winter/1.JPG",
+    "/images/gallery/winter/2.JPG",
+    "/images/gallery/winter/3.JPG",
+    "/images/gallery/winter/4.JPG",
+    "/images/gallery/winter/5.JPG",
+    "/images/gallery/winter/6.JPG",
+    "/images/gallery/winter/7.JPG",
+    "/images/gallery/winter/8.JPG"
+  ],
+  "summer": [
+    "/images/gallery/summer/1.JPG",
+    "/images/gallery/summer/2.JPG",
+    "/images/gallery/summer/3.JPG",
+    "/images/gallery/summer/4.JPG",
+    "/images/gallery/summer/5.JPG",
+    "/images/gallery/summer/6.JPG",
+    "/images/gallery/summer/7.JPG",
+    "/images/gallery/summer/8.JPG"
+  ],
+  "studio": [
+    "/images/gallery/studio/1.JPG",
+    "/images/gallery/studio/2.JPG",
+    "/images/gallery/studio/3.JPG",
+    "/images/gallery/studio/4.JPG",
+    "/images/gallery/studio/5.JPG",
+    "/images/gallery/studio/6.JPG",
+    "/images/gallery/studio/7.JPG",
+    "/images/gallery/studio/8.JPG",
+    "/images/gallery/studio/9.JPG",
+    "/images/gallery/studio/10.JPG",
+    "/images/gallery/studio/11.JPG",
+    "/images/gallery/studio/12.JPG",
+    "/images/gallery/studio/13.JPG"
+  ]
+} as const;
