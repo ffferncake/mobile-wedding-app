@@ -14,6 +14,15 @@ type Props = {
   lang: "ko" | "th";
 };
 
+type GalleryTab = "winter" | "summer" | "studio";
+type GalleryImages = Record<GalleryTab, string[]>;
+
+const emptyGallery: GalleryImages = {
+  winter: [],
+  summer: [],
+  studio: [],
+};
+
 export default function GallerySection({ lang }: Props) {
   const isTH = lang === "th";
 
@@ -22,40 +31,6 @@ export default function GallerySection({ lang }: Props) {
   const titleSize = isTH ? "text-[22px]" : "text-[16px]";
   const highlightSize = isTH ? "text-[24px]" : "text-[18px]";
   const subTextSize = isTH ? "text-[18px]" : "text-[14px]";
-
-  const gallery = {
-    winter: [
-      "/images/gallery/optimized/gallery_1.JPG",
-      "/images/gallery/optimized/gallery_2.JPG",
-      "/images/gallery/optimized/gallery_3.JPG",
-      "/images/gallery/optimized/gallery_4.JPG",
-      "/images/gallery/optimized/gallery_5.JPG",
-      "/images/gallery/optimized/gallery_6.JPG",
-    ],
-    summer: [
-      "/images/gallery/optimized/gallery_7.JPG",
-      "/images/gallery/optimized/gallery_8.JPG",
-      "/images/gallery/optimized/gallery_9.JPG",
-      "/images/gallery/optimized/gallery_10.JPG",
-      "/images/gallery/optimized/gallery_11.JPG",
-      "/images/gallery/optimized/gallery_12.JPG",
-      "/images/gallery/optimized/gallery_13.JPG",
-      "/images/gallery/optimized/gallery_14.JPG",
-    ],
-    studio: [
-      "/images/gallery/optimized/gallery_15.JPG",
-      "/images/gallery/optimized/gallery_16.JPG",
-      "/images/gallery/optimized/gallery_17.JPG",
-      "/images/gallery/optimized/gallery_18.JPG",
-      "/images/gallery/optimized/gallery_19.JPG",
-      "/images/gallery/optimized/gallery_20.JPG",
-      "/images/gallery/optimized/gallery_21.JPG",
-      "/images/gallery/optimized/gallery_22.JPG",
-      "/images/gallery/optimized/gallery_23.JPG",
-      "/images/gallery/optimized/gallery_24.JPG",
-      "/images/gallery/optimized/gallery_25.JPG",
-    ],
-  };
 
   const tabs = [
     {
@@ -72,7 +47,8 @@ export default function GallerySection({ lang }: Props) {
     },
   ] as const;
 
-  const [tab, setTab] = useState<"winter" | "summer" | "studio">("summer");
+  const [gallery, setGallery] = useState<GalleryImages>(emptyGallery);
+  const [tab, setTab] = useState<GalleryTab>("summer");
   const [viewMode, setViewMode] = useState<"single" | "grid">("single");
   const [startIndex, setStartIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
@@ -85,6 +61,24 @@ export default function GallerySection({ lang }: Props) {
   const currentImages = images.slice(startIndex, startIndex + pageSize);
   const pageKey = currentImages.join("|");
   const visibleEnd = Math.min(startIndex + currentImages.length, images.length);
+
+  useEffect(() => {
+    let active = true;
+
+    fetch("/api/gallery")
+      .then((res) => res.json())
+      .then((data: GalleryImages) => {
+        if (!active) return;
+        setGallery(data);
+      })
+      .catch((error) => {
+        console.error("Failed to load gallery images", error);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   useEffect(() => {
     setStartIndex(0);
@@ -155,11 +149,15 @@ export default function GallerySection({ lang }: Props) {
   };
 
   const next = () => {
+    if (images.length === 0) return;
+
     const nextIndex = startIndex + pageSize;
     changePage(nextIndex >= images.length ? 0 : nextIndex);
   };
 
   const prev = () => {
+    if (images.length === 0) return;
+
     changePage(startIndex - pageSize < 0 ? lastPageStart : startIndex - pageSize);
   };
 
@@ -270,6 +268,14 @@ export default function GallerySection({ lang }: Props) {
               />
             </div>
           ))}
+
+          {images.length === 0 && (
+            <div
+              className={`flex min-h-[320px] items-center justify-center text-gray-400 ${fontClass} ${subTextSize}`}
+            >
+              {lang === "ko" ? "갤러리 로딩 중..." : "กำลังโหลดแกลเลอรี่..."}
+            </div>
+          )}
         </div>
 
         {images.length > pageSize && (
@@ -293,9 +299,11 @@ export default function GallerySection({ lang }: Props) {
         <p
           className={`text-center mt-3 text-gray-500 ${fontClass} ${subTextSize}`}
         >
-          {viewMode === "single"
-            ? `${startIndex + 1} / ${images.length}`
-            : `${startIndex + 1}-${visibleEnd} / ${images.length}`}
+          {images.length === 0
+            ? `0 / 0`
+            : viewMode === "single"
+              ? `${startIndex + 1} / ${images.length}`
+              : `${startIndex + 1}-${visibleEnd} / ${images.length}`}
         </p>
       </div>
     </>

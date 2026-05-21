@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 
 import FlowerBackground from "../components/flower-background";
 import LanguagePopup from "../components/language-popup";
@@ -58,8 +59,18 @@ function TransportSection() {
 
 function GiftSection() {
   return (
-    <div className="space-y-4 pb-6">
+    <div className="space-y-4">
       <AccountSection lang="th" />
+      <div className="mx-auto w-full max-w-[420px] overflow-hidden rounded-lg shadow-sm">
+        <Image
+          src="/images/gallery/hori_1.JPG"
+          alt="wedding gallery horizontal"
+          width={1200}
+          height={800}
+          className="h-auto w-full object-cover"
+          sizes="(max-width: 420px) 100vw, 420px"
+        />
+      </div>
       <RSVPSection lang="th" />
     </div>
   );
@@ -159,6 +170,17 @@ export default function WeddingInvitation() {
               <GiftSection />
             </div>
 
+            <div className="-mt-7 mx-auto w-full max-w-[420px] overflow-hidden rounded-lg shadow-sm">
+              <Image
+                src="/images/gallery/hori_2.JPG"
+                alt="wedding gallery horizontal"
+                width={1200}
+                height={800}
+                className="h-auto w-full object-cover"
+                sizes="(max-width: 420px) 100vw, 420px"
+              />
+            </div>
+
             <div ref={sectionRefs[5]}>
               <LocationSection
                 lang="th"
@@ -172,6 +194,10 @@ export default function WeddingInvitation() {
                 <TransportSection />
               </div>
             )}
+
+            <footer className="pg-bathbomb pb-2 text-center text-[14px] text-gray-400">
+              © Copyright Fern Nichanun
+            </footer>
           </div>
 
           {/* music button */}

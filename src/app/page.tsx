@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import Image from "next/image";
 
 import HeartsBackground from "./components/hearts-background";
 import FlowerBackground from "./components/flower-background";
@@ -60,8 +61,18 @@ function TransportSection() {
 
 function GiftSection() {
   return (
-    <div className="space-y-4 pb-6">
+    <div className="space-y-4">
       <AccountSection lang="ko" />
+      <div className="mx-auto w-full max-w-[420px] overflow-hidden rounded-lg shadow-sm">
+        <Image
+          src="/images/gallery/hori_1.JPG"
+          alt="wedding gallery horizontal"
+          width={1200}
+          height={800}
+          className="h-auto w-full object-cover"
+          sizes="(max-width: 420px) 100vw, 420px"
+        />
+      </div>
       <RSVPSection lang="ko" />
     </div>
   );
@@ -175,6 +186,17 @@ export default function WeddingInvitation() {
               <GiftSection />
             </div>
 
+            <div className="-mt-7 mx-auto w-full max-w-[420px] overflow-hidden rounded-lg shadow-sm">
+              <Image
+                src="/images/gallery/hori_2.JPG"
+                alt="wedding gallery horizontal"
+                width={1200}
+                height={800}
+                className="h-auto w-full object-cover"
+                sizes="(max-width: 420px) 100vw, 420px"
+              />
+            </div>
+
             <div ref={sectionRefs[5]}>
               <LocationSection
                 lang="ko"
@@ -188,6 +210,10 @@ export default function WeddingInvitation() {
                 <TransportSection />
               </div>
             )}
+
+            <footer className="typo-crayon-font pb-2 text-center text-[12px] text-gray-400">
+              © Copyright Fern Nichanun
+            </footer>
           </div>
 
           {/* music button */}
