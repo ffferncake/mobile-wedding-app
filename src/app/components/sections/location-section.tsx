@@ -170,7 +170,7 @@ export default function LocationSection({
           }`}
         >
           {lang === "ko"
-            ? "태국 축하 파티 & 애프터 파티"
+            ? "태국 축하 파티 & After Party"
             : "งานฉลองที่ไทย & After Party"}
         </button>
       </div>

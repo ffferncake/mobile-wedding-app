@@ -17,10 +17,14 @@ type EventSchedule = {
   dateText: string;
   timeText: string;
   date: Date;
+  kakaoUrl?: string;
   mapUrl?: string;
+  naverUrl?: string;
   websiteUrl?: string;
 };
 
+const kakaoMapUrl = "https://kko.to/Kg-9yiU8OY";
+const naverMapUrl = "https://naver.me/Gn0yrSdR";
 const googleMapsUrl = "https://maps.app.goo.gl/KmSegrZQkE7tfJri8";
 const websiteUrl =
   "https://www.facebook.com/MellowGardenWineDineRestaurant";
@@ -84,9 +88,11 @@ export default function WeddingCalendar({
             dateText: "2026.09.13",
             timeText: "일요일 오후 2시",
             date: new Date(2026, 8, 13),
+            kakaoUrl: kakaoMapUrl,
+            naverUrl: naverMapUrl,
           },
           {
-            title: "태국 축하 파티 & 애프터 파티",
+            title: "태국 축하 파티 & After Party",
             place: "Mellow Garden",
             dateText: "2026.12.26",
             timeText: "토요일 18:00-23:00",
@@ -102,6 +108,8 @@ export default function WeddingCalendar({
             dateText: "13/9/2569",
             timeText: "วันอาทิตย์ เวลา 14:00 น.",
             date: new Date(2026, 8, 13),
+            kakaoUrl: kakaoMapUrl,
+            naverUrl: naverMapUrl,
           },
           {
             title: "งานฉลองที่ไทย & After Party",
@@ -251,6 +259,41 @@ export default function WeddingCalendar({
             })}
           </div>
         </div>
+
+        {event.kakaoUrl && event.naverUrl && (
+          <div className="mt-3 flex flex-col gap-2">
+            <a
+              href={event.kakaoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="inline-flex items-center justify-center gap-1 rounded-full border border-[#ddd] bg-[#f8f8f8] px-2 py-1.5 text-[12px] text-[#333] shadow-sm transition hover:bg-[#eee]"
+            >
+              <Image
+                src="/images/kakao_navi.svg"
+                alt="kakao"
+                width={16}
+                height={16}
+              />
+              {lang === "ko" ? "카카오내비" : "Kakao Map"}
+            </a>
+            <a
+              href={event.naverUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="inline-flex items-center justify-center gap-1 rounded-full border border-[#ddd] bg-[#f8f8f8] px-2 py-1.5 text-[12px] text-[#333] shadow-sm transition hover:bg-[#eee]"
+            >
+              <Image
+                src="/images/naver_map.png"
+                alt="naver"
+                width={16}
+                height={16}
+              />
+              {lang === "ko" ? "네이버지도" : "Naver Map"}
+            </a>
+          </div>
+        )}
 
         {event.mapUrl && event.websiteUrl && (
           <div className="mt-3 flex flex-col gap-2">

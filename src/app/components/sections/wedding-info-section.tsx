@@ -96,7 +96,7 @@ export default function WeddingInfoSection({
       : {
           label:
             lang === "ko"
-              ? "태국 축하 파티 & 애프터 파티"
+              ? "태국 축하 파티 & After Party"
               : "งานฉลองที่ไทย & After Party",
           name: "Mellow Garden Wine & Dine Restaurant",
           address:
@@ -245,7 +245,7 @@ export default function WeddingInfoSection({
           }`}
         >
           {lang === "ko"
-            ? "태국 축하 파티 & 애프터 파티"
+            ? "태국 축하 파티 & After Party"
             : "งานฉลองที่ไทย & After Party"}
         </button>
       </div>

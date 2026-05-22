@@ -45,14 +45,22 @@ export default function CoverSection() {
       <div className="absolute inset-x-0 top-0 z-10 h-[33%] bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.72)_0%,rgba(255,255,255,0.38)_48%,rgba(255,255,255,0)_78%)]" />
       <div className="absolute inset-x-0 bottom-0 z-10 h-[34%] bg-gradient-to-t from-white/74 via-white/22 to-white/0" />
 
-      <div className="absolute left-1/2 top-[14.5%] z-20 w-full -translate-x-1/2 -translate-y-1/2 px-3 text-center">
+      <div className="pg-bathbomb absolute inset-x-0 top-[8.5%] z-20 flex items-baseline justify-between gap-3 px-5 text-[15px] uppercase leading-none tracking-[0.2em] text-black/72 drop-shadow-[0_1px_10px_rgba(255,255,255,0.95)]">
         <p
-          className="pg-bathbomb mx-auto mb-1 w-fit text-center text-[15px] font-normal uppercase leading-none tracking-[0.22em] text-black/72 opacity-0 drop-shadow-[0_1px_10px_rgba(255,255,255,0.95)] animate-fadeIn"
+          className="shrink-0 whitespace-nowrap text-left opacity-0 animate-fadeIn"
           style={{ animationDelay: "0.2s" }}
         >
-          2026.09.13&nbsp;&nbsp;2PM
+          2026.09.13 (2 PM)
         </p>
+        <p
+          className="shrink-0 whitespace-nowrap text-right opacity-0 animate-fadeIn"
+          style={{ animationDelay: "0.2s" }}
+        >
+          JK Art Convention
+        </p>
+      </div>
 
+      <div className="absolute left-1/2 top-[18%] z-20 w-full -translate-x-1/2 -translate-y-1/2 px-3 text-center">
         <h1
           className="font-[BODAR] text-[74px] font-normal uppercase leading-none tracking-[0.018em] text-black/90 opacity-0 drop-shadow-[0_2px_18px_rgba(255,255,255,0.88)] animate-fadeIn sm:text-[86px]"
           style={{ animationDelay: "0.35s" }}
