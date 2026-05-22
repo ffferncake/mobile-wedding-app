@@ -8,6 +8,7 @@ import {
   Grid2X2,
   Image as ImageIcon,
   Loader2,
+  X,
 } from "lucide-react";
 import { galleryImages } from "../../data/gallery";
 
@@ -41,9 +42,10 @@ export default function GallerySection({ lang }: Props) {
     },
   ] as const;
 
-  const [tab, setTab] = useState<GalleryTab>("summer");
-  const [viewMode, setViewMode] = useState<"single" | "grid">("single");
+  const [tab, setTab] = useState<GalleryTab>("studio");
+  const [viewMode, setViewMode] = useState<"single" | "grid">("grid");
   const [startIndex, setStartIndex] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [animating, setAnimating] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
   const loadedImagesRef = useRef<Set<string>>(new Set());
@@ -54,6 +56,8 @@ export default function GallerySection({ lang }: Props) {
   const currentImages = images.slice(startIndex, startIndex + pageSize);
   const pageKey = currentImages.join("|");
   const visibleEnd = Math.min(startIndex + currentImages.length, images.length);
+  const lightboxImage =
+    lightboxIndex === null ? null : images[lightboxIndex] ?? null;
 
   useEffect(() => {
     setStartIndex(0);
@@ -135,6 +139,44 @@ export default function GallerySection({ lang }: Props) {
 
     changePage(startIndex - pageSize < 0 ? lastPageStart : startIndex - pageSize);
   };
+
+  const openLightbox = (index: number) => {
+    setLightboxIndex(index);
+  };
+
+  const closeLightbox = () => {
+    setLightboxIndex(null);
+  };
+
+  const showNextImage = () => {
+    if (lightboxIndex === null || images.length === 0) return;
+
+    setLightboxIndex((lightboxIndex + 1) % images.length);
+  };
+
+  const showPrevImage = () => {
+    if (lightboxIndex === null || images.length === 0) return;
+
+    setLightboxIndex(
+      lightboxIndex - 1 < 0 ? images.length - 1 : lightboxIndex - 1,
+    );
+  };
+
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeLightbox();
+      if (event.key === "ArrowRight") showNextImage();
+      if (event.key === "ArrowLeft") showPrevImage();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [lightboxIndex, images.length]);
 
   return (
     <>
@@ -220,8 +262,13 @@ export default function GallerySection({ lang }: Props) {
           )}
 
           {currentImages.map((image, imageIndex) => (
-            <div
+            <button
+              type="button"
               key={image}
+              onClick={() => openLightbox(startIndex + imageIndex)}
+              aria-label={
+                lang === "ko" ? "갤러리 사진 크게 보기" : "ดูรูปภาพขนาดใหญ่"
+              }
               className={`relative aspect-[3/4] overflow-hidden bg-white ${
                 viewMode === "single" ? "rounded-xl" : "rounded-lg"
               }`}
@@ -238,10 +285,10 @@ export default function GallerySection({ lang }: Props) {
                 className={`object-cover transition-all duration-300 ${
                   animating || imageLoading
                     ? "opacity-0 scale-95"
-                    : "opacity-100 scale-100"
+                    : "opacity-100 scale-100 hover:scale-[1.03]"
                 }`}
               />
-            </div>
+            </button>
           ))}
 
           {images.length === 0 && (
@@ -281,6 +328,64 @@ export default function GallerySection({ lang }: Props) {
               : `${startIndex + 1}-${visibleEnd} / ${images.length}`}
         </p>
       </div>
+
+      {lightboxImage && lightboxIndex !== null && (
+        <div
+          className="fixed inset-0 z-[1001] flex items-center justify-center bg-black/90"
+          role="dialog"
+          aria-modal="true"
+          aria-label={lang === "ko" ? "갤러리 사진 보기" : "ดูรูปภาพแกลเลอรี่"}
+        >
+          <button
+            type="button"
+            onClick={closeLightbox}
+            aria-label={lang === "ko" ? "닫기" : "ปิด"}
+            className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur transition hover:bg-white/25"
+          >
+            <X size={24} />
+          </button>
+
+          {images.length > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={showPrevImage}
+                aria-label={lang === "ko" ? "이전 사진" : "รูปก่อนหน้า"}
+                className="absolute left-3 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur transition hover:bg-white/25"
+              >
+                <ChevronLeft size={30} />
+              </button>
+
+              <button
+                type="button"
+                onClick={showNextImage}
+                aria-label={lang === "ko" ? "다음 사진" : "รูปถัดไป"}
+                className="absolute right-3 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur transition hover:bg-white/25"
+              >
+                <ChevronRight size={30} />
+              </button>
+            </>
+          )}
+
+          <div className="relative h-[100dvh] w-screen max-w-[420px]">
+            <Image
+              src={lightboxImage}
+              alt={`${tab}-${lightboxIndex + 1}`}
+              fill
+              quality={85}
+              sizes="100vw"
+              className="object-contain"
+              priority
+            />
+          </div>
+
+          <p
+            className={`absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-white/15 px-4 py-1.5 text-white backdrop-blur ${fontClass} ${subTextSize}`}
+          >
+            {lightboxIndex + 1} / {images.length}
+          </p>
+        </div>
+      )}
     </>
   );
 }

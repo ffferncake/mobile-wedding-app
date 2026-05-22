@@ -32,6 +32,11 @@ export const galleryImages = {
     "/images/gallery/studio/10.JPG",
     "/images/gallery/studio/11.JPG",
     "/images/gallery/studio/12.JPG",
-    "/images/gallery/studio/13.JPG"
+    "/images/gallery/studio/13.JPG",
+    "/images/gallery/studio/14.JPG",
+    "/images/gallery/studio/15.JPG",
+    "/images/gallery/studio/16.JPG",
+    "/images/gallery/studio/17.JPG",
+    "/images/gallery/studio/18.JPG"
   ]
 } as const;
