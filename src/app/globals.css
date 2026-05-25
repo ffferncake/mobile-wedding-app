@@ -220,6 +220,34 @@ a {
   animation: fadeIn 1s ease forwards;
 }
 
+.profile-photo-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 9999px;
+  flex-shrink: 0;
+  perspective: 800px;
+}
+
+.profile-photo-flip {
+  position: absolute;
+  inset: 0;
+  animation: profilePhotoFlip 700ms ease;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+@keyframes profilePhotoFlip {
+  from {
+    opacity: 0.75;
+    transform: rotateY(90deg) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotateY(0) scale(1);
+  }
+}
+
 @layer components {
   .title-en {
     @apply crayon-font inline-block border-transparent;

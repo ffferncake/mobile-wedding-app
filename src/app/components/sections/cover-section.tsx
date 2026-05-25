@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 export default function CoverSection() {
-  const images = ["/images/bg_updated_1.webp", "/images/bg_updated_2.webp"];
+  const images = ["/images/bg_updated_1.webp", "/images/bg_updated_2.webp", "/images/bg_updated_3.webp"];
 
   const [current, setCurrent] = useState(0);
 
@@ -42,7 +42,7 @@ export default function CoverSection() {
       ))}
 
       <div className="absolute inset-0 z-10 bg-gradient-to-b from-white/28 via-white/4 to-white/10" />
-      <div className="absolute inset-x-0 top-0 z-10 h-[33%] bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.72)_0%,rgba(255,255,255,0.38)_48%,rgba(255,255,255,0)_78%)]" />
+      <div className="absolute inset-x-0 top-0 z-10 h-[33%]" />
       <div className="absolute inset-x-0 bottom-0 z-10 h-[34%] bg-gradient-to-t from-white/74 via-white/22 to-white/0" />
 
       <div className="pg-bathbomb absolute inset-x-0 top-[8.5%] z-20 flex items-baseline justify-between gap-3 px-5 text-[15px] uppercase leading-none tracking-[0.2em] text-black/72 drop-shadow-[0_1px_10px_rgba(255,255,255,0.95)]">

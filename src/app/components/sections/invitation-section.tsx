@@ -1,13 +1,20 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
 type Props = {
   lang: "ko" | "th";
 };
 
+const groomImages = ["/images/oppa_kids_ver.png", "/images/oppa.JPG"] as const;
+const brideImages = ["/images/me_kids_ver.png", "/images/me.JPG"] as const;
+const profilePhotoSize = "h-[112px] w-[112px]";
+
 export default function InvitationSection({ lang }: Props) {
   const isTH = lang === "th";
+  const [groomImageIndex, setGroomImageIndex] = useState(0);
+  const [brideImageIndex, setBrideImageIndex] = useState(0);
 
   const fontClass = isTH ? "pg-bathbomb" : "typo-crayon-font";
   const sectionSize = isTH ? "text-[20px]" : "text-[13px]";
@@ -15,6 +22,21 @@ export default function InvitationSection({ lang }: Props) {
   const contentSize = isTH ? "text-[16px]" : "text-[16px]";
   const highlightSize = isTH ? "text-[24px]" : "text-[18px]";
   const subTextSize = isTH ? "text-[18px]" : "text-[14px]";
+  const groomImage = groomImages[groomImageIndex];
+  const brideImage = brideImages[brideImageIndex];
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setGroomImageIndex((currentIndex) =>
+        currentIndex === groomImages.length - 1 ? 0 : currentIndex + 1,
+      );
+      setBrideImageIndex((currentIndex) =>
+        currentIndex === brideImages.length - 1 ? 0 : currentIndex + 1,
+      );
+    }, 3000);
+
+    return () => window.clearInterval(intervalId);
+  }, []);
 
   return (
     <div
@@ -136,15 +158,19 @@ export default function InvitationSection({ lang }: Props) {
       <div className="mt-[20px] flex flex-row items-center justify-center gap-[30px]">
         {/* Groom */}
         <div className="flex flex-col items-center text-center">
-          <Image
-            src="/images/oppa_kids_ver.png"
-            alt="oppa img"
-            width={100}
-            height={100}
-            priority
-            quality={75}
-            className="rounded-full object-cover"
-          />
+          <div className={`profile-photo-frame ${profilePhotoSize}`}>
+            <div key={groomImage} className="profile-photo-flip">
+              <Image
+                src={groomImage}
+                alt="oppa img"
+                fill
+                priority
+                quality={75}
+                sizes="112px"
+                className="object-cover object-center"
+              />
+            </div>
+          </div>
 
           <div className="flex flex-row items-center justify-center gap-[10px] mt-[10px]">
             <p className={`font-bold ${contentSize}`}>
@@ -169,15 +195,19 @@ export default function InvitationSection({ lang }: Props) {
 
         {/* Bride */}
         <div className="flex flex-col items-center text-center">
-          <Image
-            src="/images/me_kids_ver.png"
-            alt="my img"
-            width={100}
-            height={100}
-            priority
-            quality={75}
-            className="rounded-full object-cover"
-          />
+          <div className={`profile-photo-frame ${profilePhotoSize}`}>
+            <div key={brideImage} className="profile-photo-flip">
+              <Image
+                src={brideImage}
+                alt="my img"
+                fill
+                priority
+                quality={75}
+                sizes="112px"
+                className="object-cover object-[center_35%]"
+              />
+            </div>
+          </div>
 
           <div className="flex flex-row items-center justify-center gap-[10px] mt-[10px]">
             <p className={`font-bold ${contentSize}`}>

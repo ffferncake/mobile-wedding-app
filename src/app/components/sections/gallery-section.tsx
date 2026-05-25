@@ -29,16 +29,16 @@ export default function GallerySection({ lang }: Props) {
 
   const tabs = [
     {
-      key: "winter",
-      label: lang === "ko" ? "겨울" : "winter set",
+      key: "studio",
+      label: lang === "ko" ? "스튜디오" : "สตูดิโอ",
     },
     {
       key: "summer",
       label: lang === "ko" ? "여름" : "summer set",
     },
     {
-      key: "studio",
-      label: lang === "ko" ? "스튜디오" : "สตูดิโอ",
+      key: "winter",
+      label: lang === "ko" ? "겨울" : "winter set",
     },
   ] as const;
 

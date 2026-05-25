@@ -1,7 +1,7 @@
 import { readdir, writeFile } from "fs/promises";
 import path from "path";
 
-const galleryTabs = ["winter", "summer", "studio"];
+const galleryTabs = ["studio", "summer", "winter"];
 const galleryRoot = path.join(process.cwd(), "public", "images", "gallery");
 const outputFile = path.join(process.cwd(), "src", "app", "data", "gallery.ts");
 
