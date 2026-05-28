@@ -32,7 +32,9 @@ import {
 } from "lucide-react";
 import BottomNav from "../components/bottom-nav";
 import LoadingScreen from "../components/loading-screen";
+import RsvpModal from "../components/rsvp-modal";
 import { useInvitationReady } from "../hooks/useInvitationReady";
+import { useRsvpModalPrompt } from "../hooks/useRsvpModalPrompt";
 
 /* ---------- nav items ---------- */
 const navItems = [
@@ -93,6 +95,11 @@ export default function WeddingInvitation() {
     selectedVenue === "THAILAND" ? navItems.slice(0, 6) : navItems;
 
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const rsvpModal = useRsvpModalPrompt({
+    containerRef,
+    enabled: isReady,
+    lang: "th",
+  });
 
   const sectionRefs = [
     useRef<HTMLDivElement>(null),
@@ -143,6 +150,13 @@ export default function WeddingInvitation() {
   return (
     <>
       <LoadingScreen lang="th" progress={progress} isReady={isReady} />
+      <RsvpModal
+        lang="th"
+        isOpen={rsvpModal.isOpen}
+        doNotShowToday={rsvpModal.doNotShowToday}
+        onDoNotShowTodayChange={rsvpModal.setDoNotShowToday}
+        onClose={rsvpModal.closeModal}
+      />
       <FlowerBackground />
 
       <div className="w-full h-screen flex justify-center bg-[rgba(153,153,153,0.05)]">
