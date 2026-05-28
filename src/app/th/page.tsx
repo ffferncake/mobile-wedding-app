@@ -31,6 +31,8 @@ import {
   VolumeOff,
 } from "lucide-react";
 import BottomNav from "../components/bottom-nav";
+import LoadingScreen from "../components/loading-screen";
+import { useInvitationReady } from "../hooks/useInvitationReady";
 
 /* ---------- nav items ---------- */
 const navItems = [
@@ -78,7 +80,11 @@ function GiftSection() {
 
 /* ---------- main component ---------- */
 export default function WeddingInvitation() {
-  const { isMuted, toggleMute } = useAudio("/songs/until-i-found-you.mp3");
+  const { isReady, progress } = useInvitationReady();
+  const { isMuted, toggleMute } = useAudio(
+    "/songs/until-i-found-you.mp3",
+    isReady,
+  );
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [showLangPopup, setShowLangPopup] = useState(false);
@@ -136,6 +142,7 @@ export default function WeddingInvitation() {
 
   return (
     <>
+      <LoadingScreen lang="th" progress={progress} isReady={isReady} />
       <FlowerBackground />
 
       <div className="w-full h-screen flex justify-center bg-[rgba(153,153,153,0.05)]">

@@ -2,13 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 
-export function useAudio(src: string) {
+export function useAudio(src: string, shouldAutoPlay = false) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
     const audio = new Audio(src);
     audio.loop = true;
+    audio.preload = "auto";
     audio.volume = 0.6;
 
     audioRef.current = audio;
@@ -27,9 +28,17 @@ export function useAudio(src: string) {
       audio.pause();
     } else {
       audio.muted = false;
-      audio.play().catch(() => {});
+      audio.play().catch(() => {
+        setIsMuted(true);
+      });
     }
   }, [isMuted]);
+
+  useEffect(() => {
+    if (!shouldAutoPlay) return;
+
+    setIsMuted(false);
+  }, [shouldAutoPlay]);
 
   const toggleMute = () => {
     setIsMuted((prev) => !prev);
