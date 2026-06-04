@@ -95,12 +95,6 @@ export default function WeddingInvitation() {
     selectedVenue === "THAILAND" ? navItems.slice(0, 6) : navItems;
 
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const rsvpModal = useRsvpModalPrompt({
-    containerRef,
-    enabled: isReady,
-    lang: "th",
-  });
-
   const sectionRefs = [
     useRef<HTMLDivElement>(null),
     useRef<HTMLDivElement>(null),
@@ -110,6 +104,12 @@ export default function WeddingInvitation() {
     useRef<HTMLDivElement>(null),
     useRef<HTMLDivElement>(null),
   ];
+  const rsvpModal = useRsvpModalPrompt({
+    containerRef,
+    enabled: isReady,
+    lang: "th",
+    triggerRef: sectionRefs[3],
+  });
 
   /* ---------- show language popup ---------- */
   // useEffect(() => {

@@ -6,13 +6,19 @@ type Options = {
   containerRef: RefObject<HTMLDivElement | null>;
   enabled: boolean;
   lang: "ko" | "th";
+  triggerRef?: RefObject<HTMLDivElement | null>;
 };
 
 function getTodayKey() {
   return new Date().toISOString().slice(0, 10);
 }
 
-export function useRsvpModalPrompt({ containerRef, enabled, lang }: Options) {
+export function useRsvpModalPrompt({
+  containerRef,
+  enabled,
+  lang,
+  triggerRef,
+}: Options) {
   const [isOpen, setIsOpen] = useState(false);
   const [doNotShowToday, setDoNotShowToday] = useState(false);
   const [hasTriggered, setHasTriggered] = useState(false);
@@ -31,9 +37,13 @@ export function useRsvpModalPrompt({ containerRef, enabled, lang }: Options) {
     }
 
     const handleScroll = () => {
-      const passedCover = container.scrollTop > container.clientHeight * 0.72;
+      const triggerElement = triggerRef?.current;
+      const shouldOpen = triggerElement
+        ? triggerElement.getBoundingClientRect().top <=
+          container.getBoundingClientRect().top + container.clientHeight * 0.35
+        : container.scrollTop > container.clientHeight * 0.72;
 
-      if (!passedCover) return;
+      if (!shouldOpen) return;
 
       setIsOpen(true);
       setHasTriggered(true);
@@ -45,7 +55,7 @@ export function useRsvpModalPrompt({ containerRef, enabled, lang }: Options) {
     return () => {
       container.removeEventListener("scroll", handleScroll);
     };
-  }, [containerRef, enabled, hasTriggered, storageKey]);
+  }, [containerRef, enabled, hasTriggered, storageKey, triggerRef]);
 
   useEffect(() => {
     if (!isOpen) return;
