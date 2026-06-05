@@ -45,8 +45,8 @@ export default function RsvpModal({
           </button>
 
           <div className="scrollbar-hide relative max-h-[74dvh] overflow-y-auto px-3 pb-5">
-          <div className={`mx-auto mb-3 text-center ${fontClass}`}>
-            <div className="mx-auto mb-2 flex h-28 w-28 items-center justify-center">
+          <div className={`mx-auto mb-1 text-center ${fontClass}`}>
+            <div className="mx-auto flex h-24 w-28 items-center justify-center">
               <Image
                 src="/images/kids_map_icon.png"
                 alt=""
@@ -55,16 +55,16 @@ export default function RsvpModal({
                 className="h-[104px] w-[104px] object-contain"
               />
             </div>
-            <div className="mx-auto mt-2 h-[1px] w-16 bg-[#d9aeb1]" />
+            <div className="mx-auto -mt-4 h-[1px] w-16 bg-[#d9aeb1]" />
           </div>
 
           <div className="[&_.title-en]:!text-[#8d7e82] [&_.highlight]:!text-[#b86f76] [&_p]:!text-[#4f4a4a] [&_button]:!text-[#6b6262] [&_input]:!text-[#3f3838] [&_input::placeholder]:!text-[#8d8588]">
-            <RSVPSection lang={lang} />
+            <RSVPSection lang={lang} compact />
           </div>
 
           <label
-            className={`mt-5 flex items-center justify-center gap-2 text-[#5b5154] ${fontClass} ${
-              isTH ? "text-[16px]" : "text-[13px]"
+            className={`mt-3 flex items-center justify-center gap-1.5 text-[#5b5154] ${fontClass} ${
+              isTH ? "text-[14px]" : "text-[11px]"
             }`}
           >
             <input
