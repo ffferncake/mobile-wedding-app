@@ -10,7 +10,7 @@ import {
   Loader2,
   X,
 } from "lucide-react";
-import { galleryImages } from "../../data/gallery";
+import { behindSceneImages, galleryImages } from "../../data/gallery";
 
 type Props = {
   lang: "ko" | "th";
@@ -46,23 +46,48 @@ export default function GallerySection({ lang }: Props) {
   const [viewMode, setViewMode] = useState<"single" | "grid">("grid");
   const [startIndex, setStartIndex] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [behindIndex, setBehindIndex] = useState(0);
+  const [behindLightboxIndex, setBehindLightboxIndex] = useState<number | null>(
+    null,
+  );
   const [animating, setAnimating] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
   const loadedImagesRef = useRef<Set<string>>(new Set());
 
+  const behindImages: readonly string[] = behindSceneImages;
+  const behindVisibleCount = Math.min(3, behindImages.length);
+  const behindLastIndex = Math.max(behindImages.length - behindVisibleCount, 0);
   const pageSize = viewMode === "single" ? 1 : 4;
   const images: readonly string[] = galleryImages[tab];
   const lastPageStart = Math.floor((images.length - 1) / pageSize) * pageSize;
   const currentImages = images.slice(startIndex, startIndex + pageSize);
   const pageKey = currentImages.join("|");
   const visibleEnd = Math.min(startIndex + currentImages.length, images.length);
+  const lightboxImages =
+    behindLightboxIndex === null ? images : behindImages;
+  const activeLightboxIndex =
+    behindLightboxIndex === null ? lightboxIndex : behindLightboxIndex;
   const lightboxImage =
-    lightboxIndex === null ? null : images[lightboxIndex] ?? null;
+    activeLightboxIndex === null
+      ? null
+      : lightboxImages[activeLightboxIndex] ?? null;
 
   useEffect(() => {
     setStartIndex(0);
     setImageLoading(true);
   }, [tab]);
+
+  useEffect(() => {
+    if (behindLastIndex === 0 || behindLightboxIndex !== null) return;
+
+    const intervalId = window.setInterval(() => {
+      setBehindIndex((currentIndex) =>
+        currentIndex + 1 > behindLastIndex ? 0 : currentIndex + 1,
+      );
+    }, 3000);
+
+    return () => window.clearInterval(intervalId);
+  }, [behindLastIndex, behindLightboxIndex]);
 
   useEffect(() => {
     const allLoaded = currentImages.every((img) =>
@@ -144,26 +169,44 @@ export default function GallerySection({ lang }: Props) {
     setLightboxIndex(index);
   };
 
+  const openBehindLightbox = (index: number) => {
+    setBehindLightboxIndex(index);
+  };
+
   const closeLightbox = () => {
     setLightboxIndex(null);
+    setBehindLightboxIndex(null);
   };
 
   const showNextImage = () => {
-    if (lightboxIndex === null || images.length === 0) return;
+    if (activeLightboxIndex === null || lightboxImages.length === 0) return;
 
-    setLightboxIndex((lightboxIndex + 1) % images.length);
+    if (behindLightboxIndex === null) {
+      setLightboxIndex((activeLightboxIndex + 1) % lightboxImages.length);
+      return;
+    }
+
+    setBehindLightboxIndex((activeLightboxIndex + 1) % lightboxImages.length);
   };
 
   const showPrevImage = () => {
-    if (lightboxIndex === null || images.length === 0) return;
+    if (activeLightboxIndex === null || lightboxImages.length === 0) return;
 
-    setLightboxIndex(
-      lightboxIndex - 1 < 0 ? images.length - 1 : lightboxIndex - 1,
-    );
+    const previousIndex =
+      activeLightboxIndex - 1 < 0
+        ? lightboxImages.length - 1
+        : activeLightboxIndex - 1;
+
+    if (behindLightboxIndex === null) {
+      setLightboxIndex(previousIndex);
+      return;
+    }
+
+    setBehindLightboxIndex(previousIndex);
   };
 
   useEffect(() => {
-    if (lightboxIndex === null) return;
+    if (activeLightboxIndex === null) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") closeLightbox();
@@ -176,7 +219,7 @@ export default function GallerySection({ lang }: Props) {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [lightboxIndex, images.length]);
+  }, [activeLightboxIndex, lightboxImages.length]);
 
   return (
     <>
@@ -248,48 +291,50 @@ export default function GallerySection({ lang }: Props) {
       </div>
 
       <div className="relative w-full max-w-[420px] mx-auto my-3">
-        <div
-          className={`relative grid w-full overflow-hidden rounded-xl bg-gray-100 ${
-            viewMode === "single"
-              ? "grid-cols-1 p-0"
-              : "grid-cols-2 gap-2 p-2"
-          }`}
-        >
+        <div className="relative overflow-hidden rounded-xl bg-gray-100">
           {imageLoading && (
             <div className="absolute inset-0 z-20 flex items-center justify-center bg-white/45 backdrop-blur-[1px]">
               <Loader2 className="h-8 w-8 animate-spin text-[#004483]" />
             </div>
           )}
 
-          {currentImages.map((image, imageIndex) => (
-            <button
-              type="button"
-              key={image}
-              onClick={() => openLightbox(startIndex + imageIndex)}
-              aria-label={
-                lang === "ko" ? "갤러리 사진 크게 보기" : "ดูรูปภาพขนาดใหญ่"
-              }
-              className={`relative aspect-[3/4] overflow-hidden bg-white ${
-                viewMode === "single" ? "rounded-xl" : "rounded-lg"
-              }`}
-            >
-              <Image
-                src={image}
-                alt={`${tab}-${startIndex + imageIndex}`}
-                fill
-                quality={70}
-                sizes="(max-width: 420px) 100vw, 420px"
-                onLoad={() => {
-                  loadedImagesRef.current.add(image);
-                }}
-                className={`object-cover transition-all duration-300 ${
-                  animating || imageLoading
-                    ? "opacity-0 scale-95"
-                    : "opacity-100 scale-100 hover:scale-[1.03]"
+          <div
+            className={`grid w-full ${
+              viewMode === "single"
+                ? "grid-cols-1 p-0"
+                : "grid-cols-2 gap-2 p-2"
+            }`}
+          >
+            {currentImages.map((image, imageIndex) => (
+              <button
+                type="button"
+                key={image}
+                onClick={() => openLightbox(startIndex + imageIndex)}
+                aria-label={
+                  lang === "ko" ? "갤러리 사진 크게 보기" : "ดูรูปภาพขนาดใหญ่"
+                }
+                className={`relative aspect-[3/4] overflow-hidden bg-white ${
+                  viewMode === "single" ? "rounded-xl" : "rounded-lg"
                 }`}
-              />
-            </button>
-          ))}
+              >
+                <Image
+                  src={image}
+                  alt={`${tab}-${startIndex + imageIndex}`}
+                  fill
+                  quality={70}
+                  sizes="(max-width: 420px) 100vw, 420px"
+                  onLoad={() => {
+                    loadedImagesRef.current.add(image);
+                  }}
+                  className={`object-cover transition-all duration-300 ${
+                    animating || imageLoading
+                      ? "opacity-0 scale-95"
+                      : "opacity-100 scale-100 hover:scale-[1.03]"
+                  }`}
+                />
+              </button>
+            ))}
+          </div>
 
           {images.length === 0 && (
             <div
@@ -329,7 +374,59 @@ export default function GallerySection({ lang }: Props) {
         </p>
       </div>
 
-      {lightboxImage && lightboxIndex !== null && (
+      {behindImages.length > 0 && (
+        <div className={`section ${fontClass} ${sectionSize}`}>
+          <p className={`title-en ${fontClass} ${titleSize}`}>
+            BEHIND THE SCENE
+          </p>
+          <h3 className={`highlight ${fontClass} ${highlightSize}`}>
+            {lang === "ko" ? "비하인드 씬" : "เบื้องหลัง"}
+          </h3>
+
+          <div className="relative w-full max-w-[420px] mx-auto mt-4">
+            <div className="relative overflow-hidden rounded-xl bg-gray-100 p-2">
+              <div
+                className="flex gap-2 transition-transform duration-1000 ease-in-out"
+                style={{
+                  transform: `translateX(calc(-${behindIndex} * (((100% - 16px) / 3) + 8px)))`,
+                }}
+              >
+                {behindImages.map((image, imageIndex) => (
+                  <button
+                    type="button"
+                    key={image}
+                    onClick={() => openBehindLightbox(imageIndex)}
+                    aria-label={
+                      lang === "ko"
+                        ? "비하인드 사진 크게 보기"
+                        : "ดูรูปภาพขนาดใหญ่"
+                    }
+                    className="relative aspect-[3/4] overflow-hidden rounded-lg bg-white"
+                    style={{ flex: "0 0 calc((100% - 16px) / 3)" }}
+                  >
+                    <Image
+                      src={image}
+                      alt={`behind-the-scene-${imageIndex + 1}`}
+                      fill
+                      quality={75}
+                      sizes="(max-width: 420px) 100vw, 420px"
+                      className="object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <p
+              className={`text-center mt-3 text-gray-500 ${fontClass} ${subTextSize}`}
+            >
+              {behindIndex + 1}-{Math.min(behindIndex + behindVisibleCount, behindImages.length)} / {behindImages.length}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {lightboxImage && activeLightboxIndex !== null && (
         <div
           className="fixed inset-0 z-[1001] flex items-center justify-center bg-black/90"
           role="dialog"
@@ -345,7 +442,7 @@ export default function GallerySection({ lang }: Props) {
             <X size={24} />
           </button>
 
-          {images.length > 1 && (
+          {lightboxImages.length > 1 && (
             <>
               <button
                 type="button"
@@ -370,7 +467,11 @@ export default function GallerySection({ lang }: Props) {
           <div className="relative h-[100dvh] w-screen max-w-[420px]">
             <Image
               src={lightboxImage}
-              alt={`${tab}-${lightboxIndex + 1}`}
+              alt={
+                behindLightboxIndex === null
+                  ? `${tab}-${activeLightboxIndex + 1}`
+                  : `behind-the-scene-${activeLightboxIndex + 1}`
+              }
               fill
               quality={85}
               sizes="100vw"
@@ -382,7 +483,7 @@ export default function GallerySection({ lang }: Props) {
           <p
             className={`absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-white/15 px-4 py-1.5 text-white backdrop-blur ${fontClass} ${subTextSize}`}
           >
-            {lightboxIndex + 1} / {images.length}
+            {activeLightboxIndex + 1} / {lightboxImages.length}
           </p>
         </div>
       )}

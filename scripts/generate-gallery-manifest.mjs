@@ -3,6 +3,7 @@ import path from "path";
 
 const galleryTabs = ["studio", "summer", "winter"];
 const galleryRoot = path.join(process.cwd(), "public", "images", "gallery");
+const behindSceneRoot = path.join(process.cwd(), "public", "images", "behide");
 const outputFile = path.join(process.cwd(), "src", "app", "data", "gallery.ts");
 
 function sortByImageNumber(a, b) {
@@ -19,21 +20,31 @@ function sortByImageNumber(a, b) {
 const entries = await Promise.all(
   galleryTabs.map(async (tab) => {
     const folder = path.join(galleryRoot, tab);
-    const files = await readdir(folder);
-    const images = files
-      .filter((file) => /\.(jpe?g|png|webp)$/i.test(file))
-      .sort(sortByImageNumber)
-      .map((file) => `/images/gallery/${tab}/${file}`);
+    const images = await getImages(folder, `/images/gallery/${tab}`);
 
     return [tab, images];
   }),
 );
 
 const gallery = Object.fromEntries(entries);
+const behindSceneImages = await getImages(behindSceneRoot, "/images/behide");
+
+async function getImages(folder, publicPath) {
+  const files = await readdir(folder);
+
+  return files
+    .filter((file) => /\.(jpe?g|png|webp)$/i.test(file))
+    .sort(sortByImageNumber)
+    .map((file) => `${publicPath}/${file}`);
+}
 
 await writeFile(
   outputFile,
-  `export const galleryImages = ${JSON.stringify(gallery, null, 2)} as const;\n`,
+  [
+    `export const galleryImages = ${JSON.stringify(gallery, null, 2)} as const;`,
+    `export const behindSceneImages = ${JSON.stringify(behindSceneImages, null, 2)} as const;`,
+    "",
+  ].join("\n"),
 );
 
 console.log(`Generated ${path.relative(process.cwd(), outputFile)}`);

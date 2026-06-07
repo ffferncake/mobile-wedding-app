@@ -50,3 +50,11 @@ export const galleryImages = {
     "/images/gallery/winter/12.JPG"
   ]
 } as const;
+export const behindSceneImages = [
+  "/images/behide/1.jpg",
+  "/images/behide/2.jpg",
+  "/images/behide/3.jpg",
+  "/images/behide/4.jpg",
+  "/images/behide/5.jpg",
+  "/images/behide/6.jpg"
+] as const;
