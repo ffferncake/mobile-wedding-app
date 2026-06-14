@@ -90,46 +90,16 @@ export default function GallerySection({ lang }: Props) {
   }, [behindLastIndex, behindLightboxIndex]);
 
   useEffect(() => {
-    const allLoaded = currentImages.every((img) =>
-      loadedImagesRef.current.has(img),
-    );
-
-    if (allLoaded) {
+    if (
+      currentImages.length === 0 ||
+      currentImages.every((img) => loadedImagesRef.current.has(img))
+    ) {
       setImageLoading(false);
       setAnimating(false);
       return;
     }
 
-    let active = true;
     setImageLoading(true);
-
-    Promise.all(
-      currentImages.map(
-        (src) =>
-          new Promise<void>((resolve) => {
-            if (loadedImagesRef.current.has(src)) {
-              resolve();
-              return;
-            }
-
-            const img = new window.Image();
-            img.onload = () => {
-              loadedImagesRef.current.add(src);
-              resolve();
-            };
-            img.onerror = () => resolve();
-            img.src = src;
-          }),
-      ),
-    ).then(() => {
-      if (!active) return;
-      setImageLoading(false);
-      setAnimating(false);
-    });
-
-    return () => {
-      active = false;
-    };
   }, [pageKey]);
 
   const changePage = (next: number) => {
@@ -321,11 +291,35 @@ export default function GallerySection({ lang }: Props) {
                   src={image}
                   alt={`${tab}-${startIndex + imageIndex}`}
                   fill
-                  quality={70}
-                  sizes="(max-width: 420px) 100vw, 420px"
+                  quality={65}
+                  sizes={
+                    viewMode === "single"
+                      ? "(max-width: 420px) 100vw, 420px"
+                      : "(max-width: 420px) 50vw, 210px"
+                  }
                   onLoad={() => {
                     loadedImagesRef.current.add(image);
+                    if (
+                      currentImages.every((img) =>
+                        loadedImagesRef.current.has(img),
+                      )
+                    ) {
+                      setImageLoading(false);
+                      setAnimating(false);
+                    }
                   }}
+                  onError={() => {
+                    loadedImagesRef.current.add(image);
+                    if (
+                      currentImages.every((img) =>
+                        loadedImagesRef.current.has(img),
+                      )
+                    ) {
+                      setImageLoading(false);
+                      setAnimating(false);
+                    }
+                  }}
+                  loading="eager"
                   className={`object-cover transition-all duration-300 ${
                     animating || imageLoading
                       ? "opacity-0 scale-95"
@@ -408,8 +402,8 @@ export default function GallerySection({ lang }: Props) {
                       src={image}
                       alt={`behind-the-scene-${imageIndex + 1}`}
                       fill
-                      quality={75}
-                      sizes="(max-width: 420px) 100vw, 420px"
+                      quality={60}
+                      sizes="(max-width: 420px) 33vw, 135px"
                       className="object-cover"
                     />
                   </button>
