@@ -12,6 +12,7 @@ import { X, ChevronLeft, ChevronRight, Copy } from "lucide-react";
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX!;
 
 export default function WeddingInvitation() {
+  const initialGalleryCount = 6;
   const allImages = [
     "/images/gallery/gallery_1.JPG",
     "/images/gallery/gallery_2.JPG",
@@ -32,7 +33,9 @@ export default function WeddingInvitation() {
   ];
 
   const [showAll, setShowAll] = useState(false);
-  const visibleImages = showAll ? allImages : allImages.slice(0, 10);
+  const visibleImages = showAll
+    ? allImages
+    : allImages.slice(0, initialGalleryCount);
 
   // 👇 Add these for full-screen image modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -552,7 +555,7 @@ export default function WeddingInvitation() {
           </ScrollSection>
           {/* 신랑 & 신부 소개합니다 */}
           <ScrollSection>
-            <div id="gallery" className={styles.inviteMessage}>
+            <div id="introduction" className={styles.inviteMessage}>
               <p className={styles.title_en}>INTRODUCTION</p>
               <h3 className={styles.highlight}>신랑 & 신부 소개합니다</h3>
             </div>
@@ -590,52 +593,24 @@ export default function WeddingInvitation() {
 
             <div className={styles.gallery}>
               {visibleImages.map((src, index) => (
-                <Image
+                <button
                   key={index}
-                  src={src}
-                  alt={`gallery-${index + 1}`}
-                  width={140}
-                  height={200}
+                  type="button"
+                  className={styles.galleryItem}
                   onClick={() => openModal(index)}
-                  style={{ cursor: "pointer" }}
-                />
+                  aria-label={`갤러리 사진 ${index + 1} 크게 보기`}
+                >
+                  <Image
+                    src={src}
+                    alt={`gallery-${index + 1}`}
+                    width={140}
+                    height={200}
+                  />
+                </button>
               ))}
             </div>
 
-            {/* Modal Fullscreen Gallery */}
-            {isModalOpen && (
-              <div className={styles.modalOverlay} onClick={closeModal}>
-                <div
-                  className={styles.modalContent}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <Image
-                    src={allImages[currentIndex]}
-                    alt={`modal-${currentIndex}`}
-                    width={420}
-                    height={500}
-                    className={styles.modalImage}
-                  />
-                  <button className={styles.modalClose} onClick={closeModal}>
-                    <X size={28} />
-                  </button>
-
-                  <button className={styles.modalPrev} onClick={showPrev}>
-                    <ChevronLeft size={36} />
-                  </button>
-
-                  <button className={styles.modalNext} onClick={showNext}>
-                    <ChevronRight size={36} />
-                  </button>
-
-                  <p className={styles.imageCounter}>
-                    {currentIndex + 1} / {allImages.length}
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {allImages.length > 10 && (
+            {allImages.length > initialGalleryCount && (
               <div className={styles.showMoreWrapper}>
                 <div
                   onClick={() => setShowAll(!showAll)}
@@ -876,6 +851,54 @@ export default function WeddingInvitation() {
           </footer>
         </div>
       </div>
+
+      {isModalOpen && (
+        <div className={styles.modalOverlay} onClick={closeModal}>
+          <div
+            className={styles.modalContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Image
+              src={allImages[currentIndex]}
+              alt={`modal-${currentIndex + 1}`}
+              fill
+              sizes="100vw"
+              className={styles.modalImage}
+              priority
+            />
+            <button
+              type="button"
+              className={styles.modalClose}
+              onClick={closeModal}
+              aria-label="닫기"
+            >
+              <X size={28} />
+            </button>
+
+            <button
+              type="button"
+              className={styles.modalPrev}
+              onClick={showPrev}
+              aria-label="이전 사진"
+            >
+              <ChevronLeft size={36} />
+            </button>
+
+            <button
+              type="button"
+              className={styles.modalNext}
+              onClick={showNext}
+              aria-label="다음 사진"
+            >
+              <ChevronRight size={36} />
+            </button>
+
+            <p className={styles.imageCounter}>
+              {currentIndex + 1} / {allImages.length}
+            </p>
+          </div>
+        </div>
+      )}
     </>
   );
 }
