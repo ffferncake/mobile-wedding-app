@@ -4,8 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { galleryImages } from "../data/gallery";
 
 const baseImageSources = [
-  "/images/bg_updated_1.webp",
-  "/images/bg_updated_2.webp",
+  "/images/sample-1.JPG",
   "/images/hall_1.jpg",
   "/images/hall_2.jpg",
   "/images/hall_3.jpg",

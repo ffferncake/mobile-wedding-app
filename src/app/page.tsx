@@ -248,11 +248,11 @@ export default function WeddingInvitation() {
           </div>
 
           {/* bottom nav */}
-          <BottomNav
+          {/* <BottomNav
             navItems={visibleNavItems}
             activeIndex={activeIndex}
             onClick={handleScrollTo}
-          />
+          /> */}
         </div>
       </div>
     </>

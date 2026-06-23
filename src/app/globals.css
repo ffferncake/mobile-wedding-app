@@ -53,6 +53,14 @@
 }
 
 @font-face {
+  font-family: "Ameda";
+  src: url("/font/Ameda-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: "IBMPlexSansKR";
   src: url("/font/IBMPlexSansKR-Regular.ttf") format("truetype");
   font-weight: normal;
@@ -119,6 +127,10 @@ body {
 
 .bodar-font {
   font-family: "BODAR", serif;
+}
+
+.ameda-font {
+  font-family: "Ameda", serif;
 }
 
 .ibmplex-font {
