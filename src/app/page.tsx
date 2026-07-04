@@ -5,7 +5,8 @@ import Image from "next/image";
 import ScrollSection from "../app/components/ScrollSection";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import HeartsBackground from "./components/HeartsBackground";
+// import HeartsBackground from "./components/HeartsBackground";
+import CanvasSnow from "./components/CanvasSnow";
 import WeddingCalendar from "./components/WeddingCalendar";
 import { X, ChevronLeft, ChevronRight, Copy } from "lucide-react";
 
@@ -258,7 +259,8 @@ export default function WeddingInvitation() {
 
   return (
     <>
-      <HeartsBackground />
+      {/* <HeartsBackground /> */}
+      <CanvasSnow />
       <div
         className={`${styles.tabNavContainer} ${
           showHeader ? styles.visible : styles.hidden
