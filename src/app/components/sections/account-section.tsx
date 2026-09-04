@@ -22,7 +22,7 @@ export default function AccountSection({
           {
             bank: "토스뱅크",
             bankIcon: "/images/toss.png",
-            number: "1001-5731-0736",
+            number: "1002-3081-1039",
             role: "🤵🏻 신랑 · 신부 👰🏻‍♀️",
           },
           {
