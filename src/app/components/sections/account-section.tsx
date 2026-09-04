@@ -9,6 +9,7 @@ type Account = {
   number: string;
   role: string;
   name?: string;
+  holderName?: string;
 };
 
 export default function AccountSection({
@@ -23,7 +24,8 @@ export default function AccountSection({
             bank: "토스뱅크",
             bankIcon: "/images/toss.png",
             number: "1002-3081-1039",
-            role: "🤵🏻 신랑 · 신부 👰🏻‍♀️",
+            role: "🤵🏻 신랑 · 신부 👰🏻‍♀️ (커플통장)",
+            holderName: "예금자 : TRAKULPHUDPHONG NICHANUN",
           },
           {
             bank: "국민은행",
@@ -110,11 +112,19 @@ export default function AccountSection({
                   className="rounded"
                 />
 
-                <span
-                  className={`${subTextSize} font-medium text-[#333] ${fontClass}`}
-                >
-                  {acc.bank} {acc.number}
-                </span>
+                <div className="flex flex-col">
+                  <span
+                    className={`${subTextSize} font-medium text-[#333] ${fontClass}`}
+                  >
+                    {acc.bank} {acc.number}
+                  </span>
+
+                  {acc.holderName && (
+                    <span className="mt-1 text-[11px] leading-none tracking-wide text-[#777]">
+                      {acc.holderName}
+                    </span>
+                  )}
+                </div>
               </div>
 
               <button
